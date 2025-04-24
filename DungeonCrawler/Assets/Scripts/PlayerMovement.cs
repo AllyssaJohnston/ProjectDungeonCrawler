@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.linearVelocity = moveSpeed * Time.fixedDeltaTime * direction;
-        Debug.Log(rb.linearVelocity.ToString());
+        //Debug.Log(rb.linearVelocity.ToString());
     }
 
 
