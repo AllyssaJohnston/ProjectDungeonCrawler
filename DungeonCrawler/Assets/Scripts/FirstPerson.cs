@@ -5,9 +5,14 @@ public class FirstPerson : MonoBehaviour
     public UnityEngine.Tilemaps.Tilemap blockTilemap;
     public UnityEngine.Tilemaps.Tilemap billboardTilemap;
 
+    public PlayerMovement playerMovement;
+    public Transform playerPos;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+
         var root = new GameObject();
         root.name = "FirstPersonWorldRoot";
 
@@ -43,7 +48,7 @@ public class FirstPerson : MonoBehaviour
                 if (billboardTilemap.GetSprite(pos) != null) {
                     var billboard = new GameObject();
                     billboard.transform.parent = root.transform;
-                    billboard.transform.position = billboardTilemap.CellToWorld(pos);
+                    billboard.transform.position = billboardTilemap.CellToWorld(pos) + billboardTilemap.cellSize * 0.5f;
 
                     billboard.name = "Billboard_" + billboardTilemap.GetSprite(pos).name;
 
@@ -64,7 +69,10 @@ public class FirstPerson : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        this.transform.position = Vector3.zero;
+        this.transform.LookAt(Vector3.right, Vector3.back);
+        this.transform.RotateAround(Vector3.zero, Vector3.back, playerMovement.rotation);
+        this.transform.position = new Vector3(playerPos.position.x, playerPos.position.y, 0f);
     }
 
     GameObject generateBlockface(Vector3Int pos, Vector3Int facing) {
@@ -74,9 +82,14 @@ public class FirstPerson : MonoBehaviour
 
         blockFace.transform.position = Vector3.zero;
         blockFace.transform.LookAt((Vector3)facing, new Vector3(0, 0, -1));
-        blockFace.transform.position = facing;
-        blockFace.transform.position.Scale(blockTilemap.cellSize);
-        blockFace.transform.position += blockTilemap.CellToWorld(pos);
+
+        // Why the hell does unity just not do anything with this line
+        //blockFace.transform.position.Scale(blockTilemap.cellSize * 0.5f);
+
+        Vector3 position = facing;
+        position.Scale(blockTilemap.cellSize * 0.5f);
+        position += blockTilemap.CellToWorld(pos) + blockTilemap.cellSize * 0.5f;
+        blockFace.transform.position = position;
 
         var renderer = blockFace.AddComponent<SpriteRenderer>();
         renderer.sprite = blockTilemap.GetSprite(pos);

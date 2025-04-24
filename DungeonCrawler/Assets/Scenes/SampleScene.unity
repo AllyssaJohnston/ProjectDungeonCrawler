@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 125
+  rotationSpeed: 64
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +471,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockTilemap: {fileID: 1668141771}
   billboardTilemap: {fileID: 1945592753}
+  playerMovement: {fileID: 135679626}
+  playerPos: {fileID: 135679623}
 --- !u!114 &603356559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3081,7 +3084,7 @@ Transform:
   m_GameObject: {fileID: 1738414342}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 36, y: 36, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
