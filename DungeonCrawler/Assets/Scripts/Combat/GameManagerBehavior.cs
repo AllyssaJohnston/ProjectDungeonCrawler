@@ -9,6 +9,7 @@ public class GameManagerBehavior : MonoBehaviour
     public List<GameObject> enemyCharacters = new List<GameObject>();
     public int startingMana = 10;
     private int curMana;
+    FriendlySpellBehavior curSpellToCast = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,19 +30,24 @@ public class GameManagerBehavior : MonoBehaviour
 
     public void getInput()
     {
-        if (stateManager.curState == E_State.PLAYER_SELECTION)
+        if (stateManager.curState == E_State.PLAYER_SPELL_SELECTION || stateManager.curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
         {
 
             if (Input.GetMouseButtonDown(0)) //left click
             {
-                // get game objects
-                //Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                //RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
-                //if (hit.collider != null)
-                //{
-                //    GameObject gameObject = hit.collider.gameObject;
-                //    Debug.Log("found something");
-                //}
+                //get game objects
+                Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
+                if (hit.collider != null)
+                {
+                    Debug.Log("hit something");
+                    GameObject gameObject = hit.collider.gameObject;
+                    if (gameObject.tag == "Enemy" && stateManager.curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+                    {
+                        Debug.Log("hit enemy");
+                        castSpellOnTarget(gameObject);
+                    }
+                }
 
 
                 //find UI elements
@@ -57,7 +63,7 @@ public class GameManagerBehavior : MonoBehaviour
                     {
                         foreach (RaycastResult result in raycastResults)
                         {
-                            if (result.gameObject.tag == "Spell")
+                            if (result.gameObject.tag == "Spell" && stateManager.curState == E_State.PLAYER_SPELL_SELECTION)
                             {
                                 FriendlySpellBehavior spellBehavior = result.gameObject.GetComponent<FriendlySpellBehavior>();
                                 if (spellBehavior != null)
@@ -72,7 +78,8 @@ public class GameManagerBehavior : MonoBehaviour
         }
     }
 
-    // takes a spell and tries to cast it if possible
+    // takes a spell and determines if it can be cast
+    // if it can, will go to enemy selection state
     public void resolveSpell(FriendlySpellBehavior spellBehavior)
     {
         bool canCast = true;
@@ -86,18 +93,17 @@ public class GameManagerBehavior : MonoBehaviour
  
         if (canCast && curMana - spellBehavior.manaCost >= 0)
         {
-            Debug.Log("cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale " + spellBehavior.manaCost + " mana ");
-            curMana -= spellBehavior.manaCost;
-            for (int i = 0; i < spellBehavior.castingCharacters.Count; i++)
+            curSpellToCast = (FriendlySpellBehavior)spellBehavior;
+            if (spellBehavior.damageAllEnemies == false)
             {
-                CharacterBehavior curCharacter = behaviors[i];
-                // do morale damage agains the casters
-                curCharacter.cast(spellBehavior.moraleDamage);
+                // go to target selection state
+                stateManager.NextState(); // select enemy state
             }
-
-            //TODO update attack enemies
-            EnemyBehavior enemy = enemyCharacters[0].GetComponent<EnemyBehavior>();
-            enemy.updateHealth(-spellBehavior.damage);
+            else
+            {
+                // cast spell on all enemies
+                castSpellOnAll();
+            }
         }
         else
         {
@@ -105,19 +111,54 @@ public class GameManagerBehavior : MonoBehaviour
         }
     }
 
+    // deal with mana and morale cost
+    // to be used with other cast methods
+    private void cast()
+    {
+        curMana -= curSpellToCast.manaCost;
+
+        for (int i = 0; i < curSpellToCast.castingCharacters.Count; i++)
+        {
+            CharacterBehavior curCharacter = curSpellToCast.castingCharacters[i].GetComponent<CharacterBehavior>();
+            // do morale damage against the casters
+            curCharacter.cast(curSpellToCast.moraleDamage);
+        }
+    }
+
+    // casts the stored spell selected by the player on all enemies
+    public void castSpellOnAll()
+    {
+        Debug.Log("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on all enemies");
+        cast();
+
+        for (int i = 0; i < enemyCharacters.Count; i++)
+        {
+            enemyCharacters[i].GetComponent<EnemyBehavior>().updateHealth(-curSpellToCast.damage);
+        }
+        stateManager.NextState(E_State.ENEMY_ACTION);
+    }
+
+    // casts the stored spell selected by the player on the enemy selected by the player
+    public void castSpellOnTarget(GameObject selectedEnemy)
+    {
+        Debug.Log("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on selected enemy");
+        cast();
+
+        selectedEnemy.GetComponent<EnemyBehavior>().updateHealth(-curSpellToCast.damage);
+        stateManager.NextState(E_State.PLAYER_SPELL_SELECTION);
+    }
+
     public void playerStartTurn()
     {
         // regen energy
         curMana += 2;
     }
-
-
     public void playerEndTurn()
     {
-        if (stateManager.curState == E_State.PLAYER_SELECTION)
+        if (stateManager.curState == E_State.PLAYER_SPELL_SELECTION)
         {
             Debug.Log("end turn");
-            stateManager.NextState();
+            stateManager.NextState(E_State.ENEMY_ACTION);
         }
     }
 

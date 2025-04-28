@@ -10,6 +10,7 @@ public class FriendlySpellBehavior : SpellBehavior
     [SerializeField] public TMP_Text damageText;
     [SerializeField] public TMP_Text moraleDamageText;
     [SerializeField] public TMP_Text manaText;
+    [SerializeField] public TMP_Text targetingText;
 
     private void Start()
     {
@@ -17,6 +18,7 @@ public class FriendlySpellBehavior : SpellBehavior
         damageText.text = damage + " DAMAGE";
         moraleDamageText.text = moraleDamage + " MORALE DAMAGE";
         manaText.text = manaCost.ToString();
+        targetingText.text = "TARGET " + (damageAllEnemies? "ALL" : "SELECT");
 
         if (castingCharacters.Count == 0 )
         {
