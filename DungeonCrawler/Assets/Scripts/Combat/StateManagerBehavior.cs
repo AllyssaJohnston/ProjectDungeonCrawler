@@ -3,13 +3,14 @@ using UnityEngine;
 
 public enum E_State
 {
-    PLAYER_SELECTION,
+    PLAYER_SPELL_SELECTION,
+    PLAYER_ENEMY_TARGET_SELECTION,
     ENEMY_ACTION
 }
 
 public class StateManagerBehavior : MonoBehaviour
 {
-    public E_State curState = E_State.PLAYER_SELECTION;
+    public E_State curState = E_State.PLAYER_SPELL_SELECTION;
     List<GameObject> friendlyCharacters = new List<GameObject>();
     List<GameObject> enemyCharacters = new List<GameObject>();
     List<CharacterBehavior> friendlyBehaviors = new List<CharacterBehavior>();
@@ -27,7 +28,10 @@ public class StateManagerBehavior : MonoBehaviour
     {
         switch (curState)
         {
-            case E_State.PLAYER_SELECTION:
+            case E_State.PLAYER_SPELL_SELECTION:
+                // do nothing, player needs to do things to end this state
+                break;
+            case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 // do nothing, player needs to do things to end this state
                 break;
             case E_State.ENEMY_ACTION:
@@ -77,7 +81,7 @@ public class StateManagerBehavior : MonoBehaviour
     // go to the given state
     public void NextState(E_State nextState)
     {
-        if (nextState == E_State.PLAYER_SELECTION)
+        if (nextState == E_State.PLAYER_SPELL_SELECTION)
         {
             gameManagerBehavior.playerStartTurn();
         }
@@ -90,14 +94,18 @@ public class StateManagerBehavior : MonoBehaviour
     {
         switch(curState)
         {
-            case E_State.PLAYER_SELECTION:
+            case E_State.PLAYER_SPELL_SELECTION:
                 // go to enmey state
-                curState = E_State.ENEMY_ACTION;
+                curState = E_State.PLAYER_ENEMY_TARGET_SELECTION;
+                break;
+            case E_State.PLAYER_ENEMY_TARGET_SELECTION:
+                // go to enmey state
+                curState = E_State.PLAYER_SPELL_SELECTION;
                 break;
             case E_State.ENEMY_ACTION:
                 // go to player state 
                 gameManagerBehavior.playerStartTurn();
-                curState = E_State.PLAYER_SELECTION;
+                curState = E_State.PLAYER_SPELL_SELECTION;
                 for (int i = 0; i < friendlyBehaviors.Count; i++)
                 {
                     friendlyBehaviors[i].startTurn();
