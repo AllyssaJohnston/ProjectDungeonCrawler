@@ -43,7 +43,7 @@ public class StateManagerBehavior : MonoBehaviour
                 {
                     enemyBehaviors[i].chooseSpell(friendlyBehaviors);
                 }
-                NextState();
+                //NextState();
 
                 //lazy reset
                 for (int i = 0; i < friendlyBehaviors.Count; i++)
