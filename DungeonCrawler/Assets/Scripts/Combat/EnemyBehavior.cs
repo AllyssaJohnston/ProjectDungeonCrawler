@@ -4,17 +4,11 @@ using System.Collections;
 
 public class EnemyBehavior : CharacterBehavior
 {
-    public List<SpellBehavior> spellsToChooseFrom = new List<SpellBehavior>();
-    private bool willCastSpell = false;
-    private List<CharacterBehavior> possibleTargets = new List<CharacterBehavior>();
-    private float spellCastTimer = 0f;
-    private float waitTime = 3f;
-    private StateManagerBehavior stateManager;
+    [SerializeField] public List<SpellBehavior> spellsToChooseFrom = new List<SpellBehavior>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        stateManager = FindFirstObjectByType<StateManagerBehavior>();
         friendly = false;
         if (spellsToChooseFrom.Count == 0)
         {
@@ -24,14 +18,7 @@ public class EnemyBehavior : CharacterBehavior
 
     private void Update()
     {
-        if (willCastSpell)
-        {
-            spellCastTimer += Time.deltaTime;
-            if (spellCastTimer > waitTime)
-            {
-                castSpell();
-            }
-        }
+        
     }
 
     // use this method to reset things between fights
@@ -56,42 +43,34 @@ public class EnemyBehavior : CharacterBehavior
     //chooses a spell and executes it
     public void chooseSpell(List<CharacterBehavior> friendlyCharacters)
     {
-        if (!willCastSpell)
+        if (canCast())
         {
-            Debug.Log("Enemy choosing spell");
-            willCastSpell = true;
-            possibleTargets = friendlyCharacters;
+            castSpell(friendlyCharacters);
         }
     }
 
-    public void castSpell()
+    private void castSpell(List<CharacterBehavior> friendlyCharacters)
     {
-        Debug.Log("enemy casting spell");
-        if (canCast())
+        //TOOD choose a spell
+        SpellBehavior spellBehavior = spellsToChooseFrom[0];
+
+        DebugBehavior.updateLog("enemy cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale ");
+        Debug.Log("enemy cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale ");
+
+        // do morale damage against the enemy
+        cast(spellBehavior.moraleDamage);
+
+        if (spellBehavior.damageAllEnemies)
         {
-            //TOOD choose a spell
-            SpellBehavior spellBehavior = spellsToChooseFrom[0];
-
-            Debug.Log("cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale ");
-
-            // do morale damage against the enemy
-            cast(spellBehavior.moraleDamage);
-
-            if (spellBehavior.damageAllEnemies)
+            for (int i = 0; i < friendlyCharacters.Count; i++)
             {
-                for (int i = 0; i < possibleTargets.Count; i++)
-                {
-                    possibleTargets[i].updateHealth(-spellBehavior.damage);
-                }
-            }
-            else
-            {
-                // TODO choose which character to do damage against
-                possibleTargets[0].updateHealth(-spellBehavior.damage);
+                friendlyCharacters[i].updateHealth(-spellBehavior.damage);
             }
         }
-        willCastSpell = false;
-        spellCastTimer = 0f;
-        stateManager.NextState();
+        else
+        {
+            // TODO choose which character to do damage against
+            friendlyCharacters[0].updateHealth(-spellBehavior.damage);
+        }
     }
 }

@@ -40,11 +40,9 @@ public class GameManagerBehavior : MonoBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
                 if (hit.collider != null)
                 {
-                    Debug.Log("hit something");
                     GameObject gameObject = hit.collider.gameObject;
                     if (gameObject.tag == "Enemy" && stateManager.curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
                     {
-                        Debug.Log("hit enemy");
                         castSpellOnTarget(gameObject);
                     }
                 }
@@ -107,6 +105,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
         else
         {
+            DebugBehavior.updateLog("Failed to cast spell");
             Debug.Log("Failed to cast");
         }
     }
@@ -128,6 +127,7 @@ public class GameManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on all enemies
     public void castSpellOnAll()
     {
+        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on all enemies");
         Debug.Log("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on all enemies");
         cast();
 
@@ -141,6 +141,7 @@ public class GameManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on the enemy selected by the player
     public void castSpellOnTarget(GameObject selectedEnemy)
     {
+        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on selected enemy");
         Debug.Log("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on selected enemy");
         cast();
 
@@ -157,8 +158,7 @@ public class GameManagerBehavior : MonoBehaviour
     {
         if (stateManager.curState == E_State.PLAYER_SPELL_SELECTION)
         {
-            Debug.Log("end turn");
-            stateManager.NextState(E_State.ENEMY_ACTION);
+            stateManager.NextState(E_State.ENEMY_BUFFER);
         }
     }
 
