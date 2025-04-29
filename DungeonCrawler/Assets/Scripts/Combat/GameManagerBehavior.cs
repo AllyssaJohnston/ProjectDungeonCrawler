@@ -135,7 +135,7 @@ public class GameManagerBehavior : MonoBehaviour
         {
             enemyCharacters[i].GetComponent<EnemyBehavior>().updateHealth(-curSpellToCast.damage);
         }
-        stateManager.NextState(E_State.ENEMY_ACTION);
+        stateManager.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
     // casts the stored spell selected by the player on the enemy selected by the player

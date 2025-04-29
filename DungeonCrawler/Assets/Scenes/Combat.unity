@@ -270,6 +270,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1278402532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8532700174656542534, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+  m_PrefabInstance: {fileID: 6001831117541380671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1337654308 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 101720692608466094, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
@@ -788,6 +793,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1337654312}
   m_SourcePrefab: {fileID: 100100000, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
+--- !u!1 &1699473951 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8532700174656542534, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+  m_PrefabInstance: {fileID: 8752053832496150668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1844703120 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6979151462030448635, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
@@ -2176,6 +2186,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1373649714082192109}
     m_Modifications:
+    - target: {fileID: 1950935576260745772, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5313716852506858494, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
       propertyPath: character
       value: 
@@ -2265,6 +2279,10 @@ PrefabInstance:
       value: Spell2
       objectReference: {fileID: 0}
     - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 1278402532}
+    - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
       propertyPath: damage
       value: 10
       objectReference: {fileID: 0}
@@ -2288,6 +2306,10 @@ PrefabInstance:
       propertyPath: damageAllEnemies
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+      propertyPath: characterIconTemplate
+      value: 
+      objectReference: {fileID: 6994409047722642919, guid: ac723c099affa944fb52463abca069e0, type: 3}
     - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
       propertyPath: castingCharacters.Array.size
       value: 2
@@ -2523,7 +2545,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6994409047722642919, guid: ac723c099affa944fb52463abca069e0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2605,6 +2627,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1373649714082192109}
     m_Modifications:
+    - target: {fileID: 1950935576260745772, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5313716852506858494, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
       propertyPath: character
       value: 
@@ -2694,9 +2720,17 @@ PrefabInstance:
       value: Spell
       objectReference: {fileID: 0}
     - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+      propertyPath: panel
+      value: 
+      objectReference: {fileID: 1699473951}
+    - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
       propertyPath: targetingText
       value: 
       objectReference: {fileID: 1040058415}
+    - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
+      propertyPath: characterIconTemplate
+      value: 
+      objectReference: {fileID: 6994409047722642919, guid: ac723c099affa944fb52463abca069e0, type: 3}
     - target: {fileID: 9007907124459943190, guid: 478815acd32cc1945874d1e7445e778f, type: 3}
       propertyPath: 'castingCharacters.Array.data[0]'
       value: 
