@@ -5,6 +5,7 @@ public enum E_State
 {
     PLAYER_SPELL_SELECTION,
     PLAYER_ENEMY_TARGET_SELECTION,
+    ENEMY_BUFFER,
     ENEMY_ACTION
 }
 
@@ -16,6 +17,9 @@ public class StateManagerBehavior : MonoBehaviour
     List<CharacterBehavior> friendlyBehaviors = new List<CharacterBehavior>();
     List<EnemyBehavior> enemyBehaviors = new List<EnemyBehavior>();
     GameManagerBehavior gameManagerBehavior;
+
+    private float bufferTimer = 0f;
+    private float waitTime = 3f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,6 +37,14 @@ public class StateManagerBehavior : MonoBehaviour
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 // do nothing, player needs to do things to end this state
+                break;
+            case E_State.ENEMY_BUFFER:
+                bufferTimer += Time.deltaTime;
+                if (bufferTimer > waitTime)
+                {
+                    NextState();
+                    bufferTimer = 0f;
+                }
                 break;
             case E_State.ENEMY_ACTION:
                 for (int i = 0; i < enemyBehaviors.Count; i++)
@@ -97,10 +109,14 @@ public class StateManagerBehavior : MonoBehaviour
             case E_State.PLAYER_SPELL_SELECTION:
                 // go to enmey state
                 curState = E_State.PLAYER_ENEMY_TARGET_SELECTION;
+                DebugBehavior.updateLog("pick an enemy target");
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 // go to enmey state
                 curState = E_State.PLAYER_SPELL_SELECTION;
+                break;
+            case E_State.ENEMY_BUFFER:
+                curState = E_State.ENEMY_ACTION;
                 break;
             case E_State.ENEMY_ACTION:
                 // go to player state 
