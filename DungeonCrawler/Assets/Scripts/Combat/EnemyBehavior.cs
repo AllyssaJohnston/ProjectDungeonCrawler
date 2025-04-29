@@ -47,11 +47,17 @@ public class EnemyBehavior : CharacterBehavior
             // do morale damage against the enemy
             cast(spellBehavior.moraleDamage);
 
-            //TODO choose how many characters to do damage against
-            // do damage against the characters
-            for (int i = 0; i < friendlyCharacters.Count; i++)
+            if (spellBehavior.damageAllEnemies)
             {
-                friendlyCharacters[i].updateHealth(-spellBehavior.damage);
+                for (int i = 0; i < friendlyCharacters.Count; i++)
+                {
+                    friendlyCharacters[i].updateHealth(-spellBehavior.damage);
+                }
+            }
+            else
+            {
+                // TODO choose which character to do damage against
+                friendlyCharacters[0].updateHealth(-spellBehavior.damage);
             }
         }
     }

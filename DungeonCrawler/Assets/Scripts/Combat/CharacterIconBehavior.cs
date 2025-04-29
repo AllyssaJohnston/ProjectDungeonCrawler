@@ -3,19 +3,14 @@ using UnityEngine;
 
 public class CharacterIconBehavior : MonoBehaviour
 {
-    [SerializeField] public GameObject character;
-    private Sprite characterSr;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void SetUp(Sprite characterSprite)
     {
-        characterSr = character.GetComponent<SpriteRenderer>().sprite;
-        GetComponentInChildren<Image>().sprite = characterSr;
+        GetComponentInChildren<Image>().sprite = characterSprite;
     }
 
-    private void Update()
+    public void updateImage(bool canCast)
     {
-        if (character.GetComponent<CharacterBehavior>().canCast())
+        if (canCast)
         {
             //character is available
             GetComponentInChildren<Image>().color = Color.white;
