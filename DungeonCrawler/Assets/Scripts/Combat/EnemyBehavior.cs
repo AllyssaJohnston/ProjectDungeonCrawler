@@ -16,10 +16,6 @@ public class EnemyBehavior : CharacterBehavior
         }
     }
 
-    private void Update()
-    {
-        
-    }
 
     // use this method to reset things between fights
     override public void startBattle()
@@ -55,7 +51,6 @@ public class EnemyBehavior : CharacterBehavior
         SpellBehavior spellBehavior = spellsToChooseFrom[0];
 
         DebugBehavior.updateLog("enemy cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale ");
-        Debug.Log("enemy cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale ");
 
         // do morale damage against the enemy
         cast(spellBehavior.moraleDamage);

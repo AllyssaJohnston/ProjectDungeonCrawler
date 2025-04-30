@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum E_State
@@ -11,24 +10,33 @@ public enum E_State
 
 public class StateManagerBehavior : MonoBehaviour
 {
-    public E_State curState = E_State.PLAYER_SPELL_SELECTION;
-    List<GameObject> friendlyCharacters = new List<GameObject>();
-    List<GameObject> enemyCharacters = new List<GameObject>();
-    List<CharacterBehavior> friendlyBehaviors = new List<CharacterBehavior>();
-    List<EnemyBehavior> enemyBehaviors = new List<EnemyBehavior>();
-    GameManagerBehavior gameManagerBehavior;
+    public static StateManagerBehavior instance;
+    private static E_State curState = E_State.PLAYER_SPELL_SELECTION;
 
-    private float bufferTimer = 0f;
-    private float waitTime = 3f;
+    private static float bufferTimer = 0f;
+    private static float waitTime = 3f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
-        gameManagerBehavior = FindFirstObjectByType<GameManagerBehavior>();
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
     }
+
+    private StateManagerBehavior() { }
 
     // Update is called once per frame
     void Update()
+    {
+        stateTick();   
+    }
+
+    // complete state effects and update if needed
+    private static void stateTick()
     {
         switch (curState)
         {
@@ -47,21 +55,15 @@ public class StateManagerBehavior : MonoBehaviour
                 }
                 break;
             case E_State.ENEMY_ACTION:
-                for (int i = 0; i < enemyBehaviors.Count; i++)
+                foreach(EnemyBehavior character in GameManagerBehavior.enemyCharacterBehaviors)
                 {
-                    enemyBehaviors[i].startTurn();
+                    character.startTurn();
                 }
-                for (int i = 0; i < enemyBehaviors.Count; i++) //this could be simplified if we don't need all enemies to reset before each enemy casts a spell
+                foreach (EnemyBehavior character in GameManagerBehavior.enemyCharacterBehaviors) //TODO this could be simplified if we don't need all enemies to reset before each enemy casts a spell
                 {
-                    enemyBehaviors[i].chooseSpell(friendlyBehaviors);
+                    character.chooseSpell(GameManagerBehavior.friendlyCharacterBehaviors);
                 }
                 NextState();
-
-                //lazy reset
-                for (int i = 0; i < friendlyBehaviors.Count; i++)
-                {
-                    friendlyBehaviors[i].startTurn();
-                }
                 break;
             default:
                 Debug.Log("Invalid state" + curState);
@@ -69,42 +71,33 @@ public class StateManagerBehavior : MonoBehaviour
         }
     }
 
-
-    public void StartBattle(List<GameObject> givenFriendlyCharacters, List<GameObject> givenEnemyCharacters)
+    // called at start of combat
+    public static void StartBattle()
     {
-        friendlyCharacters = givenFriendlyCharacters;
-        enemyCharacters = givenEnemyCharacters;
-        for (int i = 0; i < friendlyCharacters.Count; i++)
+        foreach(CharacterBehavior character in GameManagerBehavior.friendlyCharacterBehaviors)
         {
-            //character
-            CharacterBehavior character = friendlyCharacters[i].GetComponent<CharacterBehavior>();
-            friendlyBehaviors.Add(character);
             character.startBattle();
-
         }
-        for (int i = 0; i < enemyCharacters.Count; i++)
+        foreach (EnemyBehavior character in GameManagerBehavior.enemyCharacterBehaviors)
         {
-            EnemyBehavior enemy = enemyCharacters[i].GetComponent<EnemyBehavior>();
-            enemyBehaviors.Add(enemy);
-            enemy.startBattle(); 
+            character.startBattle();
         }
     }
 
     // go to the given state
-    public void NextState(E_State nextState)
+    public static void NextState(E_State nextState)
     {
-        if (nextState == E_State.PLAYER_SPELL_SELECTION)
+        if (curState == E_State.ENEMY_ACTION && nextState == E_State.PLAYER_SPELL_SELECTION)
         {
-            gameManagerBehavior.playerStartTurn();
+            GameManagerBehavior.playerStartTurn();
         }
         curState = nextState;
-        Debug.Log("Curstate = " + curState);
     }
 
     // go to the next state
-    public void NextState()
+    public static void NextState()
     {
-        switch(curState)
+        switch (curState)
         {
             case E_State.PLAYER_SPELL_SELECTION:
                 // go to enmey state
@@ -120,17 +113,14 @@ public class StateManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_ACTION:
                 // go to player state 
-                gameManagerBehavior.playerStartTurn();
+                GameManagerBehavior.playerStartTurn();
                 curState = E_State.PLAYER_SPELL_SELECTION;
-                for (int i = 0; i < friendlyBehaviors.Count; i++)
-                {
-                    friendlyBehaviors[i].startTurn();
-                }
                 break;
             default:
                 Debug.Log("Invalid state" + curState);
                 break;
         }
-        Debug.Log("Curstate = " + curState);
     }
+
+    public static E_State getState() { return curState; }
 }

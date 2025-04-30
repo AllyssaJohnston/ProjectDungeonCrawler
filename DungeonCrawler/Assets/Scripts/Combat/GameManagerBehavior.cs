@@ -1,54 +1,113 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
+
+// Singleton
 public class GameManagerBehavior : MonoBehaviour
 {
-    StateManagerBehavior stateManager;
-    public List<GameObject> friendlyCharacters = new List<GameObject>();
-    public List<GameObject> enemyCharacters = new List<GameObject>();
-    public int startingMana = 10;
-    private int curMana;
-    FriendlySpellBehavior curSpellToCast = null;
+    public static GameManagerBehavior instance;
+
+    [SerializeField] public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
+    [SerializeField] public List<GameObject> inputEnemyCharacters = new List<GameObject>();
+    [SerializeField] public int startingMana = 10;
+
+    public static List<GameObject> friendlyCharacters = new List<GameObject>();
+    public static List<GameObject> enemyCharacters = new List<GameObject>();
+    public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
+    public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
+
+    private static int curMana;
+    private static FriendlySpellBehavior curSpellToCast = null;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        foreach (GameObject character in inputFriendlyCharacters)
+        {
+            friendlyCharacters.Add(character);
+            friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
+        }
+        foreach (GameObject character in inputEnemyCharacters)
+        {
+            enemyCharacters.Add(character);
+            enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
+        }
+
+    }
+
+    private GameManagerBehavior() { }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        stateManager = FindFirstObjectByType<StateManagerBehavior>();
-        // TODO startbattle should be called from the level
-        // This is here for debugging/ ease of testing
-        stateManager.StartBattle(friendlyCharacters, enemyCharacters);
-
+        StateManagerBehavior.StartBattle();
         curMana = startingMana;
     }
 
     // Update is called once per frame
     void Update()
     {
+        checkCombatStatus();
         getInput();
     }
 
-    public void getInput()
+    private static void checkCombatStatus()
     {
-        if (stateManager.curState == E_State.PLAYER_SPELL_SELECTION || stateManager.curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+        // check if all characters or all enemies are dead
+        bool alive = false;
+        foreach (CharacterBehavior character in GameManagerBehavior.friendlyCharacterBehaviors)
+        {
+            alive = alive | character.isActive();
+        }
+        if (alive == false)
+        {
+            endCombat();
+        }
+
+        alive = false;
+        foreach (EnemyBehavior character in GameManagerBehavior.enemyCharacterBehaviors)
+        {
+            alive = alive | character.isActive();
+        }
+        if (alive == false)
+        {
+            endCombat();
+        }
+    }
+
+    // gets input and uses it
+    // TODO separate get and use input
+    public static void getInput()
+    {
+        E_State curState = StateManagerBehavior.getState();
+        if (curState == E_State.PLAYER_SPELL_SELECTION || curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
         {
 
             if (Input.GetMouseButtonDown(0)) //left click
             {
-                //get game objects
+                // get game objects
                 Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
                 if (hit.collider != null)
                 {
                     GameObject gameObject = hit.collider.gameObject;
-                    if (gameObject.tag == "Enemy" && stateManager.curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+                    if (gameObject.tag == "Enemy" && curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
                     {
                         castSpellOnTarget(gameObject);
                     }
                 }
 
 
-                //find UI elements
+                // find UI elements
                 if (EventSystem.current.IsPointerOverGameObject())
                 {
                     PointerEventData pointer = new PointerEventData(EventSystem.current);
@@ -61,7 +120,7 @@ public class GameManagerBehavior : MonoBehaviour
                     {
                         foreach (RaycastResult result in raycastResults)
                         {
-                            if (result.gameObject.tag == "Spell" && stateManager.curState == E_State.PLAYER_SPELL_SELECTION)
+                            if (result.gameObject.tag == "Spell" && curState == E_State.PLAYER_SPELL_SELECTION)
                             {
                                 FriendlySpellBehavior spellBehavior = result.gameObject.GetComponent<FriendlySpellBehavior>();
                                 if (spellBehavior != null)
@@ -76,15 +135,22 @@ public class GameManagerBehavior : MonoBehaviour
         }
     }
 
+    private static void endCombat()
+    {
+        // end combat
+        // TODO create a game manager that holds level data, so that the scene isn't restarted
+        SceneManager.LoadScene("Level1");
+    }
+
     // takes a spell and determines if it can be cast
-    // if it can, will go to enemy selection state
-    public void resolveSpell(FriendlySpellBehavior spellBehavior)
+    // if it can, cast it or go to enemy selection state depending on the spell
+    public static void resolveSpell(FriendlySpellBehavior spellBehavior)
     {
         bool canCast = true;
         List<CharacterBehavior> behaviors = new List<CharacterBehavior>();
-        for (int i = 0; i < spellBehavior.castingCharacters.Count; i++)
+        foreach (GameObject character in spellBehavior.castingCharacters)
         {
-            CharacterBehavior curCharacter = spellBehavior.castingCharacters[i].GetComponent<CharacterBehavior>();
+            CharacterBehavior curCharacter = character.GetComponent<CharacterBehavior>();
             behaviors.Add(curCharacter);
             canCast = canCast && curCharacter.canCast();
         }
@@ -92,78 +158,77 @@ public class GameManagerBehavior : MonoBehaviour
         if (canCast && curMana - spellBehavior.manaCost >= 0)
         {
             curSpellToCast = (FriendlySpellBehavior)spellBehavior;
-            if (spellBehavior.damageAllEnemies == false)
-            {
-                // go to target selection state
-                stateManager.NextState(); // select enemy state
-            }
-            else
+            if (spellBehavior.damageAllEnemies)
             {
                 // cast spell on all enemies
                 castSpellOnAll();
+            }
+            else
+            {
+                // go to target selection state
+                StateManagerBehavior.NextState(); // select enemy state
             }
         }
         else
         {
             DebugBehavior.updateLog("Failed to cast spell");
-            Debug.Log("Failed to cast");
         }
     }
 
     // deal with mana and morale cost
     // to be used with other cast methods
-    private void cast()
+    private static void cast()
     {
         curMana -= curSpellToCast.manaCost;
 
-        for (int i = 0; i < curSpellToCast.castingCharacters.Count; i++)
+        foreach (GameObject character in curSpellToCast.castingCharacters)
         {
-            CharacterBehavior curCharacter = curSpellToCast.castingCharacters[i].GetComponent<CharacterBehavior>();
+            CharacterBehavior curCharacter = character.GetComponent<CharacterBehavior>();
             // do morale damage against the casters
             curCharacter.cast(curSpellToCast.moraleDamage);
         }
     }
 
     // casts the stored spell selected by the player on all enemies
-    public void castSpellOnAll()
+    public static void castSpellOnAll()
     {
-        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on all enemies");
-        Debug.Log("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on all enemies");
+        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale, " + curSpellToCast.manaCost + " mana on all enemies");
         cast();
 
-        for (int i = 0; i < enemyCharacters.Count; i++)
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
-            enemyCharacters[i].GetComponent<EnemyBehavior>().updateHealth(-curSpellToCast.damage);
+            character.updateHealth(-curSpellToCast.damage);
         }
-        stateManager.NextState(E_State.PLAYER_SPELL_SELECTION);
+        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
     // casts the stored spell selected by the player on the enemy selected by the player
-    public void castSpellOnTarget(GameObject selectedEnemy)
+    public static void castSpellOnTarget(GameObject selectedEnemy)
     {
-        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on selected enemy");
-        Debug.Log("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale " + curSpellToCast.manaCost + " mana on selected enemy");
+        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale, " + curSpellToCast.manaCost + " mana on selected enemy");
         cast();
 
         selectedEnemy.GetComponent<EnemyBehavior>().updateHealth(-curSpellToCast.damage);
-        stateManager.NextState(E_State.PLAYER_SPELL_SELECTION);
+        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
-    public void playerStartTurn()
+    public static void playerStartTurn()
     {
         // regen energy
         curMana += 2;
-    }
-    public void playerEndTurn()
-    {
-        if (stateManager.curState == E_State.PLAYER_SPELL_SELECTION)
+        // reset all friendly characters
+        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
         {
-            stateManager.NextState(E_State.ENEMY_BUFFER);
+            character.startTurn();
+        }
+    }
+    public static void playerEndTurn()
+    {
+        if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
+        {
+            StateManagerBehavior.NextState(E_State.ENEMY_BUFFER);
         }
     }
 
-    public int getMana()
-    {
-        return curMana;
-    }
+    public static int getMana() { return curMana; }
 }

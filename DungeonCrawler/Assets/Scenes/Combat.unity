@@ -157,6 +157,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1669919359}
     - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: friendlyCharacters.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: inputEnemyCharacters.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
       propertyPath: 'friendlyCharacters.Array.data[0]'
       value: 
       objectReference: {fileID: 2013764888}
@@ -164,6 +172,30 @@ PrefabInstance:
       propertyPath: 'friendlyCharacters.Array.data[1]'
       value: 
       objectReference: {fileID: 1337654308}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: 'friendlyCharacters.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1400534909}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: 'inputEnemyCharacters.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1669919359}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: inputFriendlyCharacters.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: 'inputFriendlyCharacters.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2013764888}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: 'inputFriendlyCharacters.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1337654308}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: 'inputFriendlyCharacters.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1400534909}
     - target: {fileID: 1540039346060030437, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -241,7 +273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa53c9508e3b334a93b8b69e5767903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 202809543}
   manaText: {fileID: 100994492}
 --- !u!114 &448129518 stripped
 MonoBehaviour:
@@ -324,15 +355,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3424098001061592701, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1094.3105
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3424098001061592701, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 415.67218
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3424098001061592701, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.9313416
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3424098001061592701, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -361,6 +392,14 @@ PrefabInstance:
     - target: {fileID: 3424098001061592701, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6839624106900242351, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
+      propertyPath: damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6839624106900242351, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
+      propertyPath: spellName
+      value: Basic attack
       objectReference: {fileID: 0}
     - target: {fileID: 6839624106900242351, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
       propertyPath: damageAllEnemies
@@ -528,6 +567,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
+      propertyPath: maxHealth
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: 'spellsToChooseFrom.Array.data[0]'
       value: 
       objectReference: {fileID: 1520531837}
@@ -670,7 +713,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 101720692608466094, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
       propertyPath: m_Name
-      value: Friendly Test
+      value: Friendly (2)
       objectReference: {fileID: 0}
     - target: {fileID: 2514801421626509551, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
       propertyPath: m_Sprite
