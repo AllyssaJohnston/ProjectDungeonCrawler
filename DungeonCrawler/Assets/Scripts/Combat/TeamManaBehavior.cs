@@ -8,6 +8,6 @@ public class TeamManaBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        manaText.text = GameManagerBehavior.getMana().ToString();
+        manaText.text = CombatManagerBehavior.getMana().ToString();
     }
 }
