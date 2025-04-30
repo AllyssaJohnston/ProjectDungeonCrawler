@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 226.30319, y: 5.156296}
+  m_AnchoredPosition: {x: 262.5, y: 5.156296}
   m_SizeDelta: {x: 60.974487, y: 60.974487}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2697056066033627305
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -36.60219, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -344,8 +344,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 6.0007935, y: 0}
-  m_SizeDelta: {x: 12.001, y: 0}
+  m_AnchoredPosition: {x: 24.3118, y: 0}
+  m_SizeDelta: {x: 48.6229, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &573008281205565796
 CanvasRenderer:
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -409,6 +409,10 @@ MonoBehaviour:
   moraleDamageText: {fileID: 666855837493909067}
   manaText: {fileID: 2948450945089529200}
   targetingText: {fileID: 5367581100873129296}
+  panel: {fileID: 0}
+  characterIconTemplate: {fileID: 0}
+  posX: 375
+  spacing: 90
 --- !u!1 &5738233303320522789
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,13 +788,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 0.3053435, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2157918514693854937}
   - {fileID: 7606003659116660308}
   - {fileID: 7294320737014250109}
   - {fileID: 1520295799707102665}
   - {fileID: 7456016615667976548}
   - {fileID: 5135437711650814731}
   - {fileID: 2505575453375072708}
-  - {fileID: 2157918514693854937}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
