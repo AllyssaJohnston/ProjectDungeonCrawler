@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class FriendlySpellBehavior : SpellBehavior
 {
-    [SerializeField] public List<GameObject> castingCharacters = new List<GameObject>(); //up to 2
+    [Header("Spell details")]
+    [SerializeField] public List<GameObject> castingCharacters = new List<GameObject>();
 
+    [Header("UI Elements")]
     [SerializeField] public TMP_Text spellNameText;
     [SerializeField] public TMP_Text damageText;
     [SerializeField] public TMP_Text moraleDamageText;
@@ -14,8 +15,8 @@ public class FriendlySpellBehavior : SpellBehavior
     [SerializeField] public TMP_Text targetingText;
     [SerializeField] public GameObject panel;
     [SerializeField] public GameObject characterIconTemplate;
-
-
+    [SerializeField] public int posX = 375;
+    [SerializeField] public int spacing = 90;
     private List<CharacterIconBehavior> characterIcons = new List<CharacterIconBehavior>();
 
     private void Start()
@@ -30,9 +31,6 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             Debug.Log("Invalid spell");
         }
-
-        float posX = 375;
-        float spacing = 90;
 
         for (int i = 0; i < castingCharacters.Count; i++)
         {
