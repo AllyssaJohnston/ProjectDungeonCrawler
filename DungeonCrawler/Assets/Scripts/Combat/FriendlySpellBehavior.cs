@@ -35,12 +35,12 @@ public class FriendlySpellBehavior : SpellBehavior
         for (int i = 0; i < castingCharacters.Count; i++)
         {
             GameObject curCharacterIcon = Instantiate(characterIconTemplate);
-            Vector3 scale2 = curCharacterIcon.transform.localScale;
+            Vector3 scale2 = curCharacterIcon.transform.localScale * 1.2f;
             curCharacterIcon.transform.SetParent(panel.transform);
             curCharacterIcon.transform.localScale = new Vector3(scale2.x, scale2.y, 1);
             curCharacterIcon.transform.localPosition = new Vector3(posX + (i * spacing), 0, 0);
             CharacterIconBehavior curCharacterIconBehavior = curCharacterIcon.GetComponent<CharacterIconBehavior>();
-            curCharacterIconBehavior.SetUp(castingCharacters[i].GetComponent<SpriteRenderer>().sprite);
+            curCharacterIconBehavior.SetUp(castingCharacters[i].GetComponent<CharacterBehavior>().iconSprite);
             characterIcons.Add(curCharacterIconBehavior);
         }
     }

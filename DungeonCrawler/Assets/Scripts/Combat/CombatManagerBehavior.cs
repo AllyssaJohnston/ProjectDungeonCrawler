@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.Text;
 
 
 // Singleton
@@ -18,7 +19,6 @@ public class CombatManagerBehavior : MonoBehaviour
     public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
     public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
 
-    private static int curMana;
     private static FriendlySpellBehavior curSpellToCast = null;
 
     private void Awake()
@@ -50,7 +50,7 @@ public class CombatManagerBehavior : MonoBehaviour
     void Start()
     {
         StateManagerBehavior.StartBattle();
-        curMana = startingMana;
+        TeamManaBehavior.updateManaWithoutEffect(startingMana);
     }
 
     // Update is called once per frame
@@ -155,7 +155,7 @@ public class CombatManagerBehavior : MonoBehaviour
             canCast = canCast && curCharacter.canCast();
         }
  
-        if (canCast && curMana - spellBehavior.manaCost >= 0)
+        if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
             curSpellToCast = (FriendlySpellBehavior)spellBehavior;
             if (spellBehavior.damageAllEnemies)
@@ -179,7 +179,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // to be used with other cast methods
     private static void cast()
     {
-        curMana -= curSpellToCast.manaCost;
+        TeamManaBehavior.updateMana(-curSpellToCast.manaCost);
 
         foreach (GameObject character in curSpellToCast.castingCharacters)
         {
@@ -208,14 +208,16 @@ public class CombatManagerBehavior : MonoBehaviour
         DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale, " + curSpellToCast.manaCost + " mana on selected enemy");
         cast();
 
-        selectedEnemy.GetComponent<EnemyBehavior>().updateHealth(-curSpellToCast.damage);
+        EnemyBehavior character = selectedEnemy.GetComponent<EnemyBehavior>();
+        character.updateHealth(-curSpellToCast.damage);
         StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
     public static void playerStartTurn()
     {
         // regen energy
-        curMana += 2;
+        TeamManaBehavior.updateMana(2);
+
         // reset all friendly characters
         foreach (CharacterBehavior character in friendlyCharacterBehaviors)
         {
@@ -229,6 +231,4 @@ public class CombatManagerBehavior : MonoBehaviour
             StateManagerBehavior.NextState(E_State.ENEMY_BUFFER);
         }
     }
-
-    public static int getMana() { return curMana; }
 }

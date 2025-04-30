@@ -55,13 +55,13 @@ public class StateManagerBehavior : MonoBehaviour
                 }
                 break;
             case E_State.ENEMY_ACTION:
-                foreach(EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
-                {
-                    character.startTurn();
-                }
                 foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors) //TODO this could be simplified if we don't need all enemies to reset before each enemy casts a spell
                 {
                     character.chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
+                }
+                foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
+                {
+                    character.startTurn();
                 }
                 NextState();
                 break;
