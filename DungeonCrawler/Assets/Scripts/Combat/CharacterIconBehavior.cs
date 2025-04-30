@@ -17,7 +17,7 @@ public class CharacterIconBehavior : MonoBehaviour
         }
         else
         {
-            GetComponentInChildren<Image>().color = Color.red;
+            GetComponentInChildren<Image>().color = new Color(.23f, .23f, .23f);
         }
     }
 }

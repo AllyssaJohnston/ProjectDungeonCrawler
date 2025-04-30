@@ -1,8 +1,12 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class CharacterBehavior : MonoBehaviour
 {
     public bool friendly = true;
+    [SerializeField] public Sprite iconSprite;
+    private Sprite characterSprite;
     public int maxHealth = 100;
     protected int health;
     protected int maxMorale = 10;
@@ -11,6 +15,7 @@ public class CharacterBehavior : MonoBehaviour
 
     private void Awake()
     {
+        characterSprite = GetComponent<SpriteRenderer>().sprite;
         health = maxHealth;
         morale = maxMorale;
     }
@@ -22,12 +27,23 @@ public class CharacterBehavior : MonoBehaviour
     // updates the character's health
     public void updateHealth(int healthChange)
     {
+        if (healthChange < 0)
+        {
+            StartCoroutine(takeDamageEffect());
+        }
         health += healthChange;
         if (health <= 0)
         {
             health = 0;
             available = false;
         }
+    }
+
+    public IEnumerator takeDamageEffect()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(.2f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     // called at start of battle
