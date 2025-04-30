@@ -14,7 +14,7 @@ public class StateManagerBehavior : MonoBehaviour
     private static E_State curState = E_State.PLAYER_SPELL_SELECTION;
 
     private static float bufferTimer = 0f;
-    private static float waitTime = 3f;
+    private static float waitTime = 2f;
 
     private void Awake()
     {
@@ -90,6 +90,10 @@ public class StateManagerBehavior : MonoBehaviour
         if (curState == E_State.ENEMY_ACTION && nextState == E_State.PLAYER_SPELL_SELECTION)
         {
             CombatManagerBehavior.playerStartTurn();
+        }
+        if (nextState == E_State.ENEMY_BUFFER)
+        {
+            DebugBehavior.updateLog("enemy choosing spell, wait " + waitTime);
         }
         curState = nextState;
     }
