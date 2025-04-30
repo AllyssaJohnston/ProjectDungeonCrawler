@@ -55,13 +55,13 @@ public class StateManagerBehavior : MonoBehaviour
                 }
                 break;
             case E_State.ENEMY_ACTION:
-                foreach(EnemyBehavior character in GameManagerBehavior.enemyCharacterBehaviors)
+                foreach(EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
                 {
                     character.startTurn();
                 }
-                foreach (EnemyBehavior character in GameManagerBehavior.enemyCharacterBehaviors) //TODO this could be simplified if we don't need all enemies to reset before each enemy casts a spell
+                foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors) //TODO this could be simplified if we don't need all enemies to reset before each enemy casts a spell
                 {
-                    character.chooseSpell(GameManagerBehavior.friendlyCharacterBehaviors);
+                    character.chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
                 }
                 NextState();
                 break;
@@ -74,11 +74,11 @@ public class StateManagerBehavior : MonoBehaviour
     // called at start of combat
     public static void StartBattle()
     {
-        foreach(CharacterBehavior character in GameManagerBehavior.friendlyCharacterBehaviors)
+        foreach(CharacterBehavior character in CombatManagerBehavior.friendlyCharacterBehaviors)
         {
             character.startBattle();
         }
-        foreach (EnemyBehavior character in GameManagerBehavior.enemyCharacterBehaviors)
+        foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
         {
             character.startBattle();
         }
@@ -89,7 +89,7 @@ public class StateManagerBehavior : MonoBehaviour
     {
         if (curState == E_State.ENEMY_ACTION && nextState == E_State.PLAYER_SPELL_SELECTION)
         {
-            GameManagerBehavior.playerStartTurn();
+            CombatManagerBehavior.playerStartTurn();
         }
         curState = nextState;
     }
@@ -113,7 +113,7 @@ public class StateManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_ACTION:
                 // go to player state 
-                GameManagerBehavior.playerStartTurn();
+                CombatManagerBehavior.playerStartTurn();
                 curState = E_State.PLAYER_SPELL_SELECTION;
                 break;
             default:
