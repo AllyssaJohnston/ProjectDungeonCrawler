@@ -19,6 +19,23 @@ public class GameManagerBehavior : MonoBehaviour
         instance = this;
     }
 
+    private void Start()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        if (SceneManager.GetActiveScene().name == "Combat")
+        {
+            Debug.Log("starting in combat");
+            OnLoadCombat(); // combat already loaded, don't have to load it
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -27,17 +44,20 @@ public class GameManagerBehavior : MonoBehaviour
             Debug.Log("quit");
             Application.Quit();
         }
+        // call load combat to see if combat scene has loaded
         if (loadingCombat)
         {
             instance.StartCoroutine(instance.LoadCombat());
         }
     }
 
+    // load combat
     public static void enterCombat()
     {
         instance.StartCoroutine(instance.LoadCombat());
     }
 
+    // async load combat, and call OnLoadCombat when done
     private IEnumerator LoadCombat()
     {
         if (!loadingCombat)
@@ -48,7 +68,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
 
         // Wait until the asynchronous scene fully loads
-        while (asyncLoad.progress < .90f)
+        while (asyncLoad.progress < .90f) // async laod will never progress above 90 apparently with allowSceneActivation = false
         {
             yield return null;
         }
@@ -56,9 +76,16 @@ public class GameManagerBehavior : MonoBehaviour
         loadingCombat = false;
         asyncLoad = null;
         Debug.Log("Combat loaded");
-        CombatManagerBehavior.startBattle();
+        OnLoadCombat();
     }
 
+    // what to do after combat has loaded
+    private static void OnLoadCombat()
+    {
+        CombatManagerBehavior.startBattle();
+    }
+    
+    // what to do when entering the level
     public static void enterLevel()
     {
         SceneManager.LoadScene("Level1");
