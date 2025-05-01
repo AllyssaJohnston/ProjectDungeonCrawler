@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Analytics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FriendlySpellBehavior : SpellBehavior
 {
@@ -11,9 +13,12 @@ public class FriendlySpellBehavior : SpellBehavior
     [SerializeField] public TMP_Text spellNameText;
     [SerializeField] public TMP_Text damageText;
     [SerializeField] public TMP_Text moraleDamageText;
+    [SerializeField] public GameObject manaGroup;
     [SerializeField] public TMP_Text manaText;
     [SerializeField] public TMP_Text targetingText;
     [SerializeField] public GameObject characterIconTemplate;
+    private Color regPanelColor;
+    private Image panelImage;
 
     [Header("UI Spacing")]
     public int singleCharacterX; //x pos of single character icons
@@ -31,7 +36,11 @@ public class FriendlySpellBehavior : SpellBehavior
         spellNameText.text = spellName;
         damageText.text = damage + " DAMAGE";
         moraleDamageText.text = moraleDamage + " MORALE DAMAGE";
-        manaText.text = manaCost.ToString();
+        if (manaCost == 0)
+        {
+            //hide the mana group
+            manaGroup.SetActive(false);
+        }
         targetingText.text = "TARGET " + (damageAllEnemies? "ALL" : "SELECT");
 
         if (castingCharacters.Count == 0 )
@@ -54,6 +63,9 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             Debug.Log("Too many casting characters");
         }
+
+        panelImage = gameObject.GetComponent<Image>();
+        regPanelColor = panelImage.color;
     }
 
     private void setUpIcon(int x, int y, GameObject character, int index)
@@ -70,9 +82,38 @@ public class FriendlySpellBehavior : SpellBehavior
 
     private void Update()
     {
+        bool canCastSpell = true;
+        //update icons
         for (int i = 0; i < characterIcons.Count; i++)
         {
-            characterIcons[i].updateImage(castingCharacters[i].GetComponent<CharacterBehavior>().canCast());
+            bool canCharacterCast = castingCharacters[i].GetComponent<CharacterBehavior>().canCast();
+            characterIcons[i].updateImage(canCharacterCast);
+            canCastSpell = canCastSpell && canCharacterCast;
+        }
+
+        //update mana
+        if (manaGroup.activeSelf)
+        {
+            int curMana = TeamManaBehavior.getMana();
+            manaText.text = curMana.ToString() + "/" + manaCost.ToString();
+            canCastSpell = canCastSpell && curMana >= manaCost;
+            if (curMana < manaCost)
+            {
+                manaText.color = Color.red;
+            }
+            else
+            {
+                manaText.color = Color.black;
+            }
+        }
+
+        if (canCastSpell)
+        {
+            panelImage.color = regPanelColor;
+        }
+        else
+        {
+            panelImage.color = Color.gray;
         }
     }
 }
