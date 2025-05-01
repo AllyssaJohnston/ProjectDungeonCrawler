@@ -13,10 +13,17 @@ public class FriendlySpellBehavior : SpellBehavior
     [SerializeField] public TMP_Text moraleDamageText;
     [SerializeField] public TMP_Text manaText;
     [SerializeField] public TMP_Text targetingText;
-    [SerializeField] public GameObject panel;
     [SerializeField] public GameObject characterIconTemplate;
-    [SerializeField] public int posX = 375;
-    [SerializeField] public int spacing = 90;
+
+    [Header("UI Spacing")]
+    public int singleCharacterX; //x pos of single character icons
+    public int singleCharacterY; //y pos of single character icon
+    public int firstCharacterX; //x pos of first character icon
+    public int firstCharacterY; // y pos of first character icon
+    public int secondCharacterX; //x pos of second character icon
+    public int secondCharacterY; // y pos of second character icon
+    public float scale = 1f;
+
     private List<CharacterIconBehavior> characterIcons = new List<CharacterIconBehavior>();
 
     private void Start()
@@ -32,17 +39,33 @@ public class FriendlySpellBehavior : SpellBehavior
             Debug.Log("Invalid spell");
         }
 
-        for (int i = 0; i < castingCharacters.Count; i++)
+        if (castingCharacters.Count == 1)
         {
-            GameObject curCharacterIcon = Instantiate(characterIconTemplate);
-            Vector3 scale2 = curCharacterIcon.transform.localScale * 1.2f;
-            curCharacterIcon.transform.SetParent(panel.transform);
-            curCharacterIcon.transform.localScale = new Vector3(scale2.x, scale2.y, 1);
-            curCharacterIcon.transform.localPosition = new Vector3(posX + (i * spacing), 0, 0);
-            CharacterIconBehavior curCharacterIconBehavior = curCharacterIcon.GetComponent<CharacterIconBehavior>();
-            curCharacterIconBehavior.SetUp(castingCharacters[i].GetComponent<CharacterBehavior>().iconSprite);
-            characterIcons.Add(curCharacterIconBehavior);
+            //single character
+            setUpIcon(singleCharacterX, singleCharacterY, castingCharacters[0], 0);
         }
+        else if (castingCharacters.Count == 2)
+        {
+            //double characters
+            setUpIcon(secondCharacterX, secondCharacterY, castingCharacters[1], 0); // want second character to render first, so create it first
+            setUpIcon(firstCharacterX, firstCharacterY, castingCharacters[0], 0); // inserts the first character icon back into the first slot
+        }
+        else
+        {
+            Debug.Log("Too many casting characters");
+        }
+    }
+
+    private void setUpIcon(int x, int y, GameObject character, int index)
+    {
+        GameObject curCharacterIcon = Instantiate(characterIconTemplate);
+        curCharacterIcon.transform.SetParent(gameObject.transform);
+        curCharacterIcon.transform.localScale = new Vector3(scale, scale, 1);
+        curCharacterIcon.transform.localPosition = new Vector3(x, y, 0);
+
+        CharacterIconBehavior curCharacterIconBehavior = curCharacterIcon.GetComponent<CharacterIconBehavior>();
+        curCharacterIconBehavior.SetUp(character.GetComponent<CharacterBehavior>().iconSprite);
+        characterIcons.Insert(index, curCharacterIconBehavior);
     }
 
     private void Update()
