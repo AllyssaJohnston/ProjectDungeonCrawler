@@ -4,7 +4,7 @@ using UnityEngine;
 // Singleton
 public class DebugBehavior : MonoBehaviour
 {
-    public static DebugBehavior instance;
+    private static DebugBehavior instance;
 
     public TMP_Text stateText;
     public TMP_Text debugLog;
@@ -13,13 +13,14 @@ public class DebugBehavior : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
         instance = this;
+        Debug.Log("debug info manager initialized");
     }
 
     private DebugBehavior() {}
