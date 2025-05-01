@@ -14,6 +14,7 @@ public class StateManagerBehavior : MonoBehaviour
 
     private static E_State curState = E_State.PLAYER_SPELL_SELECTION;
 
+    private static int curEnemyIndex = 0;
     private static float bufferTimer = 0f;
     private static float waitTime = 2f;
 
@@ -67,15 +68,24 @@ public class StateManagerBehavior : MonoBehaviour
                 }
                 break;
             case E_State.ENEMY_ACTION:
-                foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors) //TODO this could be simplified if we don't need all enemies to reset before each enemy casts a spell
+                CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
+                if (curEnemyIndex == CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
                 {
-                    character.chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
+                    // all enemies have gone, go back to player states
+                    curEnemyIndex = 0;
+                    // reset enemies for next round
+                    foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
+                    {
+                        character.startTurn();
+                    }
+                    NextState();
                 }
-                foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
+                else
                 {
-                    character.startTurn();
+                    // continue rotating through enemies
+                    curEnemyIndex++;
+                    NextState(E_State.ENEMY_BUFFER);
                 }
-                NextState();
                 break;
             default:
                 Debug.Log("Invalid state" + curState);
@@ -86,7 +96,9 @@ public class StateManagerBehavior : MonoBehaviour
     // called at start of combat
     public static void StartBattle()
     {
-        foreach(CharacterBehavior character in CombatManagerBehavior.friendlyCharacterBehaviors)
+        curEnemyIndex = 0;
+        bufferTimer = 0f;
+        foreach (CharacterBehavior character in CombatManagerBehavior.friendlyCharacterBehaviors)
         {
             character.startBattle();
         }
