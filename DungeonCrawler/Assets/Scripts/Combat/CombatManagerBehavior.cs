@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
-using UnityEngine.TextCore.Text;
 
 
 // Singleton
 public class CombatManagerBehavior : MonoBehaviour
 {
-    public static CombatManagerBehavior instance;
+    private static CombatManagerBehavior instance;
 
     [SerializeField] public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     [SerializeField] public List<GameObject> inputEnemyCharacters = new List<GameObject>();
-    [SerializeField] public int startingMana = 10;
+    public static int startingMana = 3;
 
     public static List<GameObject> friendlyCharacters = new List<GameObject>();
     public static List<GameObject> enemyCharacters = new List<GameObject>();
@@ -21,15 +19,15 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static FriendlySpellBehavior curSpellToCast = null;
 
-    private void Awake()
+    public void Start()
     {
-        if (instance != null)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
-
         instance = this;
+        Debug.Log("combat manager initialized");
 
         foreach (GameObject character in inputFriendlyCharacters)
         {
@@ -41,17 +39,20 @@ public class CombatManagerBehavior : MonoBehaviour
             enemyCharacters.Add(character);
             enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
         }
+    }
 
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
     }
 
     private CombatManagerBehavior() { }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        StateManagerBehavior.StartBattle();
-        TeamManaBehavior.updateManaWithoutEffect(startingMana);
-    }
 
     // Update is called once per frame
     void Update()
@@ -64,7 +65,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         // check if all characters or all enemies are dead
         bool alive = false;
-        foreach (CharacterBehavior character in CombatManagerBehavior.friendlyCharacterBehaviors)
+        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
         {
             alive = alive | character.isActive();
         }
@@ -74,7 +75,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
 
         alive = false;
-        foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
             alive = alive | character.isActive();
         }
@@ -135,11 +136,17 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    public static void startBattle()
+    {
+        StateManagerBehavior.StartBattle();
+        TeamManaBehavior.setManaWithoutEffect(startingMana);
+    }
+
     private static void endCombat()
     {
         // end combat
-        // TODO create a game manager that holds level data, so that the scene isn't restarted
-        SceneManager.LoadScene("Level1");
+        // TODO have game manager hold level data, so that the scene isn't restarted
+        GameManagerBehavior.enterLevel();
     }
 
     // takes a spell and determines if it can be cast

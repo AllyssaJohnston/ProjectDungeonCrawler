@@ -10,7 +10,8 @@ public enum E_State
 
 public class StateManagerBehavior : MonoBehaviour
 {
-    public static StateManagerBehavior instance;
+    private static StateManagerBehavior instance;
+
     private static E_State curState = E_State.PLAYER_SPELL_SELECTION;
 
     private static float bufferTimer = 0f;
@@ -18,12 +19,23 @@ public class StateManagerBehavior : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
+        instance = this;
+        Debug.Log("state manager initialized");
+    }
+
+    public void Start()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         instance = this;
     }
 

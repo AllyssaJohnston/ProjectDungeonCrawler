@@ -60,7 +60,7 @@ public class FirstPerson : MonoBehaviour
 
                     billboard.layer = 8; // Only viewable by 1st person camera
 
-                    Debug.Log(pos);
+                    //Debug.Log(pos);
                 }
             }
         }
