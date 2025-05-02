@@ -3160,6 +3160,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831579794549443604, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_Color.b
+      value: 0.9019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831579794549443604, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4831579794549443604, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_Color.r
+      value: 0.4862745
+      objectReference: {fileID: 0}
     - target: {fileID: 5030298209255581104, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1491.1
@@ -3174,7 +3202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5030298209255581104, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90.43
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 5127946306761959263, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3204,6 +3232,10 @@ PrefabInstance:
       propertyPath: debugLog
       value: 
       objectReference: {fileID: 2115695238}
+    - target: {fileID: 5882592756407578227, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: infoPosY
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 8523366148065836435, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_margin.z
       value: 3.092102

@@ -19,9 +19,9 @@ public class StateManagerBehavior : MonoBehaviour
 
     private static int curEnemyIndex = 0;
     private static float bufferTimer = 0f;
-    public static float enemyActionWaitTime = 2f;
-    public static float playerToEnemyStateChangeWaitTime = .5f;
-    public static float enemyToPlayerStateChangeWaitTime = 1f;
+    [SerializeField] float enemyActionWaitTime = 2f;
+    [SerializeField] float playerToEnemyStateChangeWaitTime = .5f;
+    [SerializeField] float enemyToPlayerStateChangeWaitTime = 1f;
 
     private void Awake()
     {
@@ -68,13 +68,13 @@ public class StateManagerBehavior : MonoBehaviour
                 // prep/reset enemies for next round
                 curEnemyIndex = 0;
                 CombatManagerBehavior.enemiesStartTurn();
-                buffer(playerToEnemyStateChangeWaitTime);
+                buffer(instance.playerToEnemyStateChangeWaitTime);
                 break;
             case E_State.ENEMY_BUFFER:
-                buffer(enemyActionWaitTime);
+                buffer(instance.enemyActionWaitTime);
                 break;
             case E_State.BETWEEN_ENEMIES_BUFFER:
-                buffer(enemyToPlayerStateChangeWaitTime);
+                buffer(instance.enemyToPlayerStateChangeWaitTime);
                 break;
             case E_State.ENEMY_ACTION:
                 CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
@@ -85,10 +85,11 @@ public class StateManagerBehavior : MonoBehaviour
                     NextState(E_State.BETWEEN_ENEMIES_BUFFER);
                     return;
                 }
+                EnemyTurnIndicatorBehavior.show(false);
                 NextState();
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
-                buffer(enemyToPlayerStateChangeWaitTime);
+                buffer(instance.enemyToPlayerStateChangeWaitTime);
                 break;
             default:
                 Debug.Log("Invalid state" + curState);
@@ -102,8 +103,8 @@ public class StateManagerBehavior : MonoBehaviour
         bufferTimer += Time.deltaTime;
         if (bufferTimer > goalWaitTime)
         {
-            NextState();
             bufferTimer = 0f;
+            NextState(); 
         }
     }
 
@@ -140,7 +141,6 @@ public class StateManagerBehavior : MonoBehaviour
                 DebugBehavior.updateLog(CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].characterName + " is choosing their attack...");
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
-                EnemyTurnIndicatorBehavior.show(false);
                 CombatManagerBehavior.playerStartTurn();
                 break;
             default:

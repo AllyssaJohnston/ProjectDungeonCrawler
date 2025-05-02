@@ -232,7 +232,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
         {
-            StateManagerBehavior.NextState(E_State.ENEMY_BUFFER);
+            StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);
         }
     }
 
