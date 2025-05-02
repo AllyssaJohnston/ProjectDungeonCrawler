@@ -6,6 +6,7 @@ public enum E_State
     PLAYER_ENEMY_TARGET_SELECTION,
     PLAYER_END_TURN_BUFFER,
     ENEMY_BUFFER,
+    BETWEEN_ENEMIES_BUFFER,
     ENEMY_ACTION,
     ENEMY_END_TURN_BUFFER
 }
@@ -72,13 +73,16 @@ public class StateManagerBehavior : MonoBehaviour
             case E_State.ENEMY_BUFFER:
                 buffer(enemyActionWaitTime);
                 break;
+            case E_State.BETWEEN_ENEMIES_BUFFER:
+                buffer(enemyToPlayerStateChangeWaitTime);
+                break;
             case E_State.ENEMY_ACTION:
                 CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
                 if (curEnemyIndex < CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
                 {
                     // continue rotating through enemies
                     curEnemyIndex++;
-                    NextState(E_State.ENEMY_BUFFER);
+                    NextState(E_State.BETWEEN_ENEMIES_BUFFER);
                     return;
                 }
                 NextState();
@@ -143,6 +147,7 @@ public class StateManagerBehavior : MonoBehaviour
                 break;
 
         }
+        Debug.Log(nextState);
         curState = nextState;
     }
 
@@ -162,6 +167,9 @@ public class StateManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_BUFFER:
                 NextState(E_State.ENEMY_ACTION);
+                break;
+            case E_State.BETWEEN_ENEMIES_BUFFER:
+                NextState(E_State.ENEMY_BUFFER);
                 break;
             case E_State.ENEMY_ACTION:
                 NextState(E_State.ENEMY_END_TURN_BUFFER);

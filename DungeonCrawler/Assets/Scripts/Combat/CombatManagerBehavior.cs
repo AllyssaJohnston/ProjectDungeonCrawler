@@ -9,16 +9,16 @@ public class CombatManagerBehavior : MonoBehaviour
     private static CombatManagerBehavior instance;
 
     // These are here so that you can edit the characters in editor
-    [SerializeField] public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
-    [SerializeField] public List<GameObject> inputEnemyCharacters = new List<GameObject>();
-    public static int startingMana = 3;
-    public static int manaRegen = 2;
-   
+    public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
+    public List<GameObject> inputEnemyCharacters = new List<GameObject>();
+    [SerializeField] private int startingMana = 3;
+    [SerializeField] private int manaRegen = 2;
+
     // These are the fields we actually want to work with
-    public static List<GameObject> friendlyCharacters = new List<GameObject>();
-    public static List<GameObject> enemyCharacters = new List<GameObject>();
-    public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
-    public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
+    [HideInInspector] public static List<GameObject> friendlyCharacters = new List<GameObject>();
+    [HideInInspector] public static List<GameObject> enemyCharacters = new List<GameObject>();
+    [HideInInspector] public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
+    [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
 
     private static FriendlySpellBehavior curSpellToCast = null;
 
@@ -142,7 +142,7 @@ public class CombatManagerBehavior : MonoBehaviour
     public static void startBattle()
     {
         StateManagerBehavior.StartBattle();
-        TeamManaBehavior.setManaWithoutEffect(startingMana);
+        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
     }
 
     private static void endCombat()
@@ -220,7 +220,7 @@ public class CombatManagerBehavior : MonoBehaviour
     public static void playerStartTurn()
     {
         // regen energy
-        TeamManaBehavior.updateMana(manaRegen);
+        TeamManaBehavior.updateMana(instance.manaRegen);
 
         // reset all friendly characters
         foreach (CharacterBehavior character in friendlyCharacterBehaviors)

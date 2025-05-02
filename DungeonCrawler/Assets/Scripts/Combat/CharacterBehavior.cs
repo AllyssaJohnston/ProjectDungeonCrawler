@@ -5,7 +5,7 @@ public class CharacterBehavior : MonoBehaviour
 {
     public bool friendly = true;
     public string characterName = "unnamed";
-    [SerializeField] public Sprite iconSprite;
+    public Sprite iconSprite;
     private Sprite characterSprite;
     private SpriteRenderer characterSpriteRenderer;
     private Color regColor;
@@ -46,9 +46,9 @@ public class CharacterBehavior : MonoBehaviour
 
     public IEnumerator takeDamageEffect()
     {
-        GetComponent<SpriteRenderer>().color = Color.red;
+        characterSpriteRenderer.color = Color.red;
         yield return new WaitForSeconds(.2f);
-        GetComponent<SpriteRenderer>().color = regColor;
+        characterSpriteRenderer.color = regColor;
     }
 
     // called at start of battle

@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class CharacterUICreatorBehavior : MonoBehaviour
 {
-    [SerializeField] public GameObject healthBarTemplate;
+    public GameObject healthBarTemplate;
     public Color healthColor;
     public Color moraleColor;
     public float UI_OffsetX = 0;
     public float healthPosY = 3;
     public float moralePosY = 2;
     public bool includeMorale = true;
-    [SerializeField] public GameObject panel;
+    public GameObject panel;
     private CharacterBehavior characterBehavior;
 
     private GameObject healthBarManager;

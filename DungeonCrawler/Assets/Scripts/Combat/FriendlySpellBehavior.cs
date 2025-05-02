@@ -1,24 +1,27 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Analytics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FriendlySpellBehavior : SpellBehavior
 {
     [Header("Spell details")]
-    [SerializeField] public List<CharacterBehavior> castingCharacterBehaviors = new List<CharacterBehavior>();
+    public List<CharacterBehavior> castingCharacterBehaviors = new List<CharacterBehavior>();
 
     [Header("UI Elements")]
-    [SerializeField] public TMP_Text spellNameText;
-    [SerializeField] public TMP_Text damageText;
-    [SerializeField] public TMP_Text moraleDamageText;
-    [SerializeField] public GameObject manaGroup;
-    [SerializeField] public Image manaImage;
+    public TMP_Text spellNameText;
+    public TMP_Text damageText;
+    public TMP_Text moraleDamageText;
+
+    public GameObject manaGroup;
+    public Image manaImage;
     private static Color regManaColor;
-    [SerializeField] public TMP_Text manaText;
-    [SerializeField] public TMP_Text targetingText;
-    [SerializeField] public GameObject characterIconTemplate;
+    public TMP_Text manaText;
+
+    public TMP_Text targetingText;
+
+    public GameObject characterIconTemplate;
+
     private Color regPanelColor;
     private Image panelImage;
 

@@ -744,7 +744,7 @@ PrefabInstance:
     - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: 'spellsToChooseFrom.Array.data[0]'
       value: 
-      objectReference: {fileID: 1520531837}
+      objectReference: {fileID: 1520531839}
     - target: {fileID: 5279660473839215340, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -1549,17 +1549,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1520531839}
   m_SourcePrefab: {fileID: 100100000, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
---- !u!114 &1520531837 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6839624106900242351, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
-  m_PrefabInstance: {fileID: 1520531836}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 121674444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f30d8b5811d3a384287d1afdee31de8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1520531839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1910,7 +1899,7 @@ PrefabInstance:
     - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: 'spellsToChooseFrom.Array.data[0]'
       value: 
-      objectReference: {fileID: 1520531837}
+      objectReference: {fileID: 1520531839}
     - target: {fileID: 5279660473839215340, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: m_Name
       value: Enemy
