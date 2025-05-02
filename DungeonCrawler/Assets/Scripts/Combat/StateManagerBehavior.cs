@@ -125,11 +125,9 @@ public class StateManagerBehavior : MonoBehaviour
         switch(nextState)
         {
             case E_State.PLAYER_SPELL_SELECTION:
-                EnemyTurnIndicatorBehavior.show(false);
                 DebugBehavior.updateLog("Choose a spell to cast or select end turn.");
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
-                EnemyTurnIndicatorBehavior.show(false);
                 DebugBehavior.updateLog("Pick who to attack.");
                 break;
             case E_State.ENEMY_BUFFER:
@@ -138,6 +136,7 @@ public class StateManagerBehavior : MonoBehaviour
                 DebugBehavior.updateLog(CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].characterName + " is choosing their attack...");
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
+                EnemyTurnIndicatorBehavior.show(false);
                 CombatManagerBehavior.playerStartTurn();
                 break;
             default:

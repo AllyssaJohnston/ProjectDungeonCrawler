@@ -163,6 +163,18 @@ PrefabInstance:
       propertyPath: 'castingCharacters.Array.data[1]'
       value: 
       objectReference: {fileID: 1400534909}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: castingCharacterBehaviors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1337654317}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1400534915}
     - target: {fileID: 3213065005520933709, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: m_Name
       value: TeamB
@@ -306,6 +318,18 @@ PrefabInstance:
       propertyPath: 'castingCharacters.Array.data[1]'
       value: 
       objectReference: {fileID: 1337654308}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: castingCharacterBehaviors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1337654317}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2013764897}
     - target: {fileID: 3213065005520933709, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: m_Name
       value: TeamA
@@ -902,6 +926,18 @@ PrefabInstance:
       propertyPath: 'castingCharacters.Array.data[1]'
       value: 
       objectReference: {fileID: 1400534909}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: castingCharacterBehaviors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2013764897}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1400534915}
     - target: {fileID: 3213065005520933709, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: m_Name
       value: TeamC
@@ -1135,6 +1171,14 @@ PrefabInstance:
       propertyPath: 'castingCharacters.Array.data[0]'
       value: 
       objectReference: {fileID: 2013764888}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: castingCharacterBehaviors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2013764897}
     - target: {fileID: 3213065005520933709, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: m_Name
       value: SpellC
@@ -1239,6 +1283,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6953751441388743655, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
   m_PrefabInstance: {fileID: 1682994338}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1337654317 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5608975940991784616, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
+  m_PrefabInstance: {fileID: 1682994338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337654308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ebf7f106080123409e69d9286cbbee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1349488263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,6 +1430,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6953751441388743655, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
   m_PrefabInstance: {fileID: 1672724868}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1400534915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5608975940991784616, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
+  m_PrefabInstance: {fileID: 1672724868}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400534909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ebf7f106080123409e69d9286cbbee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1498059081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1719,6 +1785,14 @@ PrefabInstance:
       propertyPath: 'castingCharacters.Array.data[0]'
       value: 
       objectReference: {fileID: 1400534909}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: castingCharacterBehaviors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1400534915}
     - target: {fileID: 3213065005520933709, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: m_Name
       value: SpellB
@@ -2476,6 +2550,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6953751441388743655, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
   m_PrefabInstance: {fileID: 2013764887}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2013764897 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5608975940991784616, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
+  m_PrefabInstance: {fileID: 2013764887}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013764888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ebf7f106080123409e69d9286cbbee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2115695238 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
@@ -3196,6 +3281,14 @@ PrefabInstance:
       propertyPath: 'castingCharacters.Array.data[0]'
       value: 
       objectReference: {fileID: 1337654308}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: castingCharacterBehaviors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: 'castingCharacterBehaviors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1337654317}
     - target: {fileID: 3213065005520933709, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: m_Name
       value: SpellA

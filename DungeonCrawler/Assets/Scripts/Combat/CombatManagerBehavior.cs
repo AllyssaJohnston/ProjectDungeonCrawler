@@ -158,10 +158,9 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         // make sure everyone is available to cast
         bool canCast = true;
-        foreach (GameObject character in spellBehavior.castingCharacters)
+        foreach (CharacterBehavior character in spellBehavior.castingCharacterBehaviors)
         {
-            CharacterBehavior curCharacter = character.GetComponent<CharacterBehavior>();
-            canCast = canCast && curCharacter.canCast();
+            canCast = canCast && character.canCast();
         }
  
         // make sure there is enough mana
@@ -191,10 +190,10 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         TeamManaBehavior.updateMana(-curSpellToCast.manaCost);
 
-        foreach (GameObject character in curSpellToCast.castingCharacters)
+        foreach (CharacterBehavior character in curSpellToCast.castingCharacterBehaviors)
         {
             // do morale damage against the casters
-            character.GetComponent<CharacterBehavior>().cast(curSpellToCast.moraleDamage);
+            character.cast(curSpellToCast.moraleDamage);
         }
         StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
