@@ -3,8 +3,8 @@ using UnityEngine;
 public class CharacterUICreatorBehavior : MonoBehaviour
 {
     [SerializeField] GameObject healthBarTemplate;
-    public Color healthColor;
-    public Color moraleColor;
+    [SerializeField] Color healthColor;
+    [SerializeField] Color moraleColor;
     [SerializeField] float UI_OffsetX = 0;
     [SerializeField] float healthPosY = 3;
     [SerializeField] float moralePosY = 2;
@@ -46,16 +46,6 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         return bar;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        healthBarManagerBehavior.SetValue(characterBehavior.getHealth());
-        if (includeMorale)
-        {
-            moraleBarManagerBehavior.SetValue(characterBehavior.getMorale());
-        }
-    }
-
     public void UpdateHealthBar()
     {
         healthBarManagerBehavior.SetValue(characterBehavior.getHealth());
@@ -63,6 +53,9 @@ public class CharacterUICreatorBehavior : MonoBehaviour
 
     public void UpdateMoraleBar()
     {
-        moraleBarManagerBehavior.SetValue(characterBehavior.getMorale());
+        if (includeMorale)
+        {
+            moraleBarManagerBehavior.SetValue(characterBehavior.getMorale());
+        }
     }
 }

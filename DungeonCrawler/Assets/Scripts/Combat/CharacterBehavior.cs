@@ -19,11 +19,6 @@ public class CharacterBehavior : MonoBehaviour
 
     private CharacterUICreatorBehavior UI_ManagerBehavior;
 
-    private void Start()
-    {
-        //SetUp();
-    }
-
     protected void SetUp()
     {
         characterSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -91,6 +86,7 @@ public class CharacterBehavior : MonoBehaviour
     // use this method to reset things between fights
     virtual public void startBattle()
     {
+        // start gets called AFTER startBattle, so do setup here
         if (firstCombat)
         {
             SetUp();

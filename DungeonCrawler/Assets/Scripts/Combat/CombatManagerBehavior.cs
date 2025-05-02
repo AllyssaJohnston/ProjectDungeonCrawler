@@ -139,6 +139,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    // called at start of each combat
     public static void startBattle()
     {
         StateManagerBehavior.StartBattle();
@@ -153,10 +154,10 @@ public class CombatManagerBehavior : MonoBehaviour
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
     }
 
+    // called to end combat
     private static void endCombat()
     {
         Debug.Log("end combat");
-        // end combat
         // TODO have game manager hold level data, so that the scene isn't restarted
         GameManagerBehavior.enterLevel();
     }
@@ -192,7 +193,8 @@ public class CombatManagerBehavior : MonoBehaviour
             DebugBehavior.updateLog("Failed to cast spell.");
         }
     }
-
+    
+    // for player casted spells
     // deal with mana and morale cost
     // to be used with other cast methods
     private static void cast()
@@ -207,6 +209,7 @@ public class CombatManagerBehavior : MonoBehaviour
         StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
+    // for player casted spells
     // casts the stored spell selected by the player on all enemies
     public static void castSpellOnAll()
     {
@@ -218,6 +221,7 @@ public class CombatManagerBehavior : MonoBehaviour
         cast();
     }
 
+    // for player casted spells
     // casts the stored spell selected by the player on the enemy selected by the player
     public static void castSpellOnTarget(EnemyBehavior selectedEnemy)
     {
@@ -226,9 +230,10 @@ public class CombatManagerBehavior : MonoBehaviour
         cast();
     }
 
+    // called at the start of the player turn
     public static void playerStartTurn()
     {
-        // regen energy
+        // regen mana
         TeamManaBehavior.updateMana(instance.manaRegen);
 
         // reset all friendly characters
@@ -237,6 +242,8 @@ public class CombatManagerBehavior : MonoBehaviour
             character.startTurn();
         }
     }
+
+    // called at the end of the player turn (button click)
     public static void playerEndTurn()
     {
         if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
@@ -245,6 +252,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    // called at the start of the enemies' turn
     public static void enemiesStartTurn()
     {
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
