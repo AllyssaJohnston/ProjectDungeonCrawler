@@ -42,6 +42,7 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         Vector3 scale = bar.transform.localScale;
         bar.transform.SetParent(panel.transform);
         bar.transform.localScale = scale;
+
         bar.transform.position = new Vector3(gameObject.transform.position.x + UI_OffsetX, yOffset, 0);
         return bar;
     }

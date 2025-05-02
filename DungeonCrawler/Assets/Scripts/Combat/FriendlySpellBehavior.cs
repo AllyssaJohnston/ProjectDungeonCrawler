@@ -14,6 +14,8 @@ public class FriendlySpellBehavior : SpellBehavior
     [SerializeField] public TMP_Text damageText;
     [SerializeField] public TMP_Text moraleDamageText;
     [SerializeField] public GameObject manaGroup;
+    [SerializeField] public Image manaImage;
+    private static Color regManaColor;
     [SerializeField] public TMP_Text manaText;
     [SerializeField] public TMP_Text targetingText;
     [SerializeField] public GameObject characterIconTemplate;
@@ -66,7 +68,8 @@ public class FriendlySpellBehavior : SpellBehavior
 
         panelImage = gameObject.GetComponent<Image>();
         regPanelColor = panelImage.color;
-    }
+        regManaColor = manaImage.color;
+}
 
     private void setUpIcon(int x, int y, GameObject character, int index)
     {
@@ -100,10 +103,12 @@ public class FriendlySpellBehavior : SpellBehavior
             if (curMana < manaCost)
             {
                 manaText.color = Color.red;
+                manaImage.color = new Color(.43f, .43f, .43f);
             }
             else
             {
                 manaText.color = Color.black;
+                manaImage.color = regManaColor;
             }
         }
 
