@@ -77,7 +77,7 @@ public class StateManagerBehavior : MonoBehaviour
                 buffer(instance.enemyToPlayerStateChangeWaitTime);
                 break;
             case E_State.ENEMY_ACTION:
-                CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
+                CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].castSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
                 if (curEnemyIndex < CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
                 {
                     // continue rotating through enemies
@@ -113,14 +113,6 @@ public class StateManagerBehavior : MonoBehaviour
     {
         curEnemyIndex = 0;
         bufferTimer = 0f;
-        foreach (CharacterBehavior character in CombatManagerBehavior.friendlyCharacterBehaviors)
-        {
-            character.startBattle();
-        }
-        foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
-        {
-            character.startBattle();
-        }
         NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 

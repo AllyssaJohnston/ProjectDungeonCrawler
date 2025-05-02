@@ -142,11 +142,20 @@ public class CombatManagerBehavior : MonoBehaviour
     public static void startBattle()
     {
         StateManagerBehavior.StartBattle();
+        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
+        {
+            character.startBattle();
+        }
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
+        {
+            character.startBattle();
+        }
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
     }
 
     private static void endCombat()
     {
+        Debug.Log("end combat");
         // end combat
         // TODO have game manager hold level data, so that the scene isn't restarted
         GameManagerBehavior.enterLevel();

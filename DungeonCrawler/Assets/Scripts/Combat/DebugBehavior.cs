@@ -1,13 +1,12 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 // Singleton
 public class DebugBehavior : MonoBehaviour
 {
     private static DebugBehavior instance;
 
-    private bool lastFrameDebugMode = false;
+    private bool lastFrameDebugMode = true;
     public bool debugMode = false;
     [SerializeField] TMP_Text stateText;
     [SerializeField] TMP_Text debugLog;

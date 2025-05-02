@@ -3236,9 +3236,29 @@ PrefabInstance:
       propertyPath: infoPosY
       value: -10
       objectReference: {fileID: 0}
+    - target: {fileID: 5882592756407578227, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: debugMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8523366148065836435, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_margin.z
       value: 3.092102
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523366148065836435, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523366148065836435, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523366148065836435, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523366148065836435, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

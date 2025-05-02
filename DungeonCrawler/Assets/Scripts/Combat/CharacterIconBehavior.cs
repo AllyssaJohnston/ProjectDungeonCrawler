@@ -3,21 +3,18 @@ using UnityEngine;
 
 public class CharacterIconBehavior : MonoBehaviour
 {
+    private Image iconImage;
+
+    [SerializeField] Color unavailableColor = Color.black;
+
     public void SetUp(Sprite characterSprite)
     {
-        GetComponentInChildren<Image>().sprite = characterSprite;
+        iconImage = GetComponentInChildren<Image>();
+        iconImage.sprite = characterSprite;
     }
 
     public void updateImage(bool canCast)
     {
-        if (canCast)
-        {
-            //character is available
-            GetComponentInChildren<Image>().color = Color.white;
-        }
-        else
-        {
-            GetComponentInChildren<Image>().color = new Color(.23f, .23f, .23f);
-        }
+        iconImage.color = canCast ? Color.white : unavailableColor;
     }
 }

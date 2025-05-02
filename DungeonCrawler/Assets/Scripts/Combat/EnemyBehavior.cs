@@ -3,13 +3,14 @@ using System.Collections.Generic;
 
 public class EnemyBehavior : CharacterBehavior
 {
-    public List<EnemySpellBehavior> spellsToChooseFrom = new List<EnemySpellBehavior>();
+    [SerializeField] List<EnemySpellBehavior> spellsToChooseFrom = new List<EnemySpellBehavior>();
 
     private int curSpellIndex = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SetUp();
         friendly = false;
         if (spellsToChooseFrom.Count == 0)
         {
@@ -21,6 +22,15 @@ public class EnemyBehavior : CharacterBehavior
     // use this method to reset things between fights
     override public void startBattle()
     {
+        if (firstCombat)
+        {
+            health = maxHealth;
+            morale = maxMorale;
+            firstCombat = false;
+        }
+
+        available = true;
+
         curSpellIndex = 0;
     }
 
@@ -31,34 +41,29 @@ public class EnemyBehavior : CharacterBehavior
     }
 
     //chooses a spell and executes it
-    public void chooseSpell(List<CharacterBehavior> friendlyCharacters)
+    public void castSpell(List<CharacterBehavior> friendlyCharacters)
     {
         if (canCast())
         {
-            castSpell(friendlyCharacters);
-        }
-    }
+            EnemySpellBehavior spellBehavior = getSpell();
 
-    private void castSpell(List<CharacterBehavior> friendlyCharacters)
-    {
-        EnemySpellBehavior spellBehavior = getSpell();
-
-        string target = "all party members";
-        if (spellBehavior.damageAllEnemies)
-        {
-            foreach (CharacterBehavior characterBehavior in friendlyCharacters)
+            string target = "all party members";
+            if (spellBehavior.damageAllEnemies)
             {
-                characterBehavior.updateHealth(-spellBehavior.damage);
+                foreach (CharacterBehavior characterBehavior in friendlyCharacters)
+                {
+                    characterBehavior.updateHealth(-spellBehavior.damage);
+                }
             }
+            else
+            {
+                //select character to target based on spell targeting data, and attack them
+                CharacterBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
+                characterBehavior.updateHealth(-spellBehavior.damage);
+                target = characterBehavior.characterName;
+            }
+            DebugBehavior.updateLog(characterName + " cast " + spellBehavior.spellName + " on " + target + " for " + spellBehavior.damage + " damage.");
         }
-        else
-        {
-            //select character to target based on spell targeting data, and attack them
-            CharacterBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
-            characterBehavior.updateHealth(-spellBehavior.damage);
-            target = characterBehavior.characterName;
-        }
-        DebugBehavior.updateLog(characterName + " cast " + spellBehavior.spellName + " on " + target + " for " + spellBehavior.damage + " damage.");
     }
 
     // rotate through spells

@@ -3,25 +3,32 @@ using UnityEngine;
 
 public class CharacterBehavior : MonoBehaviour
 {
-    public bool friendly = true;
+    protected bool friendly = true;
     public string characterName = "unnamed";
     public Sprite iconSprite;
-    private Sprite characterSprite;
-    private SpriteRenderer characterSpriteRenderer;
-    private Color regColor;
-    public int maxHealth = 100;
+
+    protected SpriteRenderer characterSpriteRenderer;
+    protected Color regColor;
+
+    [SerializeField] protected int maxHealth = 100;
+    [SerializeField] protected int maxMorale = 10;
     protected int health;
-    protected int maxMorale = 10;
     protected int morale;
     protected bool available = true;
+    protected bool firstCombat = true;
 
-    private void Awake()
+    private void Start()
+    {
+        SetUp();
+    }
+
+    protected void SetUp()
     {
         characterSpriteRenderer = GetComponent<SpriteRenderer>();
-        characterSprite = characterSpriteRenderer.sprite;
+        regColor = characterSpriteRenderer.color;
+
         health = maxHealth;
         morale = maxMorale;
-        regColor = characterSpriteRenderer.color;
     }
 
     public int getHealth() { return health; }
@@ -55,6 +62,15 @@ public class CharacterBehavior : MonoBehaviour
     // use this method to reset things between fights
     virtual public void startBattle()
     {
+        if (firstCombat)
+        {
+            health = maxHealth;
+            morale = maxMorale;
+            firstCombat = false;
+        }
+
+        available = true;
+
         // morale regen
         // recover whatever is greater: half of your missing morale rounded down OR 1
         int moraleDif = maxMorale - morale;

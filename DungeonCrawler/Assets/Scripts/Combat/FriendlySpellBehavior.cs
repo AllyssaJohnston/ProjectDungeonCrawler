@@ -52,8 +52,7 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             Debug.Log("Invalid spell");
         }
-
-        if (castingCharacterBehaviors.Count == 1)
+        else if (castingCharacterBehaviors.Count == 1)
         {
             //single character
             setUpIcon(singleCharacterX, singleCharacterY, castingCharacterBehaviors[0], 0);
@@ -115,13 +114,6 @@ public class FriendlySpellBehavior : SpellBehavior
             }
         }
 
-        if (canCastSpell)
-        {
-            panelImage.color = regPanelColor;
-        }
-        else
-        {
-            panelImage.color = Color.gray;
-        }
+        panelImage.color = canCastSpell ? regPanelColor : Color.gray;
     }
 }
