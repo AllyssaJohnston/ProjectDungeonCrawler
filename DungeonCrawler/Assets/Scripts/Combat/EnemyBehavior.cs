@@ -11,7 +11,7 @@ public class EnemyBehavior : CharacterBehavior
         friendly = false;
         if (spellsToChooseFrom.Count == 0)
         {
-            Debug.Log("no spells");
+            Debug.Log("No spells");
         }
     }
 
@@ -49,7 +49,7 @@ public class EnemyBehavior : CharacterBehavior
         //TOOD choose a spell
         SpellBehavior spellBehavior = spellsToChooseFrom[0];
 
-        DebugBehavior.updateLog("enemy cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale ");
+        DebugBehavior.updateLog(characterName + " cast " + spellBehavior.spellName + " for " + spellBehavior.damage + " damage.");
 
         // do morale damage against the enemy
         cast(spellBehavior.moraleDamage);

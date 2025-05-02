@@ -4,8 +4,10 @@ public enum E_State
 {
     PLAYER_SPELL_SELECTION,
     PLAYER_ENEMY_TARGET_SELECTION,
+    PLAYER_END_TURN_BUFFER,
     ENEMY_BUFFER,
-    ENEMY_ACTION
+    ENEMY_ACTION,
+    ENEMY_END_TURN_BUFFER
 }
 
 public class StateManagerBehavior : MonoBehaviour
@@ -16,7 +18,9 @@ public class StateManagerBehavior : MonoBehaviour
 
     private static int curEnemyIndex = 0;
     private static float bufferTimer = 0f;
-    private static float waitTime = 2f;
+    public static float enemyActionWaitTime = 2f;
+    public static float playerToEnemyStateChangeWaitTime = .5f;
+    public static float enemyToPlayerStateChangeWaitTime = 1f;
 
     private void Awake()
     {
@@ -59,35 +63,43 @@ public class StateManagerBehavior : MonoBehaviour
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 // do nothing, player needs to do things to end this state
                 break;
+            case E_State.PLAYER_END_TURN_BUFFER:
+                // prep/reset enemies for next round
+                curEnemyIndex = 0;
+                CombatManagerBehavior.enemiesStartTurn();
+                buffer(playerToEnemyStateChangeWaitTime);
+                break;
             case E_State.ENEMY_BUFFER:
-
-                bufferTimer += Time.deltaTime;
-                if (bufferTimer > waitTime)
-                {
-                    NextState();
-                    bufferTimer = 0f;
-                }
+                buffer(enemyActionWaitTime);
                 break;
             case E_State.ENEMY_ACTION:
                 CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].chooseSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
-                if (curEnemyIndex == CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
-                {
-                    // all enemies have gone, go back to player states
-                    curEnemyIndex = 0;
-                    // reset enemies for next round
-                    CombatManagerBehavior.enemiesStartTurn();
-                    NextState();
-                }
-                else
+                if (curEnemyIndex < CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
                 {
                     // continue rotating through enemies
                     curEnemyIndex++;
                     NextState(E_State.ENEMY_BUFFER);
+                    return;
                 }
+                NextState();
+                break;
+            case E_State.ENEMY_END_TURN_BUFFER:
+                buffer(enemyToPlayerStateChangeWaitTime);
                 break;
             default:
                 Debug.Log("Invalid state" + curState);
                 break;
+        }
+    }
+
+    // update the buffer timer and go to the next state once past goalWaitTime
+    private static void buffer(float goalWaitTime)
+    {
+        bufferTimer += Time.deltaTime;
+        if (bufferTimer > goalWaitTime)
+        {
+            NextState();
+            bufferTimer = 0f;
         }
     }
 
@@ -104,6 +116,7 @@ public class StateManagerBehavior : MonoBehaviour
         {
             character.startBattle();
         }
+        NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
     // go to the given state
@@ -113,26 +126,24 @@ public class StateManagerBehavior : MonoBehaviour
         {
             case E_State.PLAYER_SPELL_SELECTION:
                 EnemyTurnIndicatorBehavior.show(false);
-                
+                DebugBehavior.updateLog("Choose a spell to cast or select end turn.");
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 EnemyTurnIndicatorBehavior.show(false);
-                DebugBehavior.updateLog("Pick who to attack");
+                DebugBehavior.updateLog("Pick who to attack.");
                 break;
             case E_State.ENEMY_BUFFER:
                 EnemyTurnIndicatorBehavior.show(true);
                 EnemyTurnIndicatorBehavior.Move(CombatManagerBehavior.enemyCharacters[curEnemyIndex].transform.position.x);
                 DebugBehavior.updateLog(CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].characterName + " is choosing their attack...");
                 break;
+            case E_State.ENEMY_END_TURN_BUFFER:
+                CombatManagerBehavior.playerStartTurn();
+                break;
             default:
                 break;
 
         }
-        if (curState == E_State.ENEMY_ACTION && nextState == E_State.PLAYER_SPELL_SELECTION)
-        {
-            CombatManagerBehavior.playerStartTurn();
-        }
-
         curState = nextState;
     }
 
@@ -147,10 +158,16 @@ public class StateManagerBehavior : MonoBehaviour
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 NextState(E_State.PLAYER_SPELL_SELECTION);
                 break;
+            case E_State.PLAYER_END_TURN_BUFFER:
+                NextState(E_State.ENEMY_BUFFER);
+                break;
             case E_State.ENEMY_BUFFER:
                 NextState(E_State.ENEMY_ACTION);
                 break;
             case E_State.ENEMY_ACTION:
+                NextState(E_State.ENEMY_END_TURN_BUFFER);
+                break;
+            case E_State.ENEMY_END_TURN_BUFFER:
                 NextState(E_State.PLAYER_SPELL_SELECTION);
                 break;
             default:

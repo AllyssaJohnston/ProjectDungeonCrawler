@@ -12,6 +12,7 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     [SerializeField] public List<GameObject> inputEnemyCharacters = new List<GameObject>();
     public static int startingMana = 3;
+    public static int manaRegen = 2;
    
     // These are the fields we actually want to work with
     public static List<GameObject> friendlyCharacters = new List<GameObject>();
@@ -105,7 +106,7 @@ public class CombatManagerBehavior : MonoBehaviour
                     GameObject gameObject = hit.collider.gameObject;
                     if (gameObject.tag == "Enemy" && curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
                     {
-                        castSpellOnTarget(gameObject);
+                        castSpellOnTarget(gameObject.GetComponent<EnemyBehavior>());
                     }
                 }
 
@@ -155,15 +156,15 @@ public class CombatManagerBehavior : MonoBehaviour
     // if it can, cast it or go to enemy selection state depending on the spell
     public static void resolveSpell(FriendlySpellBehavior spellBehavior)
     {
+        // make sure everyone is available to cast
         bool canCast = true;
-        List<CharacterBehavior> behaviors = new List<CharacterBehavior>();
         foreach (GameObject character in spellBehavior.castingCharacters)
         {
             CharacterBehavior curCharacter = character.GetComponent<CharacterBehavior>();
-            behaviors.Add(curCharacter);
             canCast = canCast && curCharacter.canCast();
         }
  
+        // make sure there is enough mana
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
             curSpellToCast = spellBehavior;
@@ -180,7 +181,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         else
         {
-            DebugBehavior.updateLog("Failed to cast spell");
+            DebugBehavior.updateLog("Failed to cast spell.");
         }
     }
 
@@ -192,40 +193,35 @@ public class CombatManagerBehavior : MonoBehaviour
 
         foreach (GameObject character in curSpellToCast.castingCharacters)
         {
-            CharacterBehavior curCharacter = character.GetComponent<CharacterBehavior>();
             // do morale damage against the casters
-            curCharacter.cast(curSpellToCast.moraleDamage);
+            character.GetComponent<CharacterBehavior>().cast(curSpellToCast.moraleDamage);
         }
+        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
     // casts the stored spell selected by the player on all enemies
     public static void castSpellOnAll()
     {
-        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale, " + curSpellToCast.manaCost + " mana on all enemies");
-        cast();
-
+        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
             character.updateHealth(-curSpellToCast.damage);
         }
-        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
+        cast();
     }
 
     // casts the stored spell selected by the player on the enemy selected by the player
-    public static void castSpellOnTarget(GameObject selectedEnemy)
+    public static void castSpellOnTarget(EnemyBehavior selectedEnemy)
     {
-        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale, " + curSpellToCast.manaCost + " mana on selected enemy");
+        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
+        selectedEnemy.updateHealth(-curSpellToCast.damage);
         cast();
-
-        EnemyBehavior character = selectedEnemy.GetComponent<EnemyBehavior>();
-        character.updateHealth(-curSpellToCast.damage);
-        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
     public static void playerStartTurn()
     {
         // regen energy
-        TeamManaBehavior.updateMana(2);
+        TeamManaBehavior.updateMana(manaRegen);
 
         // reset all friendly characters
         foreach (CharacterBehavior character in friendlyCharacterBehaviors)
