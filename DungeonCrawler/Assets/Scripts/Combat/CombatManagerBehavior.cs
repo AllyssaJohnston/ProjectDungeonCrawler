@@ -206,7 +206,8 @@ public class CombatManagerBehavior : MonoBehaviour
             // do morale damage against the casters
             character.cast(curSpellToCast.moraleDamage);
         }
-        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
+        PartySpellManagerBehavior.UpdateSpellOrder();
+        StateManagerBehavior.NextState(E_State.PLAYER_BETWEEN_SPELLS_BUFFFER);
     }
 
     // for player casted spells
@@ -241,6 +242,7 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             character.startTurn();
         }
+        PartySpellManagerBehavior.UpdateSpellOrder();
     }
 
     // called at the end of the player turn (button click)

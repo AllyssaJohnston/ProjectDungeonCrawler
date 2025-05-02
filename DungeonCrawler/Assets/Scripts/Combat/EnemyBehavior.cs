@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBehavior : CharacterBehavior
 {
@@ -63,6 +64,10 @@ public class EnemyBehavior : CharacterBehavior
                 target = characterBehavior.characterName;
             }
             DebugBehavior.updateLog(characterName + " cast " + spellBehavior.spellName + " on " + target + " for " + spellBehavior.damage + " damage.");
+        }
+        else
+        {
+            DebugBehavior.updateLog(characterName + " can't cast!");
         }
     }
 

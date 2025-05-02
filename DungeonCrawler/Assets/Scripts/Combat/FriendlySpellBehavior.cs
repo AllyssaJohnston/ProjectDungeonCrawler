@@ -86,38 +86,6 @@ public class FriendlySpellBehavior : SpellBehavior
         characterIcons.Add(curCharacterIconBehavior);
     }
 
-    private void Update()
-    {
-        bool canCastSpell = true;
-        //update icons
-        for (int i = 0; i < characterIcons.Count; i++)
-        {
-            bool canCharacterCast = castingCharacterBehaviors[i].canCast();
-            characterIcons[i].updateImage(canCharacterCast);
-            canCastSpell = canCastSpell && canCharacterCast;
-        }
-
-        //update mana
-        if (manaGroup.activeSelf)
-        {
-            int curMana = TeamManaBehavior.getMana();
-            manaText.text = curMana.ToString() + "/" + manaCost.ToString();
-            canCastSpell = canCastSpell && curMana >= manaCost;
-            if (curMana < manaCost)
-            {
-                manaText.color = Color.red;
-                manaImage.color = new Color(.43f, .43f, .43f);
-            }
-            else
-            {
-                manaText.color = Color.black;
-                manaImage.color = regManaColor;
-            }
-        }
-
-        panelImage.color = canCastSpell ? regPanelColor : Color.gray;
-    }
-
     public bool updateAndCanCast()
     {
         bool canCastSpell = true;
