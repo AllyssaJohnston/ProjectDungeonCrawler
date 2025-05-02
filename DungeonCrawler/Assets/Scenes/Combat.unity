@@ -1036,8 +1036,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 870985243789646130}
     - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: damage
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: spellName
       value: Death's Kiss
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: moraleDamage
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: 'castingCharacters.Array.data[0]'
@@ -1230,7 +1238,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1297500949}
   m_Direction: 3
   m_Value: 1.0000006
-  m_Size: 0.651
+  m_Size: 0.7673899
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1548,6 +1556,10 @@ PrefabInstance:
       propertyPath: panel
       value: 
       objectReference: {fileID: 870985243789646130}
+    - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
+      propertyPath: damage
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1300402699453147733, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
       propertyPath: spellName
       value: Fire Bomb
