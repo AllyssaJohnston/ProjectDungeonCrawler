@@ -60,6 +60,7 @@ public class StateManagerBehavior : MonoBehaviour
                 // do nothing, player needs to do things to end this state
                 break;
             case E_State.ENEMY_BUFFER:
+
                 bufferTimer += Time.deltaTime;
                 if (bufferTimer > waitTime)
                 {
@@ -111,14 +112,25 @@ public class StateManagerBehavior : MonoBehaviour
     // go to the given state
     public static void NextState(E_State nextState)
     {
+        if (nextState == E_State.PLAYER_SPELL_SELECTION || nextState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+        {
+            EnemyTurnIndicatorBehavior.show(false);
+        }
+        if (nextState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+        {
+            DebugBehavior.updateLog("pick an enemy target");
+        }
         if (curState == E_State.ENEMY_ACTION && nextState == E_State.PLAYER_SPELL_SELECTION)
         {
             CombatManagerBehavior.playerStartTurn();
         }
         if (nextState == E_State.ENEMY_BUFFER)
         {
+            EnemyTurnIndicatorBehavior.show(true);
+            EnemyTurnIndicatorBehavior.Move(CombatManagerBehavior.enemyCharacters[curEnemyIndex].transform.position.x);
             DebugBehavior.updateLog("enemy choosing spell, wait " + waitTime);
         }
+
         curState = nextState;
     }
 
@@ -128,21 +140,16 @@ public class StateManagerBehavior : MonoBehaviour
         switch (curState)
         {
             case E_State.PLAYER_SPELL_SELECTION:
-                // go to enmey state
-                curState = E_State.PLAYER_ENEMY_TARGET_SELECTION;
-                DebugBehavior.updateLog("pick an enemy target");
+                NextState(E_State.PLAYER_ENEMY_TARGET_SELECTION);
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
-                // go to enmey state
-                curState = E_State.PLAYER_SPELL_SELECTION;
+                NextState(E_State.PLAYER_SPELL_SELECTION);
                 break;
             case E_State.ENEMY_BUFFER:
-                curState = E_State.ENEMY_ACTION;
+                NextState(E_State.ENEMY_ACTION);
                 break;
             case E_State.ENEMY_ACTION:
-                // go to player state 
-                CombatManagerBehavior.playerStartTurn();
-                curState = E_State.PLAYER_SPELL_SELECTION;
+                NextState(E_State.PLAYER_SPELL_SELECTION);
                 break;
             default:
                 Debug.Log("Invalid state" + curState);
