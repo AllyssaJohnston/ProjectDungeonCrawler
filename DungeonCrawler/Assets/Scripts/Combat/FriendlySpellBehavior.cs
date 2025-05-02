@@ -55,13 +55,14 @@ public class FriendlySpellBehavior : SpellBehavior
         else if (castingCharacterBehaviors.Count == 1)
         {
             //single character
-            setUpIcon(singleCharacterX, singleCharacterY, castingCharacterBehaviors[0], 0);
+            setUpIcon(singleCharacterX, singleCharacterY, castingCharacterBehaviors[0]);
         }
         else if (castingCharacterBehaviors.Count == 2)
         {
             //double characters
-            setUpIcon(secondCharacterX, secondCharacterY, castingCharacterBehaviors[1], 0); // want second character to render first, so create it first
-            setUpIcon(firstCharacterX, firstCharacterY, castingCharacterBehaviors[0], 0); // inserts the first character icon back into the first slot
+            setUpIcon(firstCharacterX, firstCharacterY, castingCharacterBehaviors[0]);
+            setUpIcon(secondCharacterX, secondCharacterY, castingCharacterBehaviors[1]);
+            characterIcons[0].gameObject.transform.SetAsLastSibling(); // render the first character on top, which requires putting it at the bottom of the list
         }
         else
         {
@@ -73,7 +74,7 @@ public class FriendlySpellBehavior : SpellBehavior
         regManaColor = manaImage.color;
 }
 
-    private void setUpIcon(int x, int y, CharacterBehavior character, int index)
+    private void setUpIcon(int x, int y, CharacterBehavior character)
     {
         GameObject curCharacterIcon = Instantiate(characterIconTemplate);
         curCharacterIcon.transform.SetParent(gameObject.transform);
@@ -82,10 +83,10 @@ public class FriendlySpellBehavior : SpellBehavior
 
         CharacterIconBehavior curCharacterIconBehavior = curCharacterIcon.GetComponent<CharacterIconBehavior>();
         curCharacterIconBehavior.SetUp(character.iconSprite);
-        characterIcons.Insert(index, curCharacterIconBehavior);
+        characterIcons.Add(curCharacterIconBehavior);
     }
 
-    private void Update()
+    public bool updateAndCanCast()
     {
         bool canCastSpell = true;
         //update icons
@@ -115,5 +116,6 @@ public class FriendlySpellBehavior : SpellBehavior
         }
 
         panelImage.color = canCastSpell ? regPanelColor : Color.gray;
+        return canCastSpell;
     }
 }

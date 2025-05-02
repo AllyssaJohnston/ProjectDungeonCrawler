@@ -4,6 +4,7 @@ public enum E_State
 {
     PLAYER_SPELL_SELECTION,
     PLAYER_ENEMY_TARGET_SELECTION,
+    PLAYER_BETWEEN_SPELLS_BUFFFER,
     PLAYER_END_TURN_BUFFER,
     ENEMY_BUFFER,
     BETWEEN_ENEMIES_BUFFER,
@@ -19,9 +20,10 @@ public class StateManagerBehavior : MonoBehaviour
 
     private static int curEnemyIndex = 0;
     private static float bufferTimer = 0f;
-    [SerializeField] float enemyActionWaitTime = 2f;
-    [SerializeField] float playerToEnemyStateChangeWaitTime = .5f;
-    [SerializeField] float enemyToPlayerStateChangeWaitTime = 1f;
+    [SerializeField] float playerBetweenSpellsWaitTime = .8f;
+    [SerializeField] float enemyActionWaitTime = 1.7f;
+    [SerializeField] float enemyBetweenTurnsWaitTime = 1f;
+    [SerializeField] float enemyToPlayerStateChangeWaitTime = 2f;
 
     private void Awake()
     {
@@ -64,11 +66,14 @@ public class StateManagerBehavior : MonoBehaviour
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 // do nothing, player needs to do things to end this state
                 break;
+            case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
+                buffer(instance.playerBetweenSpellsWaitTime);
+                break;
             case E_State.PLAYER_END_TURN_BUFFER:
                 // prep/reset enemies for next round
                 curEnemyIndex = 0;
                 CombatManagerBehavior.enemiesStartTurn();
-                buffer(instance.playerToEnemyStateChangeWaitTime);
+                buffer(instance.playerBetweenSpellsWaitTime);
                 break;
             case E_State.ENEMY_BUFFER:
                 buffer(instance.enemyActionWaitTime);
@@ -89,7 +94,7 @@ public class StateManagerBehavior : MonoBehaviour
                 NextState();
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
-                buffer(instance.enemyToPlayerStateChangeWaitTime);
+                buffer(instance.enemyBetweenTurnsWaitTime);
                 break;
             default:
                 Debug.Log("Invalid state" + curState);
@@ -152,6 +157,9 @@ public class StateManagerBehavior : MonoBehaviour
                 NextState(E_State.PLAYER_ENEMY_TARGET_SELECTION);
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
+                NextState(E_State.PLAYER_SPELL_SELECTION);
+                break;
+            case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
                 NextState(E_State.PLAYER_SPELL_SELECTION);
                 break;
             case E_State.PLAYER_END_TURN_BUFFER:
