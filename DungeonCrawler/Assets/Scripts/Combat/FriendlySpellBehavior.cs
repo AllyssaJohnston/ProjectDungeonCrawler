@@ -41,7 +41,7 @@ public class FriendlySpellBehavior : SpellBehavior
             //hide the mana group
             manaGroup.SetActive(false);
         }
-        targetingText.text = "TARGET " + (damageAllEnemies? "ALL" : "SELECT");
+        targetingText.text = (damageAllEnemies? "TARGET ALL" : "SINGLE TARGET");
 
         if (castingCharacters.Count == 0 )
         {
