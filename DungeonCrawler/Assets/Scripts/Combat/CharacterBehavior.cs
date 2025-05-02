@@ -17,9 +17,11 @@ public class CharacterBehavior : MonoBehaviour
     protected bool available = true;
     protected bool firstCombat = true;
 
+    private CharacterUICreatorBehavior UI_ManagerBehavior;
+
     private void Start()
     {
-        SetUp();
+        //SetUp();
     }
 
     protected void SetUp()
@@ -29,6 +31,9 @@ public class CharacterBehavior : MonoBehaviour
 
         health = maxHealth;
         morale = maxMorale;
+
+        UI_ManagerBehavior = gameObject.GetComponent<CharacterUICreatorBehavior>();
+        UI_ManagerBehavior.SetUp(this);
     }
 
     public int getHealth() { return health; }
@@ -49,6 +54,30 @@ public class CharacterBehavior : MonoBehaviour
             health = 0;
             available = false;
         }
+        UI_ManagerBehavior.UpdateHealthBar();
+    }
+
+    public void setHealth(int givenHealth)
+    {
+        health = givenHealth;
+        UI_ManagerBehavior.UpdateHealthBar();
+    }
+
+    public void updateMorale(int moraleChange)
+    {
+        morale += moraleChange;
+        if (morale <= 0)
+        {
+            morale = 0;
+            available = false;
+        }
+        UI_ManagerBehavior.UpdateMoraleBar();
+    }
+
+    public void setMorale(int givenMorale)
+    {
+        morale = givenMorale;
+        UI_ManagerBehavior.UpdateMoraleBar();
     }
 
     public IEnumerator takeDamageEffect()
@@ -64,8 +93,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         if (firstCombat)
         {
-            health = maxHealth;
-            morale = maxMorale;
+            SetUp();
             firstCombat = false;
         }
 
@@ -74,12 +102,12 @@ public class CharacterBehavior : MonoBehaviour
         // morale regen
         // recover whatever is greater: half of your missing morale rounded down OR 1
         int moraleDif = maxMorale - morale;
-        morale += Mathf.Max(moraleDif / 2, 1);
-        morale = Mathf.Min(morale, maxMorale);
+        updateMorale(Mathf.Max(moraleDif / 2, 1));
+        setMorale(Mathf.Min(morale, maxMorale));
 
         // health regen
         // start with a minimum of 1 health
-        health = Mathf.Max(health, 1);
+        setHealth(Mathf.Max(health, 1));
     }
 
     // called at start of turn
@@ -100,7 +128,7 @@ public class CharacterBehavior : MonoBehaviour
     // and then makes the character unable to cast more spells
     public void cast(int moraleChange)
     {
-        morale += moraleChange;
+        updateMorale(moraleChange);
         available = false;
     }
 }

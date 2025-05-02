@@ -2,25 +2,24 @@ using UnityEngine;
 
 public class CharacterUICreatorBehavior : MonoBehaviour
 {
-    public GameObject healthBarTemplate;
+    [SerializeField] GameObject healthBarTemplate;
     public Color healthColor;
     public Color moraleColor;
-    public float UI_OffsetX = 0;
-    public float healthPosY = 3;
-    public float moralePosY = 2;
-    public bool includeMorale = true;
-    public GameObject panel;
-    private CharacterBehavior characterBehavior;
+    [SerializeField] float UI_OffsetX = 0;
+    [SerializeField] float healthPosY = 3;
+    [SerializeField] float moralePosY = 2;
+    [SerializeField] bool includeMorale = true;
+    [SerializeField] GameObject panel;
 
+    private CharacterBehavior characterBehavior;
     private GameObject healthBarManager;
     private HealthBarManager healthBarManagerBehavior;
     private GameObject moraleBarManager;
     private HealthBarManager moraleBarManagerBehavior;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void SetUp(CharacterBehavior givenCharacterBehavior)
     {
-        characterBehavior = gameObject.GetComponent<CharacterBehavior>();
+        characterBehavior = givenCharacterBehavior;
 
         healthBarManager = createBar(healthPosY);
         healthBarManagerBehavior = healthBarManager.GetComponent<HealthBarManager>();
@@ -55,5 +54,15 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         {
             moraleBarManagerBehavior.SetValue(characterBehavior.getMorale());
         }
+    }
+
+    public void UpdateHealthBar()
+    {
+        healthBarManagerBehavior.SetValue(characterBehavior.getHealth());
+    }
+
+    public void UpdateMoraleBar()
+    {
+        moraleBarManagerBehavior.SetValue(characterBehavior.getMorale());
     }
 }
