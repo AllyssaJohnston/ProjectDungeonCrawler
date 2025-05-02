@@ -120,6 +120,7 @@ MonoBehaviour:
   healthColor: {r: 1, g: 0, b: 0, a: 1}
   moraleColor: {r: 1, g: 1, b: 1, a: 1}
   UI_OffsetX: 0
-  healthPosY: 3.1
-  moralePosY: 2.4
+  healthPosY: 2.1
+  moralePosY: 1.4
+  includeMorale: 1
   panel: {fileID: 0}
