@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6953751441388743655}
   - component: {fileID: 2514801421626509551}
   - component: {fileID: 5608975940991784616}
+  - component: {fileID: -7147862833875646992}
   m_Layer: 0
   m_Name: Friendly
   m_TagString: Untagged
@@ -101,4 +102,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   friendly: 1
+  iconSprite: {fileID: 0}
   maxHealth: 100
+--- !u!114 &-7147862833875646992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101720692608466094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d029537f52d4944b85613814962e225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarTemplate: {fileID: 2459722467361300661, guid: 1a1adb25ab5acdc4fa758b6243ff05bd, type: 3}
+  healthColor: {r: 1, g: 0, b: 0, a: 1}
+  moraleColor: {r: 1, g: 1, b: 1, a: 1}
+  UI_OffsetX: 0
+  healthPosY: 3.1
+  moralePosY: 2.4
+  panel: {fileID: 0}
