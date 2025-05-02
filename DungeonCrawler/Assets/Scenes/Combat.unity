@@ -257,6 +257,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8285218022477056410, guid: 67c81cb2c0871fc43ace1fcadad5757b, type: 3}
   m_PrefabInstance: {fileID: 25185340}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &121674444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1268143672009032829, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
+  m_PrefabInstance: {fileID: 1520531836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &193817441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -709,6 +714,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6808733625049879353, guid: d7aee5c42d622424f96d1c7b6d46fcf2, type: 3}
     - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
+      propertyPath: characterName
+      value: D
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: 'spellsToChooseFrom.Array.data[0]'
       value: 
       objectReference: {fileID: 1520531837}
@@ -764,18 +773,6 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 6808733625049879353, guid: d7aee5c42d622424f96d1c7b6d46fcf2, type: 3}
-    - target: {fileID: 5816269740876062331, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5816269740876062331, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5816269740876062331, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5930867988196048508, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: panel
       value: 
@@ -1325,7 +1322,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1297500949}
   m_Direction: 3
   m_Value: 1.0000006
-  m_Size: 0.846
+  m_Size: 0.7673899
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1481,19 +1478,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1268143672009032829, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1520531839}
   m_SourcePrefab: {fileID: 100100000, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
 --- !u!114 &1520531837 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6839624106900242351, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
   m_PrefabInstance: {fileID: 1520531836}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 121674444}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f30d8b5811d3a384287d1afdee31de8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1520531839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121674444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f0bd0732b93914e8650b3978a6ca2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellName: Basic Attack
+  damage: 10
+  moraleDamage: 0
+  manaCost: 0
+  damageAllEnemies: 0
+  targeting: 0
 --- !u!1 &1534281256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1810,7 +1828,11 @@ PrefabInstance:
     - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: iconSprite
       value: 
-      objectReference: {fileID: 6808733625049879353, guid: d7aee5c42d622424f96d1c7b6d46fcf2, type: 3}
+      objectReference: {fileID: 6747511057611931477, guid: af9371917005f3f4dac5633bf0a6e58c, type: 3}
+    - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
+      propertyPath: characterName
+      value: C
+      objectReference: {fileID: 0}
     - target: {fileID: 2288801555982696695, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: 'spellsToChooseFrom.Array.data[0]'
       value: 
@@ -1866,19 +1888,7 @@ PrefabInstance:
     - target: {fileID: 5816269740876062331, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6808733625049879353, guid: d7aee5c42d622424f96d1c7b6d46fcf2, type: 3}
-    - target: {fileID: 5816269740876062331, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5816269740876062331, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5816269740876062331, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 6747511057611931477, guid: af9371917005f3f4dac5633bf0a6e58c, type: 3}
     - target: {fileID: 5930867988196048508, guid: 6b4feed801a49604d8e7bf8ab2765334, type: 3}
       propertyPath: panel
       value: 
@@ -1934,7 +1944,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.175, y: 1.535}
+    oldSize: {x: 1.175, y: 1.31}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1987,6 +1997,10 @@ PrefabInstance:
       propertyPath: iconSprite
       value: 
       objectReference: {fileID: -3263863412985163991, guid: fe0c430ece1aa9f4585fb2a66db8ef9a, type: 3}
+    - target: {fileID: 5608975940991784616, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
+      propertyPath: characterName
+      value: Pyromancer
+      objectReference: {fileID: 0}
     - target: {fileID: 6953751441388743655, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
@@ -2072,6 +2086,10 @@ PrefabInstance:
       propertyPath: iconSprite
       value: 
       objectReference: {fileID: -1335188855448512003, guid: 5d139cc0555e12243a2d65905aaf314e, type: 3}
+    - target: {fileID: 5608975940991784616, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
+      propertyPath: characterName
+      value: Wizard
+      objectReference: {fileID: 0}
     - target: {fileID: 6953751441388743655, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.6
@@ -2399,6 +2417,10 @@ PrefabInstance:
       propertyPath: iconSprite
       value: 
       objectReference: {fileID: -3345627800716566970, guid: c557177453e611347a80bdedd1b70b4e, type: 3}
+    - target: {fileID: 5608975940991784616, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
+      propertyPath: characterName
+      value: Necromancer
+      objectReference: {fileID: 0}
     - target: {fileID: 6953751441388743655, guid: fd3f0346d9c9b7a41a4b40bb6ef1aecf, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.9499998

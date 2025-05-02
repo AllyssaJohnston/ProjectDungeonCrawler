@@ -8,10 +8,12 @@ public class CombatManagerBehavior : MonoBehaviour
 {
     private static CombatManagerBehavior instance;
 
+    // These are here so that you can edit the characters in editor
     [SerializeField] public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     [SerializeField] public List<GameObject> inputEnemyCharacters = new List<GameObject>();
     public static int startingMana = 3;
-
+   
+    // These are the fields we actually want to work with
     public static List<GameObject> friendlyCharacters = new List<GameObject>();
     public static List<GameObject> enemyCharacters = new List<GameObject>();
     public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
@@ -164,7 +166,7 @@ public class CombatManagerBehavior : MonoBehaviour
  
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
-            curSpellToCast = (FriendlySpellBehavior)spellBehavior;
+            curSpellToCast = spellBehavior;
             if (spellBehavior.damageAllEnemies)
             {
                 // cast spell on all enemies
@@ -236,6 +238,14 @@ public class CombatManagerBehavior : MonoBehaviour
         if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
         {
             StateManagerBehavior.NextState(E_State.ENEMY_BUFFER);
+        }
+    }
+
+    public static void enemiesStartTurn()
+    {
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
+        {
+            character.startTurn();
         }
     }
 }

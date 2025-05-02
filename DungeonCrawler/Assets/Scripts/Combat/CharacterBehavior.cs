@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class CharacterBehavior : MonoBehaviour
 {
     public bool friendly = true;
+    public string characterName = "unnamed";
     [SerializeField] public Sprite iconSprite;
     private Sprite characterSprite;
+    private SpriteRenderer characterSpriteRenderer;
+    private Color regColor;
     public int maxHealth = 100;
     protected int health;
     protected int maxMorale = 10;
@@ -15,9 +17,11 @@ public class CharacterBehavior : MonoBehaviour
 
     private void Awake()
     {
-        characterSprite = GetComponent<SpriteRenderer>().sprite;
+        characterSpriteRenderer = GetComponent<SpriteRenderer>();
+        characterSprite = characterSpriteRenderer.sprite;
         health = maxHealth;
         morale = maxMorale;
+        regColor = characterSpriteRenderer.color;
     }
 
     public int getHealth() { return health; }
@@ -31,6 +35,7 @@ public class CharacterBehavior : MonoBehaviour
         {
             StartCoroutine(takeDamageEffect());
         }
+
         health += healthChange;
         if (health <= 0)
         {
@@ -43,7 +48,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(.2f);
-        GetComponent<SpriteRenderer>().color = Color.white;
+        GetComponent<SpriteRenderer>().color = regColor;
     }
 
     // called at start of battle
@@ -54,10 +59,7 @@ public class CharacterBehavior : MonoBehaviour
         // recover whatever is greater: half of your missing morale rounded down OR 1
         int moraleDif = maxMorale - morale;
         morale += Mathf.Max(moraleDif / 2, 1);
-        if (morale > maxMorale)
-        {
-            morale = maxMorale;
-        }
+        morale = Mathf.Min(morale, maxMorale);
 
         // health regen
         // start with a minimum of 1 health

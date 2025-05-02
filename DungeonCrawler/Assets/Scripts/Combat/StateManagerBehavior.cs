@@ -75,10 +75,7 @@ public class StateManagerBehavior : MonoBehaviour
                     // all enemies have gone, go back to player states
                     curEnemyIndex = 0;
                     // reset enemies for next round
-                    foreach (EnemyBehavior character in CombatManagerBehavior.enemyCharacterBehaviors)
-                    {
-                        character.startTurn();
-                    }
+                    CombatManagerBehavior.enemiesStartTurn();
                     NextState();
                 }
                 else
@@ -112,23 +109,28 @@ public class StateManagerBehavior : MonoBehaviour
     // go to the given state
     public static void NextState(E_State nextState)
     {
-        if (nextState == E_State.PLAYER_SPELL_SELECTION || nextState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+        switch(nextState)
         {
-            EnemyTurnIndicatorBehavior.show(false);
-        }
-        if (nextState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
-        {
-            DebugBehavior.updateLog("pick an enemy target");
+            case E_State.PLAYER_SPELL_SELECTION:
+                EnemyTurnIndicatorBehavior.show(false);
+                
+                break;
+            case E_State.PLAYER_ENEMY_TARGET_SELECTION:
+                EnemyTurnIndicatorBehavior.show(false);
+                DebugBehavior.updateLog("Pick who to attack");
+                break;
+            case E_State.ENEMY_BUFFER:
+                EnemyTurnIndicatorBehavior.show(true);
+                EnemyTurnIndicatorBehavior.Move(CombatManagerBehavior.enemyCharacters[curEnemyIndex].transform.position.x);
+                DebugBehavior.updateLog(CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].characterName + " is choosing their attack...");
+                break;
+            default:
+                break;
+
         }
         if (curState == E_State.ENEMY_ACTION && nextState == E_State.PLAYER_SPELL_SELECTION)
         {
             CombatManagerBehavior.playerStartTurn();
-        }
-        if (nextState == E_State.ENEMY_BUFFER)
-        {
-            EnemyTurnIndicatorBehavior.show(true);
-            EnemyTurnIndicatorBehavior.Move(CombatManagerBehavior.enemyCharacters[curEnemyIndex].transform.position.x);
-            DebugBehavior.updateLog("enemy choosing spell, wait " + waitTime);
         }
 
         curState = nextState;
