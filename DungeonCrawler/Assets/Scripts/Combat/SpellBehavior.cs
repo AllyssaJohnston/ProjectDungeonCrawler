@@ -1,7 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
-using TMPro;
-using JetBrains.Annotations;
 
 public class SpellBehavior : MonoBehaviour
 {

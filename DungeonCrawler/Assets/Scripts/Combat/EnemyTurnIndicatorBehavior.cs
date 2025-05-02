@@ -30,12 +30,6 @@ public class EnemyTurnIndicatorBehavior : MonoBehaviour
 
     private EnemyTurnIndicatorBehavior() { }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public static void show(bool show)
     {
         instance.arrow.SetActive(show);

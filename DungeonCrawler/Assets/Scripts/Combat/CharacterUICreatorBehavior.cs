@@ -2,25 +2,24 @@ using UnityEngine;
 
 public class CharacterUICreatorBehavior : MonoBehaviour
 {
-    [SerializeField] public GameObject healthBarTemplate;
-    public Color healthColor;
-    public Color moraleColor;
-    public float UI_OffsetX = 0;
-    public float healthPosY = 3;
-    public float moralePosY = 2;
-    public bool includeMorale = true;
-    [SerializeField] public GameObject panel;
-    private CharacterBehavior characterBehavior;
+    [SerializeField] GameObject healthBarTemplate;
+    [SerializeField] Color healthColor;
+    [SerializeField] Color moraleColor;
+    [SerializeField] float UI_OffsetX = 0;
+    [SerializeField] float healthPosY = 3;
+    [SerializeField] float moralePosY = 2;
+    [SerializeField] bool includeMorale = true;
+    [SerializeField] GameObject panel;
 
+    private CharacterBehavior characterBehavior;
     private GameObject healthBarManager;
     private HealthBarManager healthBarManagerBehavior;
     private GameObject moraleBarManager;
     private HealthBarManager moraleBarManagerBehavior;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void SetUp(CharacterBehavior givenCharacterBehavior)
     {
-        characterBehavior = gameObject.GetComponent<CharacterBehavior>();
+        characterBehavior = givenCharacterBehavior;
 
         healthBarManager = createBar(healthPosY);
         healthBarManagerBehavior = healthBarManager.GetComponent<HealthBarManager>();
@@ -47,10 +46,13 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         return bar;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateHealthBar()
     {
         healthBarManagerBehavior.SetValue(characterBehavior.getHealth());
+    }
+
+    public void UpdateMoraleBar()
+    {
         if (includeMorale)
         {
             moraleBarManagerBehavior.SetValue(characterBehavior.getMorale());

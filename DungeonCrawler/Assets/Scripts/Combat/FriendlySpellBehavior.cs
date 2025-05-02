@@ -1,24 +1,27 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Analytics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FriendlySpellBehavior : SpellBehavior
 {
     [Header("Spell details")]
-    [SerializeField] public List<GameObject> castingCharacters = new List<GameObject>();
+    public List<CharacterBehavior> castingCharacterBehaviors = new List<CharacterBehavior>();
 
     [Header("UI Elements")]
-    [SerializeField] public TMP_Text spellNameText;
-    [SerializeField] public TMP_Text damageText;
-    [SerializeField] public TMP_Text moraleDamageText;
-    [SerializeField] public GameObject manaGroup;
-    [SerializeField] public Image manaImage;
+    public TMP_Text spellNameText;
+    public TMP_Text damageText;
+    public TMP_Text moraleDamageText;
+
+    public GameObject manaGroup;
+    public Image manaImage;
     private static Color regManaColor;
-    [SerializeField] public TMP_Text manaText;
-    [SerializeField] public TMP_Text targetingText;
-    [SerializeField] public GameObject characterIconTemplate;
+    public TMP_Text manaText;
+
+    public TMP_Text targetingText;
+
+    public GameObject characterIconTemplate;
+
     private Color regPanelColor;
     private Image panelImage;
 
@@ -45,21 +48,20 @@ public class FriendlySpellBehavior : SpellBehavior
         }
         targetingText.text = (damageAllEnemies? "TARGET ALL" : "SINGLE TARGET");
 
-        if (castingCharacters.Count == 0 )
+        if (castingCharacterBehaviors.Count == 0 )
         {
             Debug.Log("Invalid spell");
         }
-
-        if (castingCharacters.Count == 1)
+        else if (castingCharacterBehaviors.Count == 1)
         {
             //single character
-            setUpIcon(singleCharacterX, singleCharacterY, castingCharacters[0], 0);
+            setUpIcon(singleCharacterX, singleCharacterY, castingCharacterBehaviors[0], 0);
         }
-        else if (castingCharacters.Count == 2)
+        else if (castingCharacterBehaviors.Count == 2)
         {
             //double characters
-            setUpIcon(secondCharacterX, secondCharacterY, castingCharacters[1], 0); // want second character to render first, so create it first
-            setUpIcon(firstCharacterX, firstCharacterY, castingCharacters[0], 0); // inserts the first character icon back into the first slot
+            setUpIcon(secondCharacterX, secondCharacterY, castingCharacterBehaviors[1], 0); // want second character to render first, so create it first
+            setUpIcon(firstCharacterX, firstCharacterY, castingCharacterBehaviors[0], 0); // inserts the first character icon back into the first slot
         }
         else
         {
@@ -71,7 +73,7 @@ public class FriendlySpellBehavior : SpellBehavior
         regManaColor = manaImage.color;
 }
 
-    private void setUpIcon(int x, int y, GameObject character, int index)
+    private void setUpIcon(int x, int y, CharacterBehavior character, int index)
     {
         GameObject curCharacterIcon = Instantiate(characterIconTemplate);
         curCharacterIcon.transform.SetParent(gameObject.transform);
@@ -79,7 +81,7 @@ public class FriendlySpellBehavior : SpellBehavior
         curCharacterIcon.transform.localPosition = new Vector3(x, y, 0);
 
         CharacterIconBehavior curCharacterIconBehavior = curCharacterIcon.GetComponent<CharacterIconBehavior>();
-        curCharacterIconBehavior.SetUp(character.GetComponent<CharacterBehavior>().iconSprite);
+        curCharacterIconBehavior.SetUp(character.iconSprite);
         characterIcons.Insert(index, curCharacterIconBehavior);
     }
 
@@ -89,7 +91,7 @@ public class FriendlySpellBehavior : SpellBehavior
         //update icons
         for (int i = 0; i < characterIcons.Count; i++)
         {
-            bool canCharacterCast = castingCharacters[i].GetComponent<CharacterBehavior>().canCast();
+            bool canCharacterCast = castingCharacterBehaviors[i].canCast();
             characterIcons[i].updateImage(canCharacterCast);
             canCastSpell = canCastSpell && canCharacterCast;
         }
@@ -112,13 +114,6 @@ public class FriendlySpellBehavior : SpellBehavior
             }
         }
 
-        if (canCastSpell)
-        {
-            panelImage.color = regPanelColor;
-        }
-        else
-        {
-            panelImage.color = Color.gray;
-        }
+        panelImage.color = canCastSpell ? regPanelColor : Color.gray;
     }
 }

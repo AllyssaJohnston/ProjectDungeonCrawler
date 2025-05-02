@@ -3,15 +3,18 @@ using System.Collections.Generic;
 
 public class EnemyBehavior : CharacterBehavior
 {
-    [SerializeField] public List<SpellBehavior> spellsToChooseFrom = new List<SpellBehavior>();
+    [SerializeField] List<EnemySpellBehavior> spellsToChooseFrom = new List<EnemySpellBehavior>();
+
+    private int curSpellIndex = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        SetUp();
         friendly = false;
         if (spellsToChooseFrom.Count == 0)
         {
-            Debug.Log("no spells");
+            Debug.Log("No spells");
         }
     }
 
@@ -19,52 +22,104 @@ public class EnemyBehavior : CharacterBehavior
     // use this method to reset things between fights
     override public void startBattle()
     {
-        
+        if (firstCombat)
+        {
+            health = maxHealth;
+            morale = maxMorale;
+            firstCombat = false;
+        }
+
+        available = true;
+
+        curSpellIndex = 0;
     }
 
     // use this method to reset things between turns
     override public void startTurn()
     {
-        if (health > 0 && morale > 0)
-        {
-            available = true;
-        }
-        else
-        {
-            available = false;
-        }
+        available = isActive();
     }
 
     //chooses a spell and executes it
-    public void chooseSpell(List<CharacterBehavior> friendlyCharacters)
+    public void castSpell(List<CharacterBehavior> friendlyCharacters)
     {
         if (canCast())
         {
-            castSpell(friendlyCharacters);
+            EnemySpellBehavior spellBehavior = getSpell();
+
+            string target = "all party members";
+            if (spellBehavior.damageAllEnemies)
+            {
+                foreach (CharacterBehavior characterBehavior in friendlyCharacters)
+                {
+                    characterBehavior.updateHealth(-spellBehavior.damage);
+                }
+            }
+            else
+            {
+                //select character to target based on spell targeting data, and attack them
+                CharacterBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
+                characterBehavior.updateHealth(-spellBehavior.damage);
+                target = characterBehavior.characterName;
+            }
+            DebugBehavior.updateLog(characterName + " cast " + spellBehavior.spellName + " on " + target + " for " + spellBehavior.damage + " damage.");
         }
     }
 
-    private void castSpell(List<CharacterBehavior> friendlyCharacters)
+    // rotate through spells
+    private EnemySpellBehavior getSpell()
     {
-        //TOOD choose a spell
-        SpellBehavior spellBehavior = spellsToChooseFrom[0];
-
-        DebugBehavior.updateLog("enemy cast " + spellBehavior.spellName + " " + spellBehavior.damage + " damage, " + spellBehavior.moraleDamage + " morale ");
-
-        // do morale damage against the enemy
-        cast(spellBehavior.moraleDamage);
-
-        if (spellBehavior.damageAllEnemies)
+        EnemySpellBehavior spellBehavior = spellsToChooseFrom[curSpellIndex];
+        curSpellIndex++;
+        if (curSpellIndex >= spellsToChooseFrom.Count)
         {
-            for (int i = 0; i < friendlyCharacters.Count; i++)
+            curSpellIndex = 0;
+        }
+        return spellBehavior;
+    }
+
+    // choose target
+    private CharacterBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<CharacterBehavior> friendlyCharacters)
+    {
+        int highestHealthIndex = 0;
+        int lowestHealthIndex = 0;
+        int highestMoraleIndex = 0;
+        int lowestMoraleIndex = 0;
+
+        for (int i = 1; i < friendlyCharacters.Count; i++)
+        {
+            if (friendlyCharacters[i].getHealth() >= friendlyCharacters[highestHealthIndex].getHealth())
             {
-                friendlyCharacters[i].updateHealth(-spellBehavior.damage);
+                highestHealthIndex = i;
+            }
+            if (friendlyCharacters[i].getHealth() <= friendlyCharacters[lowestHealthIndex].getHealth())
+            {
+                lowestHealthIndex = i;
+            }
+            if (friendlyCharacters[i].getMorale() >= friendlyCharacters[highestMoraleIndex].getMorale())
+            {
+                highestMoraleIndex = i;
+            }
+            if (friendlyCharacters[i].getMorale() <= friendlyCharacters[lowestMoraleIndex].getMorale())
+            {
+                lowestMoraleIndex = i;
             }
         }
-        else
+        switch (targeting)
         {
-            // TODO choose which character to do damage against
-            friendlyCharacters[0].updateHealth(-spellBehavior.damage);
+            case E_SPELL_TARGETING.HIGHEST_HEALTH:
+                return friendlyCharacters[highestHealthIndex];
+            case E_SPELL_TARGETING.LOWEST_HEALTH:
+                return friendlyCharacters[lowestHealthIndex];
+            case E_SPELL_TARGETING.HIGHEST_MORALE:
+                return friendlyCharacters[highestMoraleIndex];
+            case E_SPELL_TARGETING.LOWEST_MORALE:
+                return friendlyCharacters[lowestMoraleIndex];
+            default:
+                Debug.Log("invalid spell targeting type");
+                break;
         }
+
+        return friendlyCharacters[0];
     }
 }

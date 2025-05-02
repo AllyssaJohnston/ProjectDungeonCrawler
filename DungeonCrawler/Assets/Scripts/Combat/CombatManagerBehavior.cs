@@ -8,14 +8,17 @@ public class CombatManagerBehavior : MonoBehaviour
 {
     private static CombatManagerBehavior instance;
 
-    [SerializeField] public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
-    [SerializeField] public List<GameObject> inputEnemyCharacters = new List<GameObject>();
-    public static int startingMana = 3;
+    // These are here so that you can edit the characters in editor
+    public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
+    public List<GameObject> inputEnemyCharacters = new List<GameObject>();
+    [SerializeField] private int startingMana = 3;
+    [SerializeField] private int manaRegen = 2;
 
-    public static List<GameObject> friendlyCharacters = new List<GameObject>();
-    public static List<GameObject> enemyCharacters = new List<GameObject>();
-    public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
-    public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
+    // These are the fields we actually want to work with
+    [HideInInspector] public static List<GameObject> friendlyCharacters = new List<GameObject>();
+    [HideInInspector] public static List<GameObject> enemyCharacters = new List<GameObject>();
+    [HideInInspector] public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
+    [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
 
     private static FriendlySpellBehavior curSpellToCast = null;
 
@@ -103,7 +106,7 @@ public class CombatManagerBehavior : MonoBehaviour
                     GameObject gameObject = hit.collider.gameObject;
                     if (gameObject.tag == "Enemy" && curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
                     {
-                        castSpellOnTarget(gameObject);
+                        castSpellOnTarget(gameObject.GetComponent<EnemyBehavior>());
                     }
                 }
 
@@ -136,15 +139,25 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    // called at start of each combat
     public static void startBattle()
     {
         StateManagerBehavior.StartBattle();
-        TeamManaBehavior.setManaWithoutEffect(startingMana);
+        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
+        {
+            character.startBattle();
+        }
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
+        {
+            character.startBattle();
+        }
+        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
     }
 
+    // called to end combat
     private static void endCombat()
     {
-        // end combat
+        Debug.Log("end combat");
         // TODO have game manager hold level data, so that the scene isn't restarted
         GameManagerBehavior.enterLevel();
     }
@@ -153,18 +166,17 @@ public class CombatManagerBehavior : MonoBehaviour
     // if it can, cast it or go to enemy selection state depending on the spell
     public static void resolveSpell(FriendlySpellBehavior spellBehavior)
     {
+        // make sure everyone is available to cast
         bool canCast = true;
-        List<CharacterBehavior> behaviors = new List<CharacterBehavior>();
-        foreach (GameObject character in spellBehavior.castingCharacters)
+        foreach (CharacterBehavior character in spellBehavior.castingCharacterBehaviors)
         {
-            CharacterBehavior curCharacter = character.GetComponent<CharacterBehavior>();
-            behaviors.Add(curCharacter);
-            canCast = canCast && curCharacter.canCast();
+            canCast = canCast && character.canCast();
         }
  
+        // make sure there is enough mana
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
-            curSpellToCast = (FriendlySpellBehavior)spellBehavior;
+            curSpellToCast = spellBehavior;
             if (spellBehavior.damageAllEnemies)
             {
                 // cast spell on all enemies
@@ -178,52 +190,51 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         else
         {
-            DebugBehavior.updateLog("Failed to cast spell");
+            DebugBehavior.updateLog("Failed to cast spell.");
         }
     }
-
+    
+    // for player casted spells
     // deal with mana and morale cost
     // to be used with other cast methods
     private static void cast()
     {
         TeamManaBehavior.updateMana(-curSpellToCast.manaCost);
 
-        foreach (GameObject character in curSpellToCast.castingCharacters)
+        foreach (CharacterBehavior character in curSpellToCast.castingCharacterBehaviors)
         {
-            CharacterBehavior curCharacter = character.GetComponent<CharacterBehavior>();
             // do morale damage against the casters
-            curCharacter.cast(curSpellToCast.moraleDamage);
+            character.cast(curSpellToCast.moraleDamage);
         }
+        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
+    // for player casted spells
     // casts the stored spell selected by the player on all enemies
     public static void castSpellOnAll()
     {
-        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale, " + curSpellToCast.manaCost + " mana on all enemies");
-        cast();
-
+        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
             character.updateHealth(-curSpellToCast.damage);
         }
-        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
-    }
-
-    // casts the stored spell selected by the player on the enemy selected by the player
-    public static void castSpellOnTarget(GameObject selectedEnemy)
-    {
-        DebugBehavior.updateLog("cast " + curSpellToCast.spellName + " " + curSpellToCast.damage + " damage, " + curSpellToCast.moraleDamage + " morale, " + curSpellToCast.manaCost + " mana on selected enemy");
         cast();
-
-        EnemyBehavior character = selectedEnemy.GetComponent<EnemyBehavior>();
-        character.updateHealth(-curSpellToCast.damage);
-        StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
     }
 
+    // for player casted spells
+    // casts the stored spell selected by the player on the enemy selected by the player
+    public static void castSpellOnTarget(EnemyBehavior selectedEnemy)
+    {
+        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
+        selectedEnemy.updateHealth(-curSpellToCast.damage);
+        cast();
+    }
+
+    // called at the start of the player turn
     public static void playerStartTurn()
     {
-        // regen energy
-        TeamManaBehavior.updateMana(2);
+        // regen mana
+        TeamManaBehavior.updateMana(instance.manaRegen);
 
         // reset all friendly characters
         foreach (CharacterBehavior character in friendlyCharacterBehaviors)
@@ -231,11 +242,22 @@ public class CombatManagerBehavior : MonoBehaviour
             character.startTurn();
         }
     }
+
+    // called at the end of the player turn (button click)
     public static void playerEndTurn()
     {
         if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
         {
-            StateManagerBehavior.NextState(E_State.ENEMY_BUFFER);
+            StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);
+        }
+    }
+
+    // called at the start of the enemies' turn
+    public static void enemiesStartTurn()
+    {
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
+        {
+            character.startTurn();
         }
     }
 }

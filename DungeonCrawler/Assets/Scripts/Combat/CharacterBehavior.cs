@@ -1,23 +1,34 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class CharacterBehavior : MonoBehaviour
 {
-    public bool friendly = true;
-    [SerializeField] public Sprite iconSprite;
-    private Sprite characterSprite;
-    public int maxHealth = 100;
+    protected bool friendly = true;
+    public string characterName = "unnamed";
+    public Sprite iconSprite;
+
+    protected SpriteRenderer characterSpriteRenderer;
+    protected Color regColor;
+
+    [SerializeField] protected int maxHealth = 100;
+    [SerializeField] protected int maxMorale = 10;
     protected int health;
-    protected int maxMorale = 10;
     protected int morale;
     protected bool available = true;
+    protected bool firstCombat = true;
 
-    private void Awake()
+    private CharacterUICreatorBehavior UI_ManagerBehavior;
+
+    protected void SetUp()
     {
-        characterSprite = GetComponent<SpriteRenderer>().sprite;
+        characterSpriteRenderer = GetComponent<SpriteRenderer>();
+        regColor = characterSpriteRenderer.color;
+
         health = maxHealth;
         morale = maxMorale;
+
+        UI_ManagerBehavior = gameObject.GetComponent<CharacterUICreatorBehavior>();
+        UI_ManagerBehavior.SetUp(this);
     }
 
     public int getHealth() { return health; }
@@ -31,37 +42,68 @@ public class CharacterBehavior : MonoBehaviour
         {
             StartCoroutine(takeDamageEffect());
         }
+
         health += healthChange;
         if (health <= 0)
         {
             health = 0;
             available = false;
         }
+        UI_ManagerBehavior.UpdateHealthBar();
+    }
+
+    public void setHealth(int givenHealth)
+    {
+        health = givenHealth;
+        UI_ManagerBehavior.UpdateHealthBar();
+    }
+
+    public void updateMorale(int moraleChange)
+    {
+        morale += moraleChange;
+        if (morale <= 0)
+        {
+            morale = 0;
+            available = false;
+        }
+        UI_ManagerBehavior.UpdateMoraleBar();
+    }
+
+    public void setMorale(int givenMorale)
+    {
+        morale = givenMorale;
+        UI_ManagerBehavior.UpdateMoraleBar();
     }
 
     public IEnumerator takeDamageEffect()
     {
-        GetComponent<SpriteRenderer>().color = Color.red;
+        characterSpriteRenderer.color = Color.red;
         yield return new WaitForSeconds(.2f);
-        GetComponent<SpriteRenderer>().color = Color.white;
+        characterSpriteRenderer.color = regColor;
     }
 
     // called at start of battle
     // use this method to reset things between fights
     virtual public void startBattle()
     {
+        // start gets called AFTER startBattle, so do setup here
+        if (firstCombat)
+        {
+            SetUp();
+            firstCombat = false;
+        }
+
+        available = true;
+
         // morale regen
         // recover whatever is greater: half of your missing morale rounded down OR 1
         int moraleDif = maxMorale - morale;
-        morale += Mathf.Max(moraleDif / 2, 1);
-        if (morale > maxMorale)
-        {
-            morale = maxMorale;
-        }
+        updateMorale(Mathf.Max(moraleDif / 2, 1));
+        setMorale(Mathf.Min(morale, maxMorale));
 
         // health regen
         // start with a minimum of 1 health
-        health = Mathf.Max(health, 1);
+        setHealth(Mathf.Max(health, 1));
     }
 
     // called at start of turn
@@ -82,7 +124,7 @@ public class CharacterBehavior : MonoBehaviour
     // and then makes the character unable to cast more spells
     public void cast(int moraleChange)
     {
-        morale += moraleChange;
+        updateMorale(moraleChange);
         available = false;
     }
 }
