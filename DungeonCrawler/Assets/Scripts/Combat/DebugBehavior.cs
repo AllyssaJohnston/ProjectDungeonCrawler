@@ -65,6 +65,9 @@ public class DebugBehavior : MonoBehaviour
     {
         Debug.Log(log);
         curLog = log;
-        instance.debugLog.text = curLog;
+        if (instance != null)
+        {
+            instance.debugLog.text = curLog;
+        }
     }
 }

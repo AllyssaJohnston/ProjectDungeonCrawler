@@ -12,4 +12,14 @@ public class EnemySpellBehavior : SpellBehavior
 {
     public E_SPELL_TARGETING targeting;
 
+    public void setUpFromStat(EnemySpellStats curStat)
+    {     
+        spellName = curStat.spellName;
+        damage = curStat.damage;
+        moraleDamage = 0;
+        manaCost = 0;
+        damageAllEnemies = curStat.damageAllEnemies;
+        targeting = curStat.targeting;
+    }
+
 }
