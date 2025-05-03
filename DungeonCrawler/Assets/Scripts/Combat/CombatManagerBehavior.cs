@@ -140,26 +140,58 @@ public class CombatManagerBehavior : MonoBehaviour
             }
         }
     }
+    
+    public static void startBattle(CombatEncounterBehavior inputCombatData)
+    {
+        battleSetUp();
+        createEnemies(inputCombatData);
+    }
+
 
     // called at start of each combat
     public static void startBattle()
     {
+        battleSetUp();
+        useDefaultEnemies();
+    }
+
+
+    private static void battleSetUp()
+    {
         StateManagerBehavior.StartBattle();
         friendlyCharacterBehaviors.Clear();
-        enemyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
-            //friendlyCharacters.Add(character);
             friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
             character.GetComponent<CharacterBehavior>().startBattle();
         }
+        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
+    }
+
+    private static void useDefaultEnemies()
+    {
+        enemyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputEnemyCharacters)
         {
-            //enemyCharacters.Add(character);
             enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
             character.GetComponent<CharacterBehavior>().startBattle();
         }
-        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
+    }
+
+    private static void createEnemies(CombatEncounterBehavior inputCombatData)
+    {
+        float xPos = 2.8f;
+        float spacing = 1.53f;
+
+        int i = 0;
+        foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
+        {
+            GameObject enemy = Instantiate<GameObject>(enemyCharacterBehaviors[0].gameObject);
+            enemy.transform.position = new Vector3(xPos - i * (spacing), enemy.transform.position.y, 0);
+            EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
+            enemyBehavior.setUpFromStats(curEnemyStat);
+            i++;
+        }
     }
 
     // called to end combat

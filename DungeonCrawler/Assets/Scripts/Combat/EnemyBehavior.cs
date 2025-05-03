@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBehavior : CharacterBehavior
 {
@@ -126,5 +125,21 @@ public class EnemyBehavior : CharacterBehavior
         }
 
         return friendlyCharacters[0];
+    }
+
+    public void setUpFromStats(EnemyStats stats)
+    {
+        characterName = stats.characterName;
+        iconSprite = stats.iconSprite;
+        GetComponent<SpriteRenderer>().sprite = stats.characterSprite;
+        maxHealth = stats.maxHealth;
+
+        spellsToChooseFrom.Clear();
+        foreach(EnemySpellStats curSpellStat in stats.spells)
+        {
+            EnemySpellBehavior curSpell = new EnemySpellBehavior();
+            curSpell.setUpFromStat(curSpellStat);
+            spellsToChooseFrom.Add(curSpell);
+        }
     }
 }

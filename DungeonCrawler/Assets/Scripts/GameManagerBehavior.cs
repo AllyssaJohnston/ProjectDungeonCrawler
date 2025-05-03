@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManagerBehavior : MonoBehaviour
 {
     private static GameManagerBehavior instance;
+    public List<CombatEncounterBehavior> combatEncounters = new List<CombatEncounterBehavior>();
     static bool loadingCombat = false;
     AsyncOperation asyncLoad;
 

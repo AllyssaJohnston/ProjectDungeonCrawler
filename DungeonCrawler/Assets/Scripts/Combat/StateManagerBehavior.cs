@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 
 public enum E_State
