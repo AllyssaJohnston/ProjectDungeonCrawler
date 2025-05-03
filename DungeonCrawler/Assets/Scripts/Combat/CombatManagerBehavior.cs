@@ -31,17 +31,6 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         instance = this;
         Debug.Log("combat manager initialized");
-
-        foreach (GameObject character in inputFriendlyCharacters)
-        {
-            friendlyCharacters.Add(character);
-            friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
-        }
-        foreach (GameObject character in inputEnemyCharacters)
-        {
-            enemyCharacters.Add(character);
-            enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
-        }
     }
 
     private void Awake()
@@ -143,13 +132,21 @@ public class CombatManagerBehavior : MonoBehaviour
     public static void startBattle()
     {
         StateManagerBehavior.StartBattle();
-        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
+        friendlyCharacters.Clear();
+        friendlyCharacterBehaviors.Clear();
+        enemyCharacters.Clear();
+        enemyCharacterBehaviors.Clear();
+        foreach (GameObject character in instance.inputFriendlyCharacters)
         {
-            character.startBattle();
+            friendlyCharacters.Add(character);
+            friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
+            character.GetComponent<CharacterBehavior>().startBattle();
         }
-        foreach (EnemyBehavior character in enemyCharacterBehaviors)
+        foreach (GameObject character in instance.inputEnemyCharacters)
         {
-            character.startBattle();
+            enemyCharacters.Add(character);
+            enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
+            character.GetComponent<CharacterBehavior>().startBattle();
         }
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
     }

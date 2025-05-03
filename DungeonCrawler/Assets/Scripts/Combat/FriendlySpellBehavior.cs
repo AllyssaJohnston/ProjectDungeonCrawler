@@ -40,7 +40,16 @@ public class FriendlySpellBehavior : SpellBehavior
     {
         spellNameText.text = spellName;
         damageText.text = damage + " DAMAGE";
-        moraleDamageText.text = moraleDamage + " MORALE DAMAGE";
+        if (moraleDamage == 0f)
+        {
+            // remove morale from the list of attributes
+            Destroy(moraleDamageText.gameObject);
+            moraleDamageText = null;
+        }
+        else
+        {
+            moraleDamageText.text = moraleDamage + " MORALE DAMAGE";
+        }
         if (manaCost == 0)
         {
             //hide the mana group
@@ -72,7 +81,7 @@ public class FriendlySpellBehavior : SpellBehavior
         panelImage = gameObject.GetComponent<Image>();
         regPanelColor = panelImage.color;
         regManaColor = manaImage.color;
-}
+    }
 
     private void setUpIcon(int x, int y, CharacterBehavior character)
     {

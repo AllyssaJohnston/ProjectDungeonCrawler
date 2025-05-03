@@ -20,7 +20,7 @@ public class StateManagerBehavior : MonoBehaviour
 
     private static int curEnemyIndex = 0;
     private static float bufferTimer = 0f;
-    [SerializeField] float playerBetweenSpellsWaitTime = .8f;
+    [SerializeField] float playerBetweenSpellsWaitTime = 1f;
     [SerializeField] float enemyActionWaitTime = 1.7f;
     [SerializeField] float enemyBetweenTurnsWaitTime = 1f;
     [SerializeField] float enemyToPlayerStateChangeWaitTime = 2f;
