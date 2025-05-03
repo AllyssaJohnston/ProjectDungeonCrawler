@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -82,44 +83,58 @@ public class CombatManagerBehavior : MonoBehaviour
     public static void getInput()
     {
         E_State curState = StateManagerBehavior.getState();
-        if (curState == E_State.PLAYER_SPELL_SELECTION || curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+        if (Input.GetMouseButtonDown(0)) //left click
         {
-
-            if (Input.GetMouseButtonDown(0)) //left click
+            // get game objects
+            if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
             {
-                // get game objects
                 Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
                 if (hit.collider != null)
                 {
                     GameObject gameObject = hit.collider.gameObject;
-                    if (gameObject.tag == "Enemy" && curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+                    if (gameObject.tag == "Enemy")
                     {
                         castSpellOnTarget(gameObject.GetComponent<EnemyBehavior>());
                     }
                 }
+            }
 
+            // find UI elements
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                PointerEventData pointer = new PointerEventData(EventSystem.current);
+                pointer.position = Input.mousePosition;
 
-                // find UI elements
-                if (EventSystem.current.IsPointerOverGameObject())
+                List<RaycastResult> raycastResults = new List<RaycastResult>();
+                EventSystem.current.RaycastAll(pointer, raycastResults);
+
+                if (raycastResults.Count > 0)
                 {
-                    PointerEventData pointer = new PointerEventData(EventSystem.current);
-                    pointer.position = Input.mousePosition;
-
-                    List<RaycastResult> raycastResults = new List<RaycastResult>();
-                    EventSystem.current.RaycastAll(pointer, raycastResults);
-
-                    if (raycastResults.Count > 0)
+                    foreach (RaycastResult result in raycastResults)
                     {
-                        foreach (RaycastResult result in raycastResults)
+                        if (result.gameObject.tag == "Spell")
                         {
-                            if (result.gameObject.tag == "Spell" && curState == E_State.PLAYER_SPELL_SELECTION)
+                            if (curState == E_State.PLAYER_SPELL_SELECTION)
                             {
-                                FriendlySpellBehavior spellBehavior = result.gameObject.GetComponent<FriendlySpellBehavior>();
-                                if (spellBehavior != null)
-                                {
-                                    resolveSpell(spellBehavior);
-                                }
+                                // good
+                            }
+                            else if (curState == E_State.PLAYER_BETWEEN_SPELLS_BUFFFER || curState == E_State.ENEMY_END_TURN_BUFFER)
+                            {
+                                // interupt state
+                                StateManagerBehavior.InteruptState();
+                                StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
+                            }
+                            else
+                            {
+                                // no
+                                return;
+                            }
+
+                            FriendlySpellBehavior spellBehavior = result.gameObject.GetComponent<FriendlySpellBehavior>();
+                            if (spellBehavior != null)
+                            {
+                                resolveSpell(spellBehavior);
                             }
                         }
                     }

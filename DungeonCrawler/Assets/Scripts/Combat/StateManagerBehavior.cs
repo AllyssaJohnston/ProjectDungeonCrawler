@@ -20,10 +20,10 @@ public class StateManagerBehavior : MonoBehaviour
 
     private static int curEnemyIndex = 0;
     private static float bufferTimer = 0f;
-    [SerializeField] float playerBetweenSpellsWaitTime = 1f;
-    [SerializeField] float enemyActionWaitTime = 1.7f;
-    [SerializeField] float enemyBetweenTurnsWaitTime = 1f;
-    [SerializeField] float enemyToPlayerStateChangeWaitTime = 2f;
+    [SerializeField] float playerBetweenSpellsWaitTime = 2f;
+    [SerializeField] float enemyActionWaitTime = 1.5f;
+    [SerializeField] float enemyBetweenTurnsWaitTime = 2f;
+    [SerializeField] float playerEndTurnBuffer = .75f;
 
     private void Awake()
     {
@@ -73,13 +73,13 @@ public class StateManagerBehavior : MonoBehaviour
                 // prep/reset enemies for next round
                 curEnemyIndex = 0;
                 CombatManagerBehavior.enemiesStartTurn();
-                buffer(instance.playerBetweenSpellsWaitTime);
+                buffer(instance.playerEndTurnBuffer);
                 break;
             case E_State.ENEMY_BUFFER:
                 buffer(instance.enemyActionWaitTime);
                 break;
             case E_State.BETWEEN_ENEMIES_BUFFER:
-                buffer(instance.enemyToPlayerStateChangeWaitTime);
+                buffer(instance.enemyBetweenTurnsWaitTime);
                 break;
             case E_State.ENEMY_ACTION:
                 CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].castSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
@@ -181,6 +181,13 @@ public class StateManagerBehavior : MonoBehaviour
                 Debug.Log("Invalid state" + curState);
                 break;
         }
+    }
+
+    // go to the next state, resetting any internal timers
+    public static void InteruptState()
+    {
+        bufferTimer = 0f;
+        NextState();
     }
 
     public static E_State getState() { return curState; }
