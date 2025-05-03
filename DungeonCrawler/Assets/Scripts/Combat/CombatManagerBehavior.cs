@@ -16,8 +16,6 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] private int manaRegen = 2;
 
     // These are the fields we actually want to work with
-    [HideInInspector] public static List<GameObject> friendlyCharacters = new List<GameObject>();
-    [HideInInspector] public static List<GameObject> enemyCharacters = new List<GameObject>();
     [HideInInspector] public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
 
@@ -147,19 +145,17 @@ public class CombatManagerBehavior : MonoBehaviour
     public static void startBattle()
     {
         StateManagerBehavior.StartBattle();
-        friendlyCharacters.Clear();
         friendlyCharacterBehaviors.Clear();
-        enemyCharacters.Clear();
         enemyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
-            friendlyCharacters.Add(character);
+            //friendlyCharacters.Add(character);
             friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
             character.GetComponent<CharacterBehavior>().startBattle();
         }
         foreach (GameObject character in instance.inputEnemyCharacters)
         {
-            enemyCharacters.Add(character);
+            //enemyCharacters.Add(character);
             enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
             character.GetComponent<CharacterBehavior>().startBattle();
         }
@@ -260,6 +256,11 @@ public class CombatManagerBehavior : MonoBehaviour
     // called at the end of the player turn (button click)
     public static void playerEndTurn()
     {
+        if (StateManagerBehavior.getState() == E_State.PLAYER_BETWEEN_SPELLS_BUFFFER || StateManagerBehavior.getState() == E_State.ENEMY_END_TURN_BUFFER)
+        {
+            StateManagerBehavior.InteruptState();
+            StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
+        }
         if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
         {
             StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);

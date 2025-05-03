@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public enum E_State
@@ -132,9 +133,12 @@ public class StateManagerBehavior : MonoBehaviour
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 DebugBehavior.updateLog("Pick who to attack.");
                 break;
+            case E_State.PLAYER_END_TURN_BUFFER:
+                DebugBehavior.updateLog("");
+                break;
             case E_State.ENEMY_BUFFER:
                 EnemyTurnIndicatorBehavior.show(true);
-                EnemyTurnIndicatorBehavior.Move(CombatManagerBehavior.enemyCharacters[curEnemyIndex].transform.position.x);
+                EnemyTurnIndicatorBehavior.Move(CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].gameObject.transform.position.x);
                 DebugBehavior.updateLog(CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].characterName + " is choosing their attack...");
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
