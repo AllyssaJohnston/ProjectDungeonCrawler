@@ -380,7 +380,7 @@ MonoBehaviour:
   singleCharacterX: -55
   singleCharacterY: 55
   singleCharacterScale: 1.13
-  firstCharacterX: -83
+  firstCharacterX: -74.5
   firstCharacterY: 77
   secondCharacterX: -36.6
   secondCharacterY: 35
