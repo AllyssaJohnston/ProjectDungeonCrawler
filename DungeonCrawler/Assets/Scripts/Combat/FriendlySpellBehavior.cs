@@ -92,7 +92,7 @@ public class FriendlySpellBehavior : SpellBehavior
         curCharacterIcon.transform.localPosition = new Vector3(x, y, 0);
 
         CharacterIconBehavior curCharacterIconBehavior = curCharacterIcon.GetComponent<CharacterIconBehavior>();
-        curCharacterIconBehavior.SetUp(character.iconSprite);
+        curCharacterIconBehavior.SetUp(character.iconSprite, character.iconUsedSprite);
         characterIcons.Add(curCharacterIconBehavior);
     }
 
@@ -136,6 +136,7 @@ public class FriendlySpellBehavior : SpellBehavior
             }
         }
 
+        // update panel color
         panelImage.color = canCastSpell ? regPanelColor : Color.gray;
         return canCastSpell;
     }
