@@ -43,6 +43,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
             return;
         }
         instance = this;
+        Debug.Log("arrow indicator manager initialized");
     }
 
     private ArrowIndicatorManagerBehavior() {}
@@ -53,13 +54,16 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         {
             case E_State.PLAYER_SPELL_SELECTION:
                 deleteArrows();
-                //foreach (FriendlySpellBehavior spell in PartySpellManagerBehavior.spells)
-                //{
-                //    if (spell.canCast)
-                //    {
-                //        createArrow(E_Arrow_Type.SPELL_PTR, spell.gameObject);
-                //    }
-                //}
+                FriendlySpellBehavior[] spells = PartySpellManagerBehavior.getSpells();
+                Debug.Log(spells.Length);
+
+                foreach (FriendlySpellBehavior spell in spells)
+                {
+                    if (spell.canCast)
+                    {
+                        createArrow(E_Arrow_Type.SPELL_PTR, spell.gameObject);
+                    }
+                }
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 deleteArrows();
@@ -69,6 +73,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 }
                 break;
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
+            case E_State.PLAYER_END_TURN_BUFFER:
                 deleteArrows();
                 break;
             case E_State.ENEMY_BUFFER:
@@ -84,31 +89,30 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 
     private static void createArrow(E_Arrow_Type type, GameObject parent)
     {
-        //GameObject curArrow = Instantiate<GameObject>(instance.arrow);
-        //Quaternion rot = Quaternion.identity;
+        GameObject curArrow = Instantiate(instance.arrow);
+        Vector3 scale = curArrow.transform.localScale;
+        curArrow.transform.SetParent(parent.transform);
+        curArrow.transform.localScale = scale;
 
-        //Vector3 scale = curArrow.transform.localScale;
-        //curArrow.transform.SetParent(parent.transform);
-        //curArrow.transform.localScale = scale;
-        //switch (type)
-        //{
-        //    case (E_Arrow_Type.ENEMY_PTR):
-        //        curArrow.transform.localPosition -= new Vector3(instance.enemyXOffset, instance.enemyYOffset, 0);
-
-        //        rot = Quaternion.Euler(0, 0, instance.enemyRotation);
-        //        break;
-        //    case (E_Arrow_Type.SPELL_PTR):
-        //        curArrow.transform.localPosition -= new Vector3(instance.spellXOffset, instance.spellYOffset, 0);
-
-        //        rot = Quaternion.Euler(0, 0, instance.enemyRotation);
-        //        break;
-        //    default:
-        //        Debug.Log("unrecognized arrow type");
-        //        break;
-        //}
-        //curArrow.transform.rotation = rot;
-        //curArrow.SetActive(true);
-        //arrows.Add(curArrow);
+        Vector3 pos = Vector3.zero;
+        Quaternion rot = Quaternion.identity;
+        switch (type)
+        {
+            case (E_Arrow_Type.ENEMY_PTR):
+                pos = new Vector3(instance.enemyXOffset, instance.enemyYOffset, 0);
+                rot = Quaternion.Euler(0, 0, instance.enemyRotation);
+                break;
+            case (E_Arrow_Type.SPELL_PTR):
+                pos = new Vector3(instance.spellXOffset, instance.spellYOffset, 0);
+                rot = Quaternion.Euler(0, 0, instance.spellRotation);
+                break;
+            default:
+                Debug.Log("unrecognized arrow type");
+                break;
+        }
+        curArrow.transform.localPosition = pos;
+        curArrow.transform.rotation = rot;
+        arrows.Add(curArrow);
     }
 
     private static void createArrow(E_Arrow_Type type, GameObject parent, Vector3 refPos)
@@ -128,7 +132,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 break;
             case (E_Arrow_Type.SPELL_PTR):
                 pos = new Vector3(refPos.x + instance.spellXOffset, instance.spellYOffset, 0);
-                rot = Quaternion.Euler(0, 0, instance.enemyRotation);
+                rot = Quaternion.Euler(0, 0, instance.spellRotation);
                 break;
             default:
                 Debug.Log("unrecognized arrow type");

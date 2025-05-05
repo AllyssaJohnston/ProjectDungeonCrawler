@@ -3,7 +3,7 @@ using UnityEngine;
 public class PartySpellManagerBehavior : MonoBehaviour
 {
     private static PartySpellManagerBehavior instance;
-    public static FriendlySpellBehavior[] spells;
+    private static FriendlySpellBehavior[] spells;
 
     private void Awake()
     {
@@ -48,6 +48,11 @@ public class PartySpellManagerBehavior : MonoBehaviour
                 numUncastable++;
             }
         }
+    }
+
+    public static FriendlySpellBehavior[] getSpells()
+    {
+        return spells;
     }
 
 }

@@ -2918,8 +2918,8 @@ MonoBehaviour:
   enemyXOffset: 0
   enemyYOffset: 0
   enemyRotation: -180
-  spellXOffset: -520
-  spellYOffset: 0
+  spellXOffset: -200
+  spellYOffset: 50
   spellRotation: -90
 --- !u!114 &2115695238 stripped
 MonoBehaviour:
