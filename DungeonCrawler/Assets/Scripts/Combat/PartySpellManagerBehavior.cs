@@ -3,7 +3,7 @@ using UnityEngine;
 public class PartySpellManagerBehavior : MonoBehaviour
 {
     private static PartySpellManagerBehavior instance;
-    private static FriendlySpellBehavior[] spells;
+    public static FriendlySpellBehavior[] spells;
 
     private void Awake()
     {
@@ -36,7 +36,8 @@ public class PartySpellManagerBehavior : MonoBehaviour
         int numUncastable = 0;
         foreach (FriendlySpellBehavior spell in spells)
         {
-            if (spell.updateAndCanCast())
+            spell.updateCanCast();
+            if (spell.canCast)
             {
                 spell.gameObject.transform.SetSiblingIndex(numCastable);
                 numCastable++;

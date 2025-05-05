@@ -202,6 +202,16 @@ public class CombatManagerBehavior : MonoBehaviour
         GameManagerBehavior.enterLevel();
     }
 
+    public static void nextState(E_State nextState)
+    {
+        switch (nextState)
+        {
+            case E_State.ENEMY_END_TURN_BUFFER:
+                playerStartTurn();
+                break;
+        }
+    }
+
     // takes a spell and determines if it can be cast
     // if it can, cast it or go to enemy selection state depending on the spell
     public static void resolveSpell(FriendlySpellBehavior spellBehavior)

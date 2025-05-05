@@ -61,6 +61,30 @@ public class DebugBehavior : MonoBehaviour
         lastFrameDebugMode = debugMode;
     }
 
+    public static void nextState(E_State nextState)
+    {
+        switch (nextState)
+        {
+            case E_State.PLAYER_SPELL_SELECTION:
+                updateLog("Choose a spell to cast or select end turn.");
+                break;
+            case E_State.PLAYER_ENEMY_TARGET_SELECTION:
+                updateLog("Pick who to attack.");
+                break;
+            case E_State.PLAYER_END_TURN_BUFFER:
+                updateLog("");
+                break;
+            case E_State.ENEMY_BUFFER:
+                updateLog(CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex].characterName + " is choosing their attack...");
+                break;
+            case E_State.ENEMY_END_TURN_BUFFER:
+                break;
+            default:
+                break;
+
+        }
+    }
+
     public static void updateLog(string log) 
     {
         Debug.Log(log);
