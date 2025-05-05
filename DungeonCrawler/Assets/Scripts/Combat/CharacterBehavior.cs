@@ -1,11 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CharacterBehavior : MonoBehaviour
 {
     protected bool friendly = true;
     public string characterName = "unnamed";
+    // alt character images
+    protected Sprite regSprite;
+    public Sprite damagedSprite;
+    public Sprite usedSprite;
+    // icon images
     public Sprite iconSprite;
+    public Sprite iconUsedSprite;
 
     protected SpriteRenderer characterSpriteRenderer;
     protected Color regColor;
@@ -22,6 +29,7 @@ public class CharacterBehavior : MonoBehaviour
     protected void SetUp()
     {
         characterSpriteRenderer = GetComponent<SpriteRenderer>();
+        regSprite = characterSpriteRenderer.sprite;
         regColor = characterSpriteRenderer.color;
 
         health = maxHealth;
@@ -78,8 +86,10 @@ public class CharacterBehavior : MonoBehaviour
     public IEnumerator takeDamageEffect()
     {
         characterSpriteRenderer.color = Color.red;
+        characterSpriteRenderer.sprite = damagedSprite;
         yield return new WaitForSeconds(.2f);
         characterSpriteRenderer.color = regColor;
+        characterSpriteRenderer.sprite = regSprite;
     }
 
     // called at start of battle
@@ -112,6 +122,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         // set availability
         available = isActive();
+        characterSpriteRenderer.sprite = available ? regSprite : usedSprite;
     }
 
     // returns whether character can cast spells
@@ -126,5 +137,6 @@ public class CharacterBehavior : MonoBehaviour
     {
         updateMorale(moraleChange);
         available = false;
+        characterSpriteRenderer.sprite = usedSprite;
     }
 }

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c557177453e611347a80bdedd1b70b4e
+guid: db6b564f78e6f934186774a738b307c7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3345627800716566970
-    second: NecromancerIcon_0
+      213: -6181369391358852801
+    second: C_Walk - 2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 400
+  spritePixelsToUnits: 200
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NecromancerIcon_0
+      name: C_Walk - 2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 586
-        height: 586
+        width: 235
+        height: 262
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64e1e9bbd31f191d0800000000000000
-      internalID: -3345627800716566970
+      spriteID: f314592f94d573aa0800000000000000
+      internalID: -6181369391358852801
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NecromancerIcon_0: -3345627800716566970
+      C_Walk - 2_0: -6181369391358852801
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

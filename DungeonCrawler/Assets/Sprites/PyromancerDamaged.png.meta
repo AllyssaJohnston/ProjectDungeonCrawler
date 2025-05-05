@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c557177453e611347a80bdedd1b70b4e
+guid: 0006f75bf4cbc8f42bbed29a9b6b3b62
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3345627800716566970
-    second: NecromancerIcon_0
+      213: 8273288665434634557
+    second: PyromancerDamaged_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NecromancerIcon_0
+      name: PyromancerDamaged_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 586
-        height: 586
+        x: 6
+        y: 7
+        width: 727
+        height: 1198
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64e1e9bbd31f191d0800000000000000
-      internalID: -3345627800716566970
+      spriteID: d393f7b1530a0d270800000000000000
+      internalID: 8273288665434634557
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NecromancerIcon_0: -3345627800716566970
+      PyromancerDamaged_0: 8273288665434634557
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

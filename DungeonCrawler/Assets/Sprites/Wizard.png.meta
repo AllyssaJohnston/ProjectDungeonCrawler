@@ -116,10 +116,10 @@ TextureImporter:
       name: Wizard_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 8
         y: 0
-        width: 632
-        height: 1397
+        width: 627
+        height: 1409
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

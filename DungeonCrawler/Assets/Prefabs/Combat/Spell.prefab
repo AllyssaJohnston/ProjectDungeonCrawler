@@ -309,7 +309,7 @@ RectTransform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.776}
-  m_AnchorMax: {x: 0.294, y: 1}
+  m_AnchorMax: {x: 0.3003023, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
@@ -377,13 +377,14 @@ MonoBehaviour:
   manaText: {fileID: 513161153689856309}
   targetingText: {fileID: 2698795282960515603}
   characterIconTemplate: {fileID: 6994409047722642919, guid: ac723c099affa944fb52463abca069e0, type: 3}
-  singleCharacterX: -6
-  singleCharacterY: 50
-  firstCharacterX: -60
-  firstCharacterY: 73
-  secondCharacterX: -6
-  secondCharacterY: 40
-  scale: 1.14
+  singleCharacterX: -55
+  singleCharacterY: 55
+  singleCharacterScale: 1.13
+  firstCharacterX: -74.5
+  firstCharacterY: 77
+  secondCharacterX: -36.6
+  secondCharacterY: 35
+  doubleCharacterScale: 0.735
 --- !u!1 &5008964329552565298
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,7 +557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 174.75, y: -62.664}
+  m_AnchoredPosition: {x: 128, y: -62.664}
   m_SizeDelta: {x: 235.56, y: 52.3226}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4453952083952860
@@ -791,11 +792,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114492307985053628, guid: b70ac02483f871f45a841169f640ddda, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 315.6
+      value: 272
       objectReference: {fileID: 0}
     - target: {fileID: 114492307985053628, guid: b70ac02483f871f45a841169f640ddda, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -94.1
+      value: -96
       objectReference: {fileID: 0}
     - target: {fileID: 114492307985053628, guid: b70ac02483f871f45a841169f640ddda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

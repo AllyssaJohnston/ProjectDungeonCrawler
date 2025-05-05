@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c557177453e611347a80bdedd1b70b4e
+guid: 262f36ed6b21667418b6ca5623d06dfa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3345627800716566970
-    second: NecromancerIcon_0
+      213: 246816776284562217
+    second: WizardGrayed_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: NecromancerIcon_0
+      name: WizardGrayed_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 8
         y: 0
-        width: 586
-        height: 586
+        width: 627
+        height: 1409
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64e1e9bbd31f191d0800000000000000
-      internalID: -3345627800716566970
+      spriteID: 9236c03ec8edc6300800000000000000
+      internalID: 246816776284562217
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      NecromancerIcon_0: -3345627800716566970
+      WizardGrayed_0: 246816776284562217
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
