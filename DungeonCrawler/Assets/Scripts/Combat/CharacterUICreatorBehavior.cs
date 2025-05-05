@@ -37,7 +37,6 @@ public class CharacterUICreatorBehavior : MonoBehaviour
     private GameObject createBar(float yOffset)
     {
         GameObject bar = Instantiate(healthBarTemplate);
-        bar = Instantiate(healthBarTemplate);
         Vector3 scale = bar.transform.localScale;
         bar.transform.SetParent(panel.transform);
         bar.transform.localScale = scale;

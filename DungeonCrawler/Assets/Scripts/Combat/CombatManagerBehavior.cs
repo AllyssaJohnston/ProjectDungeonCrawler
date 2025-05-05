@@ -158,14 +158,15 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void battleSetUp()
     {
-        StateManagerBehavior.StartBattle();
+        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
         friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
             friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
             character.GetComponent<CharacterBehavior>().startBattle();
         }
-        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
+        PartySpellManagerBehavior.UpdateSpellOrder();
+        StateManagerBehavior.StartBattle();
     }
 
     private static void useDefaultEnemies()
@@ -200,6 +201,16 @@ public class CombatManagerBehavior : MonoBehaviour
         Debug.Log("end combat");
         // TODO have game manager hold level data, so that the scene isn't restarted
         GameManagerBehavior.enterLevel();
+    }
+
+    public static void nextState(E_State nextState)
+    {
+        switch (nextState)
+        {
+            case E_State.ENEMY_END_TURN_BUFFER:
+                playerStartTurn();
+                break;
+        }
     }
 
     // takes a spell and determines if it can be cast

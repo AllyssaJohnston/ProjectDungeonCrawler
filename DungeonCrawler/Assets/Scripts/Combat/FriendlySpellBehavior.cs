@@ -35,6 +35,8 @@ public class FriendlySpellBehavior : SpellBehavior
     public float secondCharacterY; // y pos of second character icon
     public float doubleCharacterScale;
 
+    [HideInInspector] public bool canCast;
+
     private List<CharacterIconBehavior> characterIcons = new List<CharacterIconBehavior>();
 
     private void Start()
@@ -96,7 +98,7 @@ public class FriendlySpellBehavior : SpellBehavior
         characterIcons.Add(curCharacterIconBehavior);
     }
 
-    public bool updateAndCanCast()
+    public void updateCanCast()
     {
         bool canCastSpell = true;
         // calculate if spell is castable
@@ -138,6 +140,6 @@ public class FriendlySpellBehavior : SpellBehavior
 
         // update panel color
         panelImage.color = canCastSpell ? regPanelColor : Color.gray;
-        return canCastSpell;
+        canCast = canCastSpell;
     }
 }

@@ -27,7 +27,6 @@ public class PartySpellManagerBehavior : MonoBehaviour
         instance = this;
 
         spells = GetComponentsInChildren<FriendlySpellBehavior>();
-        UpdateSpellOrder();
     }
 
     public static void UpdateSpellOrder()
@@ -36,7 +35,8 @@ public class PartySpellManagerBehavior : MonoBehaviour
         int numUncastable = 0;
         foreach (FriendlySpellBehavior spell in spells)
         {
-            if (spell.updateAndCanCast())
+            spell.updateCanCast();
+            if (spell.canCast)
             {
                 spell.gameObject.transform.SetSiblingIndex(numCastable);
                 numCastable++;
@@ -47,6 +47,11 @@ public class PartySpellManagerBehavior : MonoBehaviour
                 numUncastable++;
             }
         }
+    }
+
+    public static FriendlySpellBehavior[] getSpells()
+    {
+        return spells;
     }
 
 }
