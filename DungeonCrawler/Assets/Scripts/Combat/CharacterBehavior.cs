@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CharacterBehavior : MonoBehaviour
 {
@@ -121,6 +122,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         // set availability
         available = isActive();
+        characterSpriteRenderer.sprite = available ? regSprite : usedSprite;
     }
 
     // returns whether character can cast spells
@@ -135,5 +137,6 @@ public class CharacterBehavior : MonoBehaviour
     {
         updateMorale(moraleChange);
         available = false;
+        characterSpriteRenderer.sprite = usedSprite;
     }
 }
