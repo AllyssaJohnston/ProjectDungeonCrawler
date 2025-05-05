@@ -17,7 +17,6 @@ public class TeamManaBehavior : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            Debug.Log("first");
             Destroy(gameObject);
             return;
         }
@@ -29,7 +28,6 @@ public class TeamManaBehavior : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            Debug.Log("second");
             Destroy(gameObject);
             return;
         }

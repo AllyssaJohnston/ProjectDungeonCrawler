@@ -158,14 +158,15 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void battleSetUp()
     {
-        StateManagerBehavior.StartBattle();
+        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
         friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
             friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
             character.GetComponent<CharacterBehavior>().startBattle();
         }
-        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
+        PartySpellManagerBehavior.UpdateSpellOrder();
+        StateManagerBehavior.StartBattle();
     }
 
     private static void useDefaultEnemies()

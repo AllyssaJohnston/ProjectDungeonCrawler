@@ -1,8 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
 public enum E_Arrow_Type 
 {
@@ -15,12 +12,12 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
     private static ArrowIndicatorManagerBehavior instance;
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject fullScreenPanel;
-    [SerializeField] int enemyXOffset;
-    [SerializeField] int enemyYOffset;
-    [SerializeField] int enemyRotation;
-    [SerializeField] int spellXOffset;
-    [SerializeField] int spellYOffset;
-    [SerializeField] int spellRotation;
+    [SerializeField] float enemyXOffset;
+    [SerializeField] float enemyYOffset;
+    [SerializeField] float enemyRotation;
+    [SerializeField] float spellXOffset;
+    [SerializeField] float spellYOffset;
+    [SerializeField] float spellRotation;
     private static List<GameObject> arrows = new List<GameObject>();
 
 
@@ -48,6 +45,11 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 
     private ArrowIndicatorManagerBehavior() {}
 
+    private void Update()
+    {
+        
+    }
+
     public static void nextState(E_State nextState)
     {
         switch (nextState)
@@ -55,7 +57,6 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
             case E_State.PLAYER_SPELL_SELECTION:
                 deleteArrows();
                 FriendlySpellBehavior[] spells = PartySpellManagerBehavior.getSpells();
-                Debug.Log(spells.Length);
 
                 foreach (FriendlySpellBehavior spell in spells)
                 {
@@ -96,15 +97,13 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 
         Vector3 pos = Vector3.zero;
         Quaternion rot = Quaternion.identity;
+        float zRot = 0;
         switch (type)
         {
-            case (E_Arrow_Type.ENEMY_PTR):
-                pos = new Vector3(instance.enemyXOffset, instance.enemyYOffset, 0);
-                rot = Quaternion.Euler(0, 0, instance.enemyRotation);
-                break;
             case (E_Arrow_Type.SPELL_PTR):
                 pos = new Vector3(instance.spellXOffset, instance.spellYOffset, 0);
                 rot = Quaternion.Euler(0, 0, instance.spellRotation);
+                zRot = instance.spellRotation;
                 break;
             default:
                 Debug.Log("unrecognized arrow type");
@@ -112,6 +111,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
         curArrow.transform.localPosition = pos;
         curArrow.transform.rotation = rot;
+        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot);
         arrows.Add(curArrow);
     }
 
@@ -124,15 +124,13 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 
         Vector3 pos = Vector3.zero;
         Quaternion rot = Quaternion.identity;
+        float zRot = 0;
         switch (type)
         {
             case (E_Arrow_Type.ENEMY_PTR):
                 pos = new Vector3(refPos.x + instance.enemyXOffset, instance.enemyYOffset, 0);
                 rot = Quaternion.Euler(0, 0, instance.enemyRotation);
-                break;
-            case (E_Arrow_Type.SPELL_PTR):
-                pos = new Vector3(refPos.x + instance.spellXOffset, instance.spellYOffset, 0);
-                rot = Quaternion.Euler(0, 0, instance.spellRotation);
+                zRot = instance.enemyRotation;
                 break;
             default:
                 Debug.Log("unrecognized arrow type");
@@ -140,6 +138,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
         curArrow.transform.position = pos;
         curArrow.transform.rotation = rot;
+        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot);
         arrows.Add(curArrow);
     }
 

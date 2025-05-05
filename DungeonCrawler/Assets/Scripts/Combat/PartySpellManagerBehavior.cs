@@ -27,7 +27,6 @@ public class PartySpellManagerBehavior : MonoBehaviour
         instance = this;
 
         spells = GetComponentsInChildren<FriendlySpellBehavior>();
-        UpdateSpellOrder();
     }
 
     public static void UpdateSpellOrder()

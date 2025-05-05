@@ -2916,11 +2916,11 @@ MonoBehaviour:
   arrow: {fileID: 8506294000642117441, guid: 695a281c98676c544bb06eb10042295f, type: 3}
   fullScreenPanel: {fileID: 9140717330033394566}
   enemyXOffset: 0
-  enemyYOffset: 0
-  enemyRotation: -180
-  spellXOffset: -200
+  enemyYOffset: 0.75
+  enemyRotation: -90
+  spellXOffset: -260
   spellYOffset: 50
-  spellRotation: -90
+  spellRotation: 0
 --- !u!114 &2115695238 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
