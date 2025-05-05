@@ -26,13 +26,14 @@ public class FriendlySpellBehavior : SpellBehavior
     private Image panelImage;
 
     [Header("UI Spacing")]
-    public int singleCharacterX; //x pos of single character icons
-    public int singleCharacterY; //y pos of single character icon
-    public int firstCharacterX; //x pos of first character icon
-    public int firstCharacterY; // y pos of first character icon
-    public int secondCharacterX; //x pos of second character icon
-    public int secondCharacterY; // y pos of second character icon
-    public float scale = 1f;
+    public float singleCharacterX; //x pos of single character icons
+    public float singleCharacterY; //y pos of single character icon
+    public float singleCharacterScale;
+    public float firstCharacterX; //x pos of first character icon
+    public float firstCharacterY; // y pos of first character icon
+    public float secondCharacterX; //x pos of second character icon
+    public float secondCharacterY; // y pos of second character icon
+    public float doubleCharacterScale;
 
     private List<CharacterIconBehavior> characterIcons = new List<CharacterIconBehavior>();
 
@@ -64,13 +65,13 @@ public class FriendlySpellBehavior : SpellBehavior
         else if (castingCharacterBehaviors.Count == 1)
         {
             //single character
-            setUpIcon(singleCharacterX, singleCharacterY, castingCharacterBehaviors[0]);
+            setUpIcon(singleCharacterX, singleCharacterY, singleCharacterScale, castingCharacterBehaviors[0]);
         }
         else if (castingCharacterBehaviors.Count == 2)
         {
             //double characters
-            setUpIcon(firstCharacterX, firstCharacterY, castingCharacterBehaviors[0]);
-            setUpIcon(secondCharacterX, secondCharacterY, castingCharacterBehaviors[1]);
+            setUpIcon(firstCharacterX, firstCharacterY, doubleCharacterScale, castingCharacterBehaviors[0]);
+            setUpIcon(secondCharacterX, secondCharacterY, doubleCharacterScale, castingCharacterBehaviors[1]);
             characterIcons[0].gameObject.transform.SetAsLastSibling(); // render the first character on top, which requires putting it at the bottom of the list
         }
         else
@@ -83,7 +84,7 @@ public class FriendlySpellBehavior : SpellBehavior
         regManaColor = manaImage.color;
     }
 
-    private void setUpIcon(int x, int y, CharacterBehavior character)
+    private void setUpIcon(float x, float y, float scale, CharacterBehavior character)
     {
         GameObject curCharacterIcon = Instantiate(characterIconTemplate);
         curCharacterIcon.transform.SetParent(gameObject.transform);
@@ -98,23 +99,34 @@ public class FriendlySpellBehavior : SpellBehavior
     public bool updateAndCanCast()
     {
         bool canCastSpell = true;
-        //update icons
+        // calculate if spell is castable
         for (int i = 0; i < characterIcons.Count; i++)
         {
             bool canCharacterCast = castingCharacterBehaviors[i].canCast();
-            characterIcons[i].updateImage(canCharacterCast);
             canCastSpell = canCastSpell && canCharacterCast;
         }
+        int curMana = TeamManaBehavior.getMana();
+        canCastSpell = canCastSpell && curMana >= manaCost;
 
-        //update mana
+        // update icons
+        foreach (CharacterIconBehavior icon in characterIcons)
+        {
+            icon.updateImage(canCastSpell);
+        }
+
+        // update mana icon
         if (manaGroup.activeSelf)
         {
-            int curMana = TeamManaBehavior.getMana();
             manaText.text = curMana.ToString() + "/" + manaCost.ToString();
             canCastSpell = canCastSpell && curMana >= manaCost;
             if (curMana < manaCost)
             {
                 manaText.color = Color.red;
+                manaImage.color = new Color(.43f, .43f, .43f);
+            }
+            else if (!canCastSpell)
+            {
+                manaText.color = Color.white;
                 manaImage.color = new Color(.43f, .43f, .43f);
             }
             else

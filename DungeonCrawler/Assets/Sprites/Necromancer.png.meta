@@ -5,9 +5,6 @@ TextureImporter:
   - first:
       213: -6201857198974045655
     second: Necromancer_0
-  - first:
-      213: 8203306007564158787
-    second: Necromancer_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,10 +116,10 @@ TextureImporter:
       name: Necromancer_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 7
-        width: 791
-        height: 1016
+        x: 0
+        y: 0
+        width: 865
+        height: 1014
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,28 +130,6 @@ TextureImporter:
       bones: []
       spriteID: 922f3738cb39ee9a0800000000000000
       internalID: -6201857198974045655
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Necromancer_1
-      rect:
-        serializedVersion: 2
-        x: 796
-        y: 226
-        width: 7
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 34780b4d95ff7d170800000000000000
-      internalID: 8203306007564158787
       vertices: []
       indices: 
       edges: []
@@ -174,7 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Necromancer_0: -6201857198974045655
-      Necromancer_1: 8203306007564158787
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

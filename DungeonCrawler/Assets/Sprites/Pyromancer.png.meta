@@ -116,9 +116,9 @@ TextureImporter:
       name: Pyromancer_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 14
-        width: 731
+        x: 6
+        y: 6
+        width: 727
         height: 1199
       alignment: 0
       pivot: {x: 0, y: 0}
