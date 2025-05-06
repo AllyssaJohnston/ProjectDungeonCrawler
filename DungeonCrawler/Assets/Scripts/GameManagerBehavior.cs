@@ -7,7 +7,8 @@ public class GameManagerBehavior : MonoBehaviour
 {
     private static GameManagerBehavior instance;
     public List<CombatEncounterBehavior> combatEncounters = new List<CombatEncounterBehavior>();
-    static bool loadingCombat = false;
+    static bool loadingEncounter = false;
+    static CombatEncounterBehavior encounter = null;
     AsyncOperation asyncLoad;
 
     private void Awake()
@@ -34,7 +35,7 @@ public class GameManagerBehavior : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Combat")
         {
             Debug.Log("starting in combat");
-            OnLoadCombat(); // combat already loaded, don't have to load it
+            OnLoadCombat(null); // combat already loaded, don't have to load it
         }
     }
 
@@ -47,24 +48,25 @@ public class GameManagerBehavior : MonoBehaviour
             Application.Quit();
         }
         // call load combat to see if combat scene has loaded
-        if (loadingCombat)
+        if (loadingEncounter)
         {
             instance.StartCoroutine(instance.LoadCombat());
         }
     }
 
     // load combat
-    public static void enterCombat()
+    public static void enterCombat(CombatEncounterBehavior enc)
     {
+        encounter = enc;
         instance.StartCoroutine(instance.LoadCombat());
     }
 
     // async load combat, and call OnLoadCombat when done
     private IEnumerator LoadCombat()
     {
-        if (!loadingCombat)
+        if (!loadingEncounter)
         {
-            loadingCombat = true;
+            loadingEncounter = true;
             asyncLoad = SceneManager.LoadSceneAsync("Combat");
             asyncLoad.allowSceneActivation = false;
         }
@@ -75,16 +77,16 @@ public class GameManagerBehavior : MonoBehaviour
             yield return null;
         }
         asyncLoad.allowSceneActivation = true;
-        loadingCombat = false;
+        loadingEncounter = false;
         asyncLoad = null;
         Debug.Log("Combat loaded");
-        OnLoadCombat();
+        OnLoadCombat(encounter);
     }
 
     // what to do after combat has loaded
-    private static void OnLoadCombat()
+    private static void OnLoadCombat(CombatEncounterBehavior encounter)
     {
-        CombatManagerBehavior.startBattle();
+        CombatManagerBehavior.startBattle(encounter);
     }
     
     // what to do when entering the level

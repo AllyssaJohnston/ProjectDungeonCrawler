@@ -143,8 +143,11 @@ public class CombatManagerBehavior : MonoBehaviour
     
     public static void startBattle(CombatEncounterBehavior inputCombatData)
     {
-        battleSetUp();
-        createEnemies(inputCombatData);
+        if (inputCombatData == null) startBattle();
+        else {
+            battleSetUp();
+            createEnemies(inputCombatData);
+        }
     }
 
 
