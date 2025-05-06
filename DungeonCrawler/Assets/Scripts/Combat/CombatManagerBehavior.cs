@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -161,6 +160,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void battleSetUp()
     {
+        Debug.Log(instance == null);
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
         friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
