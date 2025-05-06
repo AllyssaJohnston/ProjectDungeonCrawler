@@ -2915,8 +2915,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 8506294000642117441, guid: 695a281c98676c544bb06eb10042295f, type: 3}
   fullScreenPanel: {fileID: 9140717330033394566}
-  enemyXOffset: 0
-  enemyYOffset: 0.75
+  enemySelectionXOffset: 0
+  enemySelectionYOffset: 0.7
+  enemyTurnXOffset: 0
+  enemyTurnYOffset: 0
   enemyRotation: -90
   spellXOffset: -260
   spellYOffset: 50
