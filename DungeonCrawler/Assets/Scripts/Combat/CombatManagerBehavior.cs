@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.TextCore.Text;
 
 
 // Singleton
@@ -11,6 +12,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // These are here so that you can edit the characters in editor
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
+    [SerializeField] GameObject enemyTemplate;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
 
@@ -47,8 +49,11 @@ public class CombatManagerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        checkCombatStatus();
-        getInput();
+        if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
+        {
+            checkCombatStatus();
+            getInput();
+        }
     }
 
     private static void checkCombatStatus()
@@ -77,7 +82,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     // gets input and uses it
     // TODO separate get and use input
-    public static void getInput()
+    private static void getInput()
     {
         E_State curState = StateManagerBehavior.getState();
         if (Input.GetMouseButtonDown(0)) //left click
@@ -142,16 +147,23 @@ public class CombatManagerBehavior : MonoBehaviour
     
     public static void startBattle(CombatEncounterBehavior inputCombatData)
     {
-        if (inputCombatData == null) startBattle();
-        else {
-            battleSetUp();
-            createEnemies(inputCombatData);
+        if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
+        {
+            if (inputCombatData == null)
+            {
+                startBattle();
+            }
+            else
+            {
+                battleSetUp();
+                createEnemies(inputCombatData);
+            }
         }
     }
 
 
     // called at start of each combat
-    public static void startBattle()
+    private static void startBattle()
     {
         battleSetUp();
         useDefaultEnemies();
@@ -160,7 +172,6 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void battleSetUp()
     {
-        Debug.Log(instance == null);
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
         friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
@@ -184,16 +195,26 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
-        float xPos = 2.8f;
         float spacing = 1.53f;
 
         int i = 0;
+        //clear old enemies
+        foreach (GameObject defaultEnemy in instance.inputEnemyCharacters)
+        {
+            Destroy(defaultEnemy);
+        }
+        enemyCharacterBehaviors.Clear();
+        instance.inputEnemyCharacters.Clear();
+
+        //create new enemies
         foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
         {
-            GameObject enemy = Instantiate<GameObject>(enemyCharacterBehaviors[0].gameObject);
-            enemy.transform.position = new Vector3(xPos - i * (spacing), enemy.transform.position.y, 0);
+            GameObject enemy = Instantiate<GameObject>(instance.enemyTemplate);
+            enemy.transform.position = instance.enemyTemplate.transform.position - new Vector3(i * (spacing), 0, 0);
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
             enemyBehavior.setUpFromStats(curEnemyStat);
+            enemyCharacterBehaviors.Add(enemyBehavior);
+            enemyBehavior.startBattle();
             i++;
         }
     }
@@ -201,9 +222,12 @@ public class CombatManagerBehavior : MonoBehaviour
     // called to end combat
     private static void endCombat()
     {
-        Debug.Log("end combat");
-        // TODO have game manager hold level data, so that the scene isn't restarted
-        GameManagerBehavior.enterLevel();
+        if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
+        {
+            Debug.Log("end combat");
+            // TODO have game manager hold level data, so that the scene isn't restarted
+            GameManagerBehavior.enterLevel();
+        }
     }
 
     public static void nextState(E_State nextState)
@@ -218,7 +242,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     // takes a spell and determines if it can be cast
     // if it can, cast it or go to enemy selection state depending on the spell
-    public static void resolveSpell(FriendlySpellBehavior spellBehavior)
+    private static void resolveSpell(FriendlySpellBehavior spellBehavior)
     {
         // make sure everyone is available to cast
         bool canCast = true;
@@ -266,7 +290,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     // for player casted spells
     // casts the stored spell selected by the player on all enemies
-    public static void castSpellOnAll()
+    private static void castSpellOnAll()
     {
         DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
@@ -278,7 +302,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     // for player casted spells
     // casts the stored spell selected by the player on the enemy selected by the player
-    public static void castSpellOnTarget(EnemyBehavior selectedEnemy)
+    private static void castSpellOnTarget(EnemyBehavior selectedEnemy)
     {
         DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
         selectedEnemy.updateHealth(-curSpellToCast.damage);

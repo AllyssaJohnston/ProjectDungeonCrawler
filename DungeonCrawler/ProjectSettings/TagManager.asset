@@ -8,6 +8,8 @@ TagManager:
   - Spell
   - Enemy
   - FirstPerson
+  - CombatData
+  - LevelData
   layers:
   - Default
   - TransparentFX

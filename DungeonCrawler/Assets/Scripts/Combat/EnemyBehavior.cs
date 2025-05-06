@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class EnemyBehavior : CharacterBehavior
 {
+    [SerializeField] GameObject spellTemplate;
     [SerializeField] List<EnemySpellBehavior> spellsToChooseFrom = new List<EnemySpellBehavior>();
 
     private int curSpellIndex = 0;
@@ -137,7 +138,8 @@ public class EnemyBehavior : CharacterBehavior
         spellsToChooseFrom.Clear();
         foreach(EnemySpellStats curSpellStat in stats.spells)
         {
-            EnemySpellBehavior curSpell = new EnemySpellBehavior();
+            GameObject spellObj = Instantiate<GameObject>(spellTemplate);
+            EnemySpellBehavior curSpell = spellObj.AddComponent<EnemySpellBehavior>();
             curSpell.setUpFromStat(curSpellStat);
             spellsToChooseFrom.Add(curSpell);
         }
