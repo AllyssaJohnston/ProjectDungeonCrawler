@@ -21,6 +21,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static FriendlySpellBehavior curSpellToCast = null;
 
+    public static bool combatStarted {get; private set;}
+
     public void Start()
     {
         if (instance != null && instance != this)
@@ -45,11 +47,17 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private CombatManagerBehavior() { }
 
+    public static bool loaded() {
+        return instance != null;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        checkCombatStatus();
-        getInput();
+        if (combatStarted) {
+            checkCombatStatus();
+            getInput();
+        }
     }
 
     private static void checkCombatStatus()
@@ -58,6 +66,7 @@ public class CombatManagerBehavior : MonoBehaviour
         bool alive = false;
         foreach (CharacterBehavior character in friendlyCharacterBehaviors)
         {
+            Debug.Log(character);
             alive = alive | character.isActive();
         }
         if (alive == false)
@@ -148,6 +157,7 @@ public class CombatManagerBehavior : MonoBehaviour
             battleSetUp();
             createEnemies(inputCombatData);
         }
+        combatStarted = true;
     }
 
 
@@ -156,6 +166,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         battleSetUp();
         useDefaultEnemies();
+        combatStarted = true;
     }
 
 
@@ -187,13 +198,15 @@ public class CombatManagerBehavior : MonoBehaviour
         float xPos = 2.8f;
         float spacing = 1.53f;
 
+        enemyCharacterBehaviors.Clear();
         int i = 0;
         foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
         {
-            GameObject enemy = Instantiate<GameObject>(enemyCharacterBehaviors[0].gameObject);
+            GameObject enemy = Instantiate<GameObject>(instance.inputEnemyCharacters[0]);
             enemy.transform.position = new Vector3(xPos - i * (spacing), enemy.transform.position.y, 0);
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
             enemyBehavior.setUpFromStats(curEnemyStat);
+            enemyCharacterBehaviors.Add(enemyBehavior);
             i++;
         }
     }

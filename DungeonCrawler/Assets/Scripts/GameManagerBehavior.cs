@@ -11,6 +11,8 @@ public class GameManagerBehavior : MonoBehaviour
     static CombatEncounterBehavior encounter = null;
     AsyncOperation asyncLoad;
 
+    private List<GameObject> inactiveLevelObjects;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -67,12 +69,12 @@ public class GameManagerBehavior : MonoBehaviour
         if (!loadingEncounter)
         {
             loadingEncounter = true;
-            asyncLoad = SceneManager.LoadSceneAsync("Combat");
-            asyncLoad.allowSceneActivation = false;
+
+            asyncLoad = SceneManager.LoadSceneAsync("Combat", LoadSceneMode.Additive);
         }
 
         // Wait until the asynchronous scene fully loads
-        while (asyncLoad.progress < .90f) // async laod will never progress above 90 apparently with allowSceneActivation = false
+        while (!CombatManagerBehavior.loaded()) // async laod will never progress above 90 apparently with allowSceneActivation = false
         {
             yield return null;
         }
@@ -80,18 +82,46 @@ public class GameManagerBehavior : MonoBehaviour
         loadingEncounter = false;
         asyncLoad = null;
         Debug.Log("Combat loaded");
-        OnLoadCombat(encounter);
+        //OnLoadCombat(encounter);
+        OnLoadCombat(null);
     }
 
     // what to do after combat has loaded
     private static void OnLoadCombat(CombatEncounterBehavior encounter)
     {
+        instance.deactivateLevel();
         CombatManagerBehavior.startBattle(encounter);
     }
     
     // what to do when entering the level
     public static void enterLevel()
     {
-        SceneManager.LoadScene("Level1");
+        //SceneManager.LoadScene("Level1");
+        SceneManager.UnloadSceneAsync("Combat");
+        instance.activateLevel();
+    }
+
+    private void deactivateLevel() {
+        if (inactiveLevelObjects == null) inactiveLevelObjects = new List<GameObject>();
+
+        foreach (var obj in SceneManager.GetActiveScene().GetRootGameObjects()) {
+            if (obj.activeSelf && !obj.CompareTag("RetainThroughBattle")) {
+                obj.SetActive(false);
+                inactiveLevelObjects.Add(obj);
+            }
+        }
+    }
+
+    private void activateLevel() {
+        if (inactiveLevelObjects == null
+        ||  inactiveLevelObjects.Count == 0) {
+            Debug.LogWarning("No level inactive in background to reload");
+            return;
+        }
+
+        foreach (var obj in inactiveLevelObjects) {
+            obj.SetActive(true);
+        }
+        inactiveLevelObjects.Clear();
     }
 }
