@@ -9,7 +9,8 @@ public enum E_State
     ENEMY_BUFFER,
     BETWEEN_ENEMIES_BUFFER,
     ENEMY_ACTION,
-    ENEMY_END_TURN_BUFFER
+    ENEMY_END_TURN_BUFFER,
+    COMBAT_ENDED
 }
 
 public class StateManagerBehavior : MonoBehaviour
@@ -92,6 +93,8 @@ public class StateManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
                 buffer(instance.enemyBetweenTurnsWaitTime);
+                break;
+            case E_State.COMBAT_ENDED:
                 break;
             default:
                 Debug.Log("Invalid state" + curState);

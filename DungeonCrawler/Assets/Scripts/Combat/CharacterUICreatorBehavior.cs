@@ -34,6 +34,11 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         }
     }
 
+    public void setPanel(GameObject panel)
+    {
+        this.panel = panel;
+    }
+
     private GameObject createBar(float yOffset)
     {
         GameObject bar = Instantiate(healthBarTemplate);

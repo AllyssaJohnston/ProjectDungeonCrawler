@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 
 
 // Singleton
@@ -13,6 +12,8 @@ public class CombatManagerBehavior : MonoBehaviour
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
     [SerializeField] GameObject enemyTemplate;
+    [SerializeField] GameObject characterHolder;
+    [SerializeField] GameObject fullscreenPanel;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
 
@@ -145,13 +146,15 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
     
+    // called at the start of each combat
     public static void startBattle(CombatEncounterBehavior inputCombatData)
     {
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             if (inputCombatData == null)
             {
-                startBattle();
+                battleSetUp();
+                useDefaultEnemies();
             }
             else
             {
@@ -159,14 +162,6 @@ public class CombatManagerBehavior : MonoBehaviour
                 createEnemies(inputCombatData);
             }
         }
-    }
-
-
-    // called at start of each combat
-    private static void startBattle()
-    {
-        battleSetUp();
-        useDefaultEnemies();
     }
 
 
@@ -185,6 +180,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void useDefaultEnemies()
     {
+        // reset so that you can enter the same encounter multiple times
         enemyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputEnemyCharacters)
         {
@@ -197,7 +193,8 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         float spacing = 1.53f;
 
-        int i = 0;
+        
+        int i = inputCombatData.enemies.Count - 1;
         //clear old enemies
         foreach (GameObject defaultEnemy in instance.inputEnemyCharacters)
         {
@@ -210,12 +207,18 @@ public class CombatManagerBehavior : MonoBehaviour
         foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
         {
             GameObject enemy = Instantiate<GameObject>(instance.enemyTemplate);
-            enemy.transform.position = instance.enemyTemplate.transform.position - new Vector3(i * (spacing), 0, 0);
+            enemy.transform.position = instance.characterHolder.transform.position + instance.enemyTemplate.transform.position - new Vector3(i * (spacing), 0, 0);
+            enemy.transform.SetParent(instance.characterHolder.transform);
+            foreach (Behaviour component in enemy.GetComponents<Behaviour>())
+            {
+                component.enabled = true;
+            }
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
+            enemy.GetComponent<CharacterUICreatorBehavior>().setPanel(instance.fullscreenPanel);
             enemyBehavior.setUpFromStats(curEnemyStat);
             enemyCharacterBehaviors.Add(enemyBehavior);
             enemyBehavior.startBattle();
-            i++;
+            i--;
         }
     }
 

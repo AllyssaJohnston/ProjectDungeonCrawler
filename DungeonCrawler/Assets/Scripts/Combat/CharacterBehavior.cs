@@ -26,7 +26,7 @@ public class CharacterBehavior : MonoBehaviour
 
     private CharacterUICreatorBehavior UI_ManagerBehavior;
 
-    protected void SetUp()
+    virtual protected void SetUp()
     {
         characterSpriteRenderer = GetComponent<SpriteRenderer>();
         regSprite = characterSpriteRenderer.sprite;

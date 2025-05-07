@@ -4,20 +4,9 @@ using System.Collections.Generic;
 public class EnemyBehavior : CharacterBehavior
 {
     [SerializeField] GameObject spellTemplate;
-    [SerializeField] List<EnemySpellBehavior> spellsToChooseFrom = new List<EnemySpellBehavior>();
+    [SerializeField] List<EnemySpellStats> spellsToChooseFrom = new List<EnemySpellStats>();
 
     private int curSpellIndex = 0;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        SetUp();
-        friendly = false;
-        if (spellsToChooseFrom.Count == 0)
-        {
-            Debug.Log("No spells");
-        }
-    }
 
 
     // use this method to reset things between fights
@@ -31,8 +20,19 @@ public class EnemyBehavior : CharacterBehavior
         }
 
         available = true;
-
         curSpellIndex = 0;
+        SetUp();
+    }
+
+    override protected void SetUp()
+    {
+        base.SetUp();
+        friendly = false;
+        if (spellsToChooseFrom.Count == 0)
+        {
+            Debug.Log("No spells");
+        }
+
     }
 
     // use this method to reset things between turns
@@ -46,24 +46,24 @@ public class EnemyBehavior : CharacterBehavior
     {
         if (canCast())
         {
-            EnemySpellBehavior spellBehavior = getSpell();
+            EnemySpellStats spell = getSpell();
 
             string target = "all party members";
-            if (spellBehavior.damageAllEnemies)
+            if (spell.damageAllEnemies)
             {
                 foreach (CharacterBehavior characterBehavior in friendlyCharacters)
                 {
-                    characterBehavior.updateHealth(-spellBehavior.damage);
+                    characterBehavior.updateHealth(-spell.damage);
                 }
             }
             else
             {
                 //select character to target based on spell targeting data, and attack them
                 CharacterBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
-                characterBehavior.updateHealth(-spellBehavior.damage);
+                characterBehavior.updateHealth(-spell.damage);
                 target = characterBehavior.characterName;
             }
-            DebugBehavior.updateLog(characterName + " cast " + spellBehavior.spellName + " on " + target + " for " + spellBehavior.damage + " damage.");
+            DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage.");
         }
         else
         {
@@ -72,15 +72,15 @@ public class EnemyBehavior : CharacterBehavior
     }
 
     // rotate through spells
-    private EnemySpellBehavior getSpell()
+    private EnemySpellStats getSpell()
     {
-        EnemySpellBehavior spellBehavior = spellsToChooseFrom[curSpellIndex];
+        EnemySpellStats spellStat = spellsToChooseFrom[curSpellIndex];
         curSpellIndex++;
         if (curSpellIndex >= spellsToChooseFrom.Count)
         {
             curSpellIndex = 0;
         }
-        return spellBehavior;
+        return spellStat;
     }
 
     // choose target
@@ -135,13 +135,6 @@ public class EnemyBehavior : CharacterBehavior
         GetComponent<SpriteRenderer>().sprite = stats.characterSprite;
         maxHealth = stats.maxHealth;
 
-        spellsToChooseFrom.Clear();
-        foreach(EnemySpellStats curSpellStat in stats.spells)
-        {
-            GameObject spellObj = Instantiate<GameObject>(spellTemplate);
-            EnemySpellBehavior curSpell = spellObj.AddComponent<EnemySpellBehavior>();
-            curSpell.setUpFromStat(curSpellStat);
-            spellsToChooseFrom.Add(curSpell);
-        }
+        spellsToChooseFrom = stats.spells;
     }
 }

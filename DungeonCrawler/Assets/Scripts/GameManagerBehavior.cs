@@ -18,6 +18,7 @@ public class GameManagerBehavior : MonoBehaviour
     static GameObject combatData;
     static GameObject levelData;
     static bool getData = false;
+    public static bool combatOnlyMode = true;
 
     private void Awake()
     {
@@ -39,21 +40,22 @@ public class GameManagerBehavior : MonoBehaviour
         }
 
         instance = this;
-        levelData = GameObject.FindWithTag("LevelData");
 
         if (SceneManager.GetActiveScene().name == "Combat")
         {
             Debug.Log("starting in combat");
             gameMode = E_GameMode.COMBAT;
-            loadCombat = false;
-            instance.StartCoroutine(instance.Load());
+            combatData = GameObject.FindWithTag("CombatData");
+            combatOnlyMode = true;
             OnLoadCombat(null); // combat already loaded, don't have to load it
         }
         else
         {
             Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;
+            levelData = GameObject.FindWithTag("LevelData");
             loadCombat = true;
+            combatOnlyMode = false;
             instance.StartCoroutine(instance.Load());
         }
     }
@@ -139,8 +141,15 @@ public class GameManagerBehavior : MonoBehaviour
     private static void OnLoadCombat(CombatEncounterBehavior encounter)
     {
         Debug.Log("on load combat");
-        levelData.SetActive(false);
-        combatData.SetActive(true);
+        if (combatOnlyMode)
+        {
+
+        }
+        else
+        {
+            levelData.SetActive(false);
+            combatData.SetActive(true);
+        }
         gameMode = E_GameMode.COMBAT;
         CombatManagerBehavior.startBattle(encounter);
     }
@@ -148,8 +157,15 @@ public class GameManagerBehavior : MonoBehaviour
     // what to do when entering the level
     public static void enterLevel()
     {
-        levelData.SetActive(true);
-        combatData.SetActive(false);
-        gameMode = E_GameMode.LEVEL;
+        if (combatOnlyMode)
+        {
+
+        }
+        else
+        {
+            levelData.SetActive(true);
+            combatData.SetActive(false);
+            gameMode = E_GameMode.LEVEL;
+        }
     }
 }

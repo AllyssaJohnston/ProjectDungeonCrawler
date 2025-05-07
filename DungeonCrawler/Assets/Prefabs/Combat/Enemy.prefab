@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5279660473839215340}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.8885355, y: -3.4793546, z: 0}
+  m_LocalPosition: {x: 2.97, y: -1.3577, z: 0}
   m_LocalScale: {x: 0.76371545, y: 0.76371545, z: 0.76371545}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -157,7 +157,10 @@ MonoBehaviour:
   maxMorale: 10
   spellTemplate: {fileID: 1268143672009032829, guid: ec6f7a81dc3ba8944a2531c49a95dda6, type: 3}
   spellsToChooseFrom:
-  - {fileID: 0}
+  - spellName: unnamed
+    damage: 10
+    damageAllEnemies: 0
+    targeting: 0
 --- !u!114 &5930867988196048508
 MonoBehaviour:
   m_ObjectHideFlags: 0
