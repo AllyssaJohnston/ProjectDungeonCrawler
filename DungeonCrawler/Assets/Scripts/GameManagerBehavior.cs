@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public enum E_GameMode
 {
@@ -19,9 +20,9 @@ public class GameManagerBehavior : MonoBehaviour
     static GameObject combatData;
     static GameObject levelData;
     static bool getData = false;
-    public static bool combatOnlyMode = true;
+    public static bool combatOnlyMode = false;
 
-    private List<GameObject> inactiveLevelObjects;
+    //private List<GameObject> inactiveLevelObjects = new List<GameObject>();
 
     private void Awake()
     {
@@ -49,8 +50,9 @@ public class GameManagerBehavior : MonoBehaviour
             Debug.Log("starting in combat");
             gameMode = E_GameMode.COMBAT;
             combatData = GameObject.FindWithTag("CombatData");
+            loadCombat = false;
             combatOnlyMode = true;
-            OnLoadCombat(null); // combat already loaded, don't have to load it
+            enterCombat(null); // combat already loaded, don't have to load it
         }
         else
         {
@@ -59,7 +61,7 @@ public class GameManagerBehavior : MonoBehaviour
             levelData = GameObject.FindWithTag("LevelData");
             loadCombat = true;
             combatOnlyMode = false;
-            instance.StartCoroutine(instance.Load());
+            instance.StartCoroutine(instance.Load()); // load in combat async so it's ready when we need it
         }
     }
 
@@ -71,11 +73,14 @@ public class GameManagerBehavior : MonoBehaviour
             Debug.Log("quit");
             Application.Quit();
         }
+
         // call load combat to see if combat scene has loaded
         if (loading)
         {
             instance.StartCoroutine(instance.Load());
         }
+
+        // get the level and combat roots
         if (getData)
         {
             if (loadCombat)
@@ -88,23 +93,20 @@ public class GameManagerBehavior : MonoBehaviour
                     getData = false;
                 }
             }
-            else
-            {
-                Debug.Log("Level loaded");
-                levelData = GameObject.FindWithTag("LevelData");
-                if (levelData != null)
-                {
-                    levelData.SetActive(false);
-                    getData = false;
-                }
-            }
         }
     }
 
     // load combat
-    public static void enterCombat(CombatEncounterBehavior enc)
+    public static void enterCombat(CombatEncounterBehavior encounter)
     {
-        OnLoadCombat(enc);
+        Debug.Log("entering combat");
+        if (!combatOnlyMode) //combat only mode is used to just test combat, so don't go back to the level
+        {
+            levelData.SetActive(false);
+            combatData.SetActive(true);
+        }
+        gameMode = E_GameMode.COMBAT;
+        CombatManagerBehavior.startBattle(encounter);
     }
 
     // async load scenes
@@ -140,68 +142,14 @@ public class GameManagerBehavior : MonoBehaviour
 
     }
 
-    // what to do after combat has loaded
-    private static void OnLoadCombat(CombatEncounterBehavior encounter)
-    {
-        Debug.Log("on load combat");
-        if (combatOnlyMode)
-        {
-
-        }
-        else
-        {
-            levelData.SetActive(false);
-            combatData.SetActive(true);
-        }
-        gameMode = E_GameMode.COMBAT;
-        //instance.deactivateLevel();
-        CombatManagerBehavior.startBattle(encounter);
-    }
-
     // what to do when entering the level
     public static void enterLevel()
     {
-        if (combatOnlyMode)
-        {
-
-        }
-        else
+        if (!combatOnlyMode)
         {
             levelData.SetActive(true);
             combatData.SetActive(false);
             gameMode = E_GameMode.LEVEL;
         }
-    }
-
-    private void deactivateLevel()
-    {
-        if (inactiveLevelObjects == null) inactiveLevelObjects = new List<GameObject>();
-
-        foreach (var obj in SceneManager.GetActiveScene().GetRootGameObjects())
-        {
-            if (obj.activeSelf && !obj.CompareTag("RetainThroughBattle"))
-            {
-                obj.SetActive(false);
-                inactiveLevelObjects.Add(obj);
-            }
-        }
-    }
-
-    private void activateLevel()
-    {
-        if (inactiveLevelObjects == null
-        || inactiveLevelObjects.Count == 0)
-        {
-            Debug.LogWarning("No level inactive in background to reload");
-            return;
-        }
-
-        foreach (var obj in inactiveLevelObjects)
-        {
-            obj.SetActive(true);
-        }
-        inactiveLevelObjects.Clear();
-
-
     }
 }

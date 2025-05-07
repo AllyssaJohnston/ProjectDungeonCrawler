@@ -87,6 +87,10 @@ public class StateManagerBehavior : MonoBehaviour
                     // continue rotating through enemies
                     curEnemyIndex++;
                     NextState(E_State.BETWEEN_ENEMIES_BUFFER);
+                    if (CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].canCast() == false)
+                    {
+                        InteruptState();
+                    }
                     return;
                 }
                 NextState();

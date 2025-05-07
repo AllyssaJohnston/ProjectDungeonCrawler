@@ -8,6 +8,15 @@ public enum E_SPELL_TARGETING
     LOWEST_MORALE,
 }
 
+[System.Serializable]
+public class EnemySpellStats
+{
+    public string spellName = "unnamed";
+    public int damage = 10;
+    public bool damageAllEnemies = false;
+    public E_SPELL_TARGETING targeting;
+}
+
 public class EnemySpellBehavior : SpellBehavior
 {
     public E_SPELL_TARGETING targeting;

@@ -69,7 +69,6 @@ public class CombatManagerBehavior : MonoBehaviour
         bool alive = false;
         foreach (CharacterBehavior character in friendlyCharacterBehaviors)
         {
-            Debug.Log(character);
             alive = alive | character.isActive();
         }
         if (alive == false)

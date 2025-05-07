@@ -39,6 +39,7 @@ public class EnemyBehavior : CharacterBehavior
     override public void startTurn()
     {
         available = isActive();
+        characterSpriteRenderer.sprite = available ? regSprite : usedSprite;
     }
 
     //chooses a spell and executes it
@@ -64,6 +65,8 @@ public class EnemyBehavior : CharacterBehavior
                 target = characterBehavior.characterName;
             }
             DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage.");
+            available = false;
+            characterSpriteRenderer.sprite = usedSprite;
         }
         else
         {
@@ -131,8 +134,12 @@ public class EnemyBehavior : CharacterBehavior
     public void setUpFromStats(EnemyStats stats)
     {
         characterName = stats.characterName;
-        iconSprite = stats.iconSprite;
+        iconSprite = null;
+        regSprite = stats.characterSprite;
         GetComponent<SpriteRenderer>().sprite = stats.characterSprite;
+        damagedSprite = stats.characterDamagedSprite;
+        usedSprite = stats.characterUsedSprite;
+        
         maxHealth = stats.maxHealth;
 
         spellsToChooseFrom = stats.spells;
