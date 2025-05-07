@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public enum E_GameMode
 {
@@ -138,14 +136,16 @@ public class GameManagerBehavior : MonoBehaviour
         loading = false;
         asyncLoad = null;
         getData = true;
-
-
     }
 
     // what to do when entering the level
     public static void enterLevel()
     {
-        if (!combatOnlyMode)
+        if (combatOnlyMode)
+        {
+            Application.Quit();
+        }
+        else
         {
             levelData.SetActive(true);
             combatData.SetActive(false);
