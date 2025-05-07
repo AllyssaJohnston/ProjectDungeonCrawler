@@ -101,9 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ebf7f106080123409e69d9286cbbee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  friendly: 1
+  characterName: unnamed
+  damagedSprite: {fileID: 0}
+  usedSprite: {fileID: 0}
   iconSprite: {fileID: 0}
+  iconUsedSprite: {fileID: 0}
   maxHealth: 100
+  maxMorale: 10
 --- !u!114 &-7147862833875646992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,8 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarTemplate: {fileID: 2459722467361300661, guid: 1a1adb25ab5acdc4fa758b6243ff05bd, type: 3}
-  healthColor: {r: 1, g: 0, b: 0, a: 1}
-  moraleColor: {r: 1, g: 1, b: 1, a: 1}
+  healthBarColor: {r: 1, g: 0, b: 0, a: 1}
+  healthTextColor: {r: 1, g: 1, b: 1, a: 1}
+  moraleBarColor: {r: 1, g: 1, b: 1, a: 1}
+  moraleTextColor: {r: 0, g: 0, b: 0, a: 1}
   UI_OffsetX: 0
   healthPosY: 2.1
   moralePosY: 1.4

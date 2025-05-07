@@ -3,8 +3,10 @@ using UnityEngine;
 public class CharacterUICreatorBehavior : MonoBehaviour
 {
     [SerializeField] GameObject healthBarTemplate;
-    [SerializeField] Color healthColor;
-    [SerializeField] Color moraleColor;
+    [SerializeField] Color healthBarColor;
+    [SerializeField] Color healthTextColor;
+    [SerializeField] Color moraleBarColor;
+    [SerializeField] Color moraleTextColor;
     [SerializeField] float UI_OffsetX = 0;
     [SerializeField] float healthPosY = 3;
     [SerializeField] float moralePosY = 2;
@@ -23,13 +25,13 @@ public class CharacterUICreatorBehavior : MonoBehaviour
 
         healthBarManager = createBar(healthPosY);
         healthBarManagerBehavior = healthBarManager.GetComponent<HealthBarManager>();
-        healthBarManagerBehavior.SetUp(characterBehavior.getHealth(), healthColor);
+        healthBarManagerBehavior.SetUp(characterBehavior.getHealth(), healthBarColor, healthTextColor);
 
         if (includeMorale)
         {
             moraleBarManager = createBar(moralePosY);
             moraleBarManagerBehavior = moraleBarManager.GetComponent<HealthBarManager>();
-            moraleBarManagerBehavior.SetUp(characterBehavior.getMorale(), moraleColor);
+            moraleBarManagerBehavior.SetUp(characterBehavior.getMorale(), moraleBarColor, moraleTextColor);
 
         }
     }

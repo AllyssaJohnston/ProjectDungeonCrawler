@@ -174,8 +174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBarTemplate: {fileID: 2459722467361300661, guid: 1a1adb25ab5acdc4fa758b6243ff05bd, type: 3}
-  healthColor: {r: 1, g: 0, b: 0, a: 1}
-  moraleColor: {r: 0, g: 0, b: 0, a: 0}
+  healthBarColor: {r: 1, g: 0, b: 0, a: 1}
+  healthTextColor: {r: 1, g: 1, b: 1, a: 1}
+  moraleBarColor: {r: 1, g: 1, b: 1, a: 1}
+  moraleTextColor: {r: 0, g: 0, b: 0, a: 1}
   UI_OffsetX: 0
   healthPosY: 2.1
   moralePosY: 1.4
