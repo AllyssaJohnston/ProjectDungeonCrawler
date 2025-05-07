@@ -3,6 +3,7 @@ using UnityEngine;
 public class PartySpellManagerBehavior : MonoBehaviour
 {
     private static PartySpellManagerBehavior instance;
+    [SerializeField] GameObject viewport;
     private static FriendlySpellBehavior[] spells;
 
     private void Awake()
@@ -26,7 +27,7 @@ public class PartySpellManagerBehavior : MonoBehaviour
         }
         instance = this;
 
-        spells = GetComponentsInChildren<FriendlySpellBehavior>();
+        spells = viewport.GetComponentsInChildren<FriendlySpellBehavior>();
     }
 
     public static void UpdateSpellOrder()

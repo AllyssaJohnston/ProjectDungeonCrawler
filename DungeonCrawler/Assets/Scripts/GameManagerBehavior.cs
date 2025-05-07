@@ -1,17 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+public enum E_GameMode
+{
+    LEVEL,
+    COMBAT
+}
 
 public class GameManagerBehavior : MonoBehaviour
 {
     private static GameManagerBehavior instance;
-    public List<CombatEncounterBehavior> combatEncounters = new List<CombatEncounterBehavior>();
-    static bool loadingEncounter = false;
-    static CombatEncounterBehavior encounter = null;
+    public static E_GameMode gameMode = E_GameMode.LEVEL;
+    static bool loadCombat = false;
+    static bool loading = false;
     AsyncOperation asyncLoad;
+    static GameObject combatData;
+    static GameObject levelData;
+    static bool getData = false;
+    public static bool combatOnlyMode = false;
 
-    private List<GameObject> inactiveLevelObjects;
+    //private List<GameObject> inactiveLevelObjects = new List<GameObject>();
 
     private void Awake()
     {
@@ -37,7 +46,20 @@ public class GameManagerBehavior : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Combat")
         {
             Debug.Log("starting in combat");
-            OnLoadCombat(null); // combat already loaded, don't have to load it
+            gameMode = E_GameMode.COMBAT;
+            combatData = GameObject.FindWithTag("CombatData");
+            loadCombat = false;
+            combatOnlyMode = true;
+            enterCombat(null); // combat already loaded, don't have to load it
+        }
+        else
+        {
+            Debug.Log("starting in level");
+            gameMode = E_GameMode.LEVEL;
+            levelData = GameObject.FindWithTag("LevelData");
+            loadCombat = true;
+            combatOnlyMode = false;
+            instance.StartCoroutine(instance.Load()); // load in combat async so it's ready when we need it
         }
     }
 
@@ -49,79 +71,85 @@ public class GameManagerBehavior : MonoBehaviour
             Debug.Log("quit");
             Application.Quit();
         }
+
         // call load combat to see if combat scene has loaded
-        if (loadingEncounter)
+        if (loading)
         {
-            instance.StartCoroutine(instance.LoadCombat());
-        }
-    }
-
-    // load combat
-    public static void enterCombat(CombatEncounterBehavior enc)
-    {
-        encounter = enc;
-        instance.StartCoroutine(instance.LoadCombat());
-    }
-
-    // async load combat, and call OnLoadCombat when done
-    private IEnumerator LoadCombat()
-    {
-        if (!loadingEncounter)
-        {
-            loadingEncounter = true;
-
-            asyncLoad = SceneManager.LoadSceneAsync("Combat", LoadSceneMode.Additive);
+            instance.StartCoroutine(instance.Load());
         }
 
-        // Wait until the asynchronous scene fully loads
-        while (!CombatManagerBehavior.loaded()) // async laod will never progress above 90 apparently with allowSceneActivation = false
+        // get the level and combat roots
+        if (getData)
         {
-            yield return null;
-        }
-        asyncLoad.allowSceneActivation = true;
-        loadingEncounter = false;
-        asyncLoad = null;
-        Debug.Log("Combat loaded");
-        //OnLoadCombat(encounter);
-        OnLoadCombat(null);
-    }
-
-    // what to do after combat has loaded
-    private static void OnLoadCombat(CombatEncounterBehavior encounter)
-    {
-        instance.deactivateLevel();
-        CombatManagerBehavior.startBattle(encounter);
-    }
-    
-    // what to do when entering the level
-    public static void enterLevel()
-    {
-        //SceneManager.LoadScene("Level1");
-        SceneManager.UnloadSceneAsync("Combat");
-        instance.activateLevel();
-    }
-
-    private void deactivateLevel() {
-        if (inactiveLevelObjects == null) inactiveLevelObjects = new List<GameObject>();
-
-        foreach (var obj in SceneManager.GetActiveScene().GetRootGameObjects()) {
-            if (obj.activeSelf && !obj.CompareTag("RetainThroughBattle")) {
-                obj.SetActive(false);
-                inactiveLevelObjects.Add(obj);
+            if (loadCombat)
+            {
+                Debug.Log("Combat loaded");
+                combatData = GameObject.FindWithTag("CombatData");
+                if (combatData != null)
+                {
+                    combatData.SetActive(false);
+                    getData = false;
+                }
             }
         }
     }
 
-    private void activateLevel() {
-        if (inactiveLevelObjects == null
-        ||  inactiveLevelObjects.Count == 0) {
-            Debug.LogWarning("No level inactive in background to reload");
-            return;
+    // load combat
+    public static void enterCombat(CombatEncounterBehavior encounter)
+    {
+        Debug.Log("entering combat");
+        if (!combatOnlyMode) //combat only mode is used to just test combat, so don't go back to the level
+        {
+            levelData.SetActive(false);
+            combatData.SetActive(true);
+        }
+        gameMode = E_GameMode.COMBAT;
+        CombatManagerBehavior.startBattle(encounter);
+    }
+
+    // async load scenes
+    private IEnumerator Load()
+    {
+        Debug.Log("load");
+        if (!loading)
+        {
+            loading = true;
+            if (loadCombat)
+            {
+                Debug.Log("loading combat");
+                asyncLoad = SceneManager.LoadSceneAsync("Combat", LoadSceneMode.Additive);
+            }
+            else
+            {
+                Debug.Log("loading level");
+                asyncLoad = SceneManager.LoadSceneAsync("Level1", LoadSceneMode.Additive);
+            }
+            asyncLoad.allowSceneActivation = false;
         }
 
-        foreach (var obj in inactiveLevelObjects) {
-            obj.SetActive(true);
+        // Wait until the asynchronous scene fully loads
+        while (asyncLoad == null || asyncLoad.progress < .90f) // async laod will never progress above 90 apparently with allowSceneActivation = false
+        {
+            yield return null;
         }
-        inactiveLevelObjects.Clear();
+        asyncLoad.allowSceneActivation = true;
+        loading = false;
+        asyncLoad = null;
+        getData = true;
+    }
+
+    // what to do when entering the level
+    public static void enterLevel()
+    {
+        if (combatOnlyMode)
+        {
+            Application.Quit();
+        }
+        else
+        {
+            levelData.SetActive(true);
+            combatData.SetActive(false);
+            gameMode = E_GameMode.LEVEL;
+        }
     }
 }

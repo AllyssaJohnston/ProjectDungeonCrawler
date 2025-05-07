@@ -4,7 +4,8 @@ using System.Collections.Generic;
 public enum E_Arrow_Type 
 {
     SPELL_PTR,
-    ENEMY_PTR,
+    ENEMY_SELECTION_PTR,
+    ENEMY_TURN_PTR
 }
 
 public class ArrowIndicatorManagerBehavior : MonoBehaviour
@@ -12,8 +13,10 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
     private static ArrowIndicatorManagerBehavior instance;
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject fullScreenPanel;
-    [SerializeField] float enemyXOffset;
-    [SerializeField] float enemyYOffset;
+    [SerializeField] float enemySelectionXOffset;
+    [SerializeField] float enemySelectionYOffset;
+    [SerializeField] float enemyTurnXOffset;
+    [SerializeField] float enemyTurnYOffset;
     [SerializeField] float enemyRotation;
     [SerializeField] float spellXOffset;
     [SerializeField] float spellYOffset;
@@ -70,7 +73,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 deleteArrows();
                 foreach (EnemyBehavior enemy in CombatManagerBehavior.enemyCharacterBehaviors)
                 {
-                    createArrow(E_Arrow_Type.ENEMY_PTR, instance.fullScreenPanel, enemy.gameObject.transform.position);
+                    createArrow(E_Arrow_Type.ENEMY_SELECTION_PTR, instance.fullScreenPanel, enemy.gameObject.transform.position);
                 }
                 break;
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
@@ -79,7 +82,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_BUFFER:
                 deleteArrows();
-                createArrow(E_Arrow_Type.ENEMY_PTR, instance.fullScreenPanel, CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex].gameObject.transform.position);
+                createArrow(E_Arrow_Type.ENEMY_TURN_PTR, instance.fullScreenPanel, CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex].gameObject.transform.position);
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
                 break;
@@ -98,6 +101,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         Vector3 pos = Vector3.zero;
         Quaternion rot = Quaternion.identity;
         float zRot = 0;
+        bool move = true;
         switch (type)
         {
             case (E_Arrow_Type.SPELL_PTR):
@@ -111,7 +115,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
         curArrow.transform.localPosition = pos;
         curArrow.transform.rotation = rot;
-        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot);
+        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot, move);
         arrows.Add(curArrow);
     }
 
@@ -125,12 +129,19 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         Vector3 pos = Vector3.zero;
         Quaternion rot = Quaternion.identity;
         float zRot = 0;
+        bool move = true;
         switch (type)
         {
-            case (E_Arrow_Type.ENEMY_PTR):
-                pos = new Vector3(refPos.x + instance.enemyXOffset, instance.enemyYOffset, 0);
+            case (E_Arrow_Type.ENEMY_SELECTION_PTR):
+                pos = new Vector3(refPos.x + instance.enemySelectionXOffset, instance.enemySelectionYOffset, 0);
                 rot = Quaternion.Euler(0, 0, instance.enemyRotation);
                 zRot = instance.enemyRotation;
+                break;
+            case (E_Arrow_Type.ENEMY_TURN_PTR):
+                pos = new Vector3(refPos.x + instance.enemyTurnXOffset, instance.enemyTurnYOffset, 0);
+                rot = Quaternion.Euler(0, 0, instance.enemyRotation);
+                zRot = instance.enemyRotation;
+                move = false;
                 break;
             default:
                 Debug.Log("unrecognized arrow type");
@@ -138,7 +149,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
         curArrow.transform.position = pos;
         curArrow.transform.rotation = rot;
-        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot);
+        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot, move);
         arrows.Add(curArrow);
     }
 
