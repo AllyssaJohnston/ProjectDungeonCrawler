@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -96,7 +97,7 @@ public class GameManagerBehavior : MonoBehaviour
                     levelData.SetActive(false);
                     getData = false;
                 }
-            }        
+            }
         }
     }
 
@@ -135,8 +136,8 @@ public class GameManagerBehavior : MonoBehaviour
         loading = false;
         asyncLoad = null;
         getData = true;
-        
-           
+
+
     }
 
     // what to do after combat has loaded
@@ -156,7 +157,7 @@ public class GameManagerBehavior : MonoBehaviour
         //instance.deactivateLevel();
         CombatManagerBehavior.startBattle(encounter);
     }
-    
+
     // what to do when entering the level
     public static void enterLevel()
     {
@@ -170,37 +171,37 @@ public class GameManagerBehavior : MonoBehaviour
             combatData.SetActive(false);
             gameMode = E_GameMode.LEVEL;
         }
+    }
 
-        /*
-        private void deactivateLevel() 
+    private void deactivateLevel()
+    {
+        if (inactiveLevelObjects == null) inactiveLevelObjects = new List<GameObject>();
+
+        foreach (var obj in SceneManager.GetActiveScene().GetRootGameObjects())
         {
-            if (inactiveLevelObjects == null) inactiveLevelObjects = new List<GameObject>();
-
-            foreach (var obj in SceneManager.GetActiveScene().GetRootGameObjects()) 
+            if (obj.activeSelf && !obj.CompareTag("RetainThroughBattle"))
             {
-                if (obj.activeSelf && !obj.CompareTag("RetainThroughBattle")) 
-                {
-                    obj.SetActive(false);
-                    inactiveLevelObjects.Add(obj);
-                }
+                obj.SetActive(false);
+                inactiveLevelObjects.Add(obj);
             }
         }
+    }
 
-        private void activateLevel() 
+    private void activateLevel()
+    {
+        if (inactiveLevelObjects == null
+        || inactiveLevelObjects.Count == 0)
         {
-            if (inactiveLevelObjects == null
-            ||  inactiveLevelObjects.Count == 0) 
-            {
-                Debug.LogWarning("No level inactive in background to reload");
-                return;
-            }
+            Debug.LogWarning("No level inactive in background to reload");
+            return;
+        }
 
-            foreach (var obj in inactiveLevelObjects) 
-            {
-                obj.SetActive(true);
-            }
-            inactiveLevelObjects.Clear();
+        foreach (var obj in inactiveLevelObjects)
+        {
+            obj.SetActive(true);
+        }
+        inactiveLevelObjects.Clear();
 
-        */
+
     }
 }
