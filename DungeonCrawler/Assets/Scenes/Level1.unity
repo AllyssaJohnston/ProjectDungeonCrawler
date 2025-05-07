@@ -436,7 +436,7 @@ MonoBehaviour:
     characterSprite: {fileID: 5853414339950614613, guid: 09fb4aa5261f8424bb0ab81d82c40039, type: 3}
     characterDamagedSprite: {fileID: 3727472164378946246, guid: b15fa6c896b309a44b66114ca9c87a54, type: 3}
     characterUsedSprite: {fileID: -1288390348084866842, guid: c68575c1b264f6e4193c77ce5a9b000d, type: 3}
-    maxHealth: 30
+    maxHealth: 60
     spells:
     - spellName: Basic Attack
       damage: 10
@@ -450,7 +450,7 @@ MonoBehaviour:
     characterSprite: {fileID: 1440170682504469450, guid: 79dace1d439ebda4a927ffc1a7c43d98, type: 3}
     characterDamagedSprite: {fileID: 5336066593591741879, guid: 1db07d923ebd98b4dbb39373d3cefcd1, type: 3}
     characterUsedSprite: {fileID: -8847495025112559319, guid: dafa5d5eb33a17e428a9fd42a1d4fce0, type: 3}
-    maxHealth: 30
+    maxHealth: 60
     spells:
     - spellName: Basic Attack
       damage: 10
