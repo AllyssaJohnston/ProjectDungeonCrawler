@@ -55,7 +55,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 
     private ArrowIndicatorManagerBehavior() {}
 
-    public static void nextState(E_State nextState)
+    public static void OnNextState(E_State nextState)
     {
         switch (nextState)
         {
