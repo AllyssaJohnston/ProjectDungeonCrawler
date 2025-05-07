@@ -13,7 +13,7 @@ public class CombatManagerBehavior : MonoBehaviour
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
     [SerializeField] GameObject enemyTemplate;
     [SerializeField] GameObject characterHolder;
-    [SerializeField] GameObject fullscreenPanel;
+    [SerializeField] GameObject characterStatsPanel;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
 
@@ -95,19 +95,19 @@ public class CombatManagerBehavior : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) //left click
         {
             // get game objects
-            if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
-            {
-                Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
-                if (hit.collider != null)
-                {
-                    GameObject gameObject = hit.collider.gameObject;
-                    if (gameObject.tag == "Enemy")
-                    {
-                        castSpellOnTarget(gameObject.GetComponent<EnemyBehavior>());
-                    }
-                }
-            }
+            //if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+            //{
+            //    Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //    RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
+            //    if (hit.collider != null)
+            //    {
+            //        GameObject gameObject = hit.collider.gameObject;
+            //        if (gameObject.tag == "Enemy")
+            //        {
+            //            castSpellOnTarget(gameObject.GetComponent<EnemyBehavior>());
+            //        }
+            //    }
+            //}
 
             // find UI elements
             if (EventSystem.current.IsPointerOverGameObject())
@@ -144,6 +144,14 @@ public class CombatManagerBehavior : MonoBehaviour
                             if (spellBehavior != null)
                             {
                                 resolveSpell(spellBehavior);
+                            }
+                        }
+                        else if (result.gameObject.tag == "Enemy")
+                        {
+                            if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+                            {
+                                Debug.Log("hit enemy");
+                                castSpellOnTarget(result.gameObject.GetComponent<EnemyBehavior>());
                             }
                         }
                     }
@@ -198,7 +206,9 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
-        float spacing = 1.53f;
+        float screenX = 380;
+        float yPos = -100;
+        float spacing = 130f;
 
         
         int i = inputCombatData.enemies.Count - 1;
@@ -214,14 +224,15 @@ public class CombatManagerBehavior : MonoBehaviour
         foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
         {
             GameObject enemy = Instantiate<GameObject>(instance.enemyTemplate);
-            enemy.transform.position = instance.characterHolder.transform.position + instance.enemyTemplate.transform.position - new Vector3(i * (spacing), 0, 0);
             enemy.transform.SetParent(instance.characterHolder.transform);
+            enemy.transform.localPosition = new Vector3(screenX - i * (spacing), yPos, 0);
+            enemy.transform.localScale = Vector3.one;
             foreach (Behaviour component in enemy.GetComponents<Behaviour>())
             {
                 component.enabled = true;
             }
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
-            enemy.GetComponent<CharacterUICreatorBehavior>().setPanel(instance.fullscreenPanel);
+            enemy.GetComponent<CharacterUICreatorBehavior>().setPanel(instance.characterStatsPanel);
             enemyBehavior.setUpFromStats(curEnemyStat);
             enemyCharacterBehaviors.Add(enemyBehavior);
             enemyBehavior.startBattle();
@@ -235,7 +246,6 @@ public class CombatManagerBehavior : MonoBehaviour
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             Debug.Log("end combat");
-            // TODO have game manager hold level data, so that the scene isn't restarted
             GameManagerBehavior.enterLevel();
         }
     }

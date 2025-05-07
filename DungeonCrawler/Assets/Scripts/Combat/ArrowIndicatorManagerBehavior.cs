@@ -1,8 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public enum E_Arrow_Type 
 {
@@ -16,7 +13,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 {
     private static ArrowIndicatorManagerBehavior instance;
     [SerializeField] GameObject arrow;
-    [SerializeField] GameObject fullScreenPanel;
+    [SerializeField] GameObject arrowsPanel;
     [SerializeField] float enemySelectionXOffset;
     [SerializeField] float enemySelectionYOffset;
     [SerializeField] float enemyTurnXOffset;
@@ -70,13 +67,16 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                         createArrow(E_Arrow_Type.SPELL_PTR, spell.gameObject, Vector3.zero);
                     }
                 }
-                createArrow(E_Arrow_Type.END_TURN_PTR, instance.fullScreenPanel, Vector3.zero);
+                createArrow(E_Arrow_Type.END_TURN_PTR, instance.arrowsPanel, Vector3.zero);
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 deleteArrows();
                 foreach (EnemyBehavior enemy in CombatManagerBehavior.enemyCharacterBehaviors)
                 {
-                    createArrow(E_Arrow_Type.ENEMY_SELECTION_PTR, instance.fullScreenPanel, enemy.gameObject.transform.position);
+                    
+                    RectTransform curEnemyRect = enemy.GetComponent<RectTransform>();
+                    Vector3 curCenter = curEnemyRect.TransformPoint(curEnemyRect.rect.center);
+                    createArrow(E_Arrow_Type.ENEMY_SELECTION_PTR, instance.arrowsPanel, curCenter);
                 }
                 break;
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
@@ -85,7 +85,9 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_BUFFER:
                 deleteArrows();
-                createArrow(E_Arrow_Type.ENEMY_TURN_PTR, instance.fullScreenPanel, CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex].gameObject.transform.position);
+                RectTransform enemyRect = CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex].gameObject.GetComponent<RectTransform>();
+                Vector3 center = enemyRect.TransformPoint(enemyRect.rect.center);
+                createArrow(E_Arrow_Type.ENEMY_TURN_PTR, instance.arrowsPanel, center);
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
                 break;
@@ -105,12 +107,12 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         switch (type)
         {
             case (E_Arrow_Type.SPELL_PTR):
-                curArrow.transform.localPosition = new Vector3(instance.spellXOffset, instance.spellYOffset, 0);
+                curArrow.transform.localPosition = new Vector3(instance.spellXOffset, instance.spellYOffset, 3);
                 curArrow.transform.rotation = Quaternion.Euler(0, 0, instance.spellRotation);
                 zRot = instance.spellRotation;
                 break;
             case (E_Arrow_Type.END_TURN_PTR):
-                curArrow.transform.localPosition = new Vector3(instance.buttonXOffset, instance.buttonYOffset, 0);
+                curArrow.transform.localPosition = new Vector3(instance.buttonXOffset, instance.buttonYOffset, 3);
                 curArrow.transform.rotation = Quaternion.Euler(0, 0, instance.buttonRotation);
                 zRot = instance.buttonRotation;
                 break;
