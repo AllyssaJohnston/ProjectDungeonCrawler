@@ -20,6 +20,8 @@ public class GameManagerBehavior : MonoBehaviour
     static bool getData = false;
     public static bool combatOnlyMode = true;
 
+    private List<GameObject> inactiveLevelObjects;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -151,6 +153,7 @@ public class GameManagerBehavior : MonoBehaviour
             combatData.SetActive(true);
         }
         gameMode = E_GameMode.COMBAT;
+        //instance.deactivateLevel();
         CombatManagerBehavior.startBattle(encounter);
     }
     
@@ -167,5 +170,37 @@ public class GameManagerBehavior : MonoBehaviour
             combatData.SetActive(false);
             gameMode = E_GameMode.LEVEL;
         }
+
+        /*
+        private void deactivateLevel() 
+        {
+            if (inactiveLevelObjects == null) inactiveLevelObjects = new List<GameObject>();
+
+            foreach (var obj in SceneManager.GetActiveScene().GetRootGameObjects()) 
+            {
+                if (obj.activeSelf && !obj.CompareTag("RetainThroughBattle")) 
+                {
+                    obj.SetActive(false);
+                    inactiveLevelObjects.Add(obj);
+                }
+            }
+        }
+
+        private void activateLevel() 
+        {
+            if (inactiveLevelObjects == null
+            ||  inactiveLevelObjects.Count == 0) 
+            {
+                Debug.LogWarning("No level inactive in background to reload");
+                return;
+            }
+
+            foreach (var obj in inactiveLevelObjects) 
+            {
+                obj.SetActive(true);
+            }
+            inactiveLevelObjects.Clear();
+
+        */
     }
 }

@@ -23,6 +23,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static FriendlySpellBehavior curSpellToCast = null;
 
+    public static bool combatStarted {get; private set;}
+
     public void Start()
     {
         if (instance != null && instance != this)
@@ -47,6 +49,10 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private CombatManagerBehavior() { }
 
+    public static bool loaded() {
+        return instance != null;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -63,6 +69,7 @@ public class CombatManagerBehavior : MonoBehaviour
         bool alive = false;
         foreach (CharacterBehavior character in friendlyCharacterBehaviors)
         {
+            Debug.Log(character);
             alive = alive | character.isActive();
         }
         if (alive == false)
@@ -162,6 +169,7 @@ public class CombatManagerBehavior : MonoBehaviour
                 createEnemies(inputCombatData);
             }
         }
+        combatStarted = true;
     }
 
 
