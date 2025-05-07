@@ -131,9 +131,10 @@ public class StateManagerBehavior : MonoBehaviour
         Debug.Log(nextState);
         curState = nextState;
 
-        DebugBehavior.nextState(nextState);
-        CombatManagerBehavior.nextState(nextState);
-        ArrowIndicatorManagerBehavior.nextState(nextState);
+        DebugBehavior.OnNextState(nextState);
+        CombatManagerBehavior.OnNextState(nextState);
+        ArrowIndicatorManagerBehavior.OnNextState(nextState);
+        EndTurnButtonBehavior.OnNextState(nextState);
     }
 
     // go to the next state

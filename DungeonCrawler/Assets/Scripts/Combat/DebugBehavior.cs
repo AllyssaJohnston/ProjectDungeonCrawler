@@ -61,7 +61,7 @@ public class DebugBehavior : MonoBehaviour
         lastFrameDebugMode = debugMode;
     }
 
-    public static void nextState(E_State nextState)
+    public static void OnNextState(E_State nextState)
     {
         switch (nextState)
         {

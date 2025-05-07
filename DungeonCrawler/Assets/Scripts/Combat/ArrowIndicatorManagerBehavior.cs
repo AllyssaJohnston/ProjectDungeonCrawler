@@ -1,9 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public enum E_Arrow_Type 
 {
     SPELL_PTR,
+    END_TURN_PTR,
     ENEMY_SELECTION_PTR,
     ENEMY_TURN_PTR
 }
@@ -21,6 +25,9 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
     [SerializeField] float spellXOffset;
     [SerializeField] float spellYOffset;
     [SerializeField] float spellRotation;
+    [SerializeField] float buttonXOffset;
+    [SerializeField] float buttonYOffset;
+    [SerializeField] float buttonRotation;
     private static List<GameObject> arrows = new List<GameObject>();
 
 
@@ -48,12 +55,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 
     private ArrowIndicatorManagerBehavior() {}
 
-    private void Update()
-    {
-        
-    }
-
-    public static void nextState(E_State nextState)
+    public static void OnNextState(E_State nextState)
     {
         switch (nextState)
         {
@@ -65,9 +67,10 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 {
                     if (spell.canCast)
                     {
-                        createArrow(E_Arrow_Type.SPELL_PTR, spell.gameObject);
+                        createArrow(E_Arrow_Type.SPELL_PTR, spell.gameObject, Vector3.zero);
                     }
                 }
+                createArrow(E_Arrow_Type.END_TURN_PTR, instance.fullScreenPanel, Vector3.zero);
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 deleteArrows();
@@ -90,35 +93,6 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 break;
         }
     }
-
-    private static void createArrow(E_Arrow_Type type, GameObject parent)
-    {
-        GameObject curArrow = Instantiate(instance.arrow);
-        Vector3 scale = curArrow.transform.localScale;
-        curArrow.transform.SetParent(parent.transform);
-        curArrow.transform.localScale = scale;
-
-        Vector3 pos = Vector3.zero;
-        Quaternion rot = Quaternion.identity;
-        float zRot = 0;
-        bool move = true;
-        switch (type)
-        {
-            case (E_Arrow_Type.SPELL_PTR):
-                pos = new Vector3(instance.spellXOffset, instance.spellYOffset, 0);
-                rot = Quaternion.Euler(0, 0, instance.spellRotation);
-                zRot = instance.spellRotation;
-                break;
-            default:
-                Debug.Log("unrecognized arrow type");
-                break;
-        }
-        curArrow.transform.localPosition = pos;
-        curArrow.transform.rotation = rot;
-        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot, move);
-        arrows.Add(curArrow);
-    }
-
     private static void createArrow(E_Arrow_Type type, GameObject parent, Vector3 refPos)
     {
         GameObject curArrow = Instantiate(instance.arrow);
@@ -126,20 +100,28 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         curArrow.transform.SetParent(parent.transform);
         curArrow.transform.localScale = scale;
 
-        Vector3 pos = Vector3.zero;
-        Quaternion rot = Quaternion.identity;
         float zRot = 0;
         bool move = true;
         switch (type)
         {
+            case (E_Arrow_Type.SPELL_PTR):
+                curArrow.transform.localPosition = new Vector3(instance.spellXOffset, instance.spellYOffset, 0);
+                curArrow.transform.rotation = Quaternion.Euler(0, 0, instance.spellRotation);
+                zRot = instance.spellRotation;
+                break;
+            case (E_Arrow_Type.END_TURN_PTR):
+                curArrow.transform.localPosition = new Vector3(instance.buttonXOffset, instance.buttonYOffset, 0);
+                curArrow.transform.rotation = Quaternion.Euler(0, 0, instance.buttonRotation);
+                zRot = instance.buttonRotation;
+                break;
             case (E_Arrow_Type.ENEMY_SELECTION_PTR):
-                pos = new Vector3(refPos.x + instance.enemySelectionXOffset, instance.enemySelectionYOffset, 0);
-                rot = Quaternion.Euler(0, 0, instance.enemyRotation);
+                curArrow.transform.position = new Vector3(refPos.x + instance.enemySelectionXOffset, instance.enemySelectionYOffset, 0);
+                curArrow.transform.rotation = Quaternion.Euler(0, 0, instance.enemyRotation);
                 zRot = instance.enemyRotation;
                 break;
             case (E_Arrow_Type.ENEMY_TURN_PTR):
-                pos = new Vector3(refPos.x + instance.enemyTurnXOffset, instance.enemyTurnYOffset, 0);
-                rot = Quaternion.Euler(0, 0, instance.enemyRotation);
+                curArrow.transform.position = new Vector3(refPos.x + instance.enemyTurnXOffset, instance.enemyTurnYOffset, 0);
+                curArrow.transform.rotation = Quaternion.Euler(0, 0, instance.enemyRotation);
                 zRot = instance.enemyRotation;
                 move = false;
                 break;
@@ -147,8 +129,6 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 Debug.Log("unrecognized arrow type");
                 break;
         }
-        curArrow.transform.position = pos;
-        curArrow.transform.rotation = rot;
         curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot, move);
         arrows.Add(curArrow);
     }
