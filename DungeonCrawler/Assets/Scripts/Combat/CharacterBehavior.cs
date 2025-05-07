@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class CharacterBehavior : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class CharacterBehavior : MonoBehaviour
     public Sprite iconSprite;
     public Sprite iconUsedSprite;
 
-    protected SpriteRenderer characterSpriteRenderer;
+    protected Image characterImageManager;
     protected Color regColor;
 
     [SerializeField] protected int maxHealth = 100;
@@ -28,9 +28,9 @@ public class CharacterBehavior : MonoBehaviour
 
     virtual protected void SetUp()
     {
-        characterSpriteRenderer = GetComponent<SpriteRenderer>();
-        regSprite = characterSpriteRenderer.sprite;
-        regColor = characterSpriteRenderer.color;
+        characterImageManager = GetComponent<Image>();
+        regSprite = characterImageManager.sprite;
+        regColor = characterImageManager.color;
 
         health = maxHealth;
         morale = maxMorale;
@@ -85,11 +85,11 @@ public class CharacterBehavior : MonoBehaviour
 
     public IEnumerator takeDamageEffect()
     {
-        characterSpriteRenderer.color = Color.red;
-        characterSpriteRenderer.sprite = damagedSprite;
+        characterImageManager.color = Color.red;
+        characterImageManager.sprite = damagedSprite;
         yield return new WaitForSeconds(.2f);
-        characterSpriteRenderer.color = regColor;
-        characterSpriteRenderer.sprite = regSprite;
+        characterImageManager.color = regColor;
+        characterImageManager.sprite = regSprite;
     }
 
     // called at start of battle
@@ -122,7 +122,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         // set availability
         available = isActive();
-        characterSpriteRenderer.sprite = available ? regSprite : usedSprite;
+        characterImageManager.sprite = available ? regSprite : usedSprite;
     }
 
     // returns whether character can cast spells
@@ -137,6 +137,6 @@ public class CharacterBehavior : MonoBehaviour
     {
         updateMorale(moraleChange);
         available = false;
-        characterSpriteRenderer.sprite = usedSprite;
+        characterImageManager.sprite = usedSprite;
     }
 }

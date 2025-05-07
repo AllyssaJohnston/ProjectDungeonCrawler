@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnemyBehavior : CharacterBehavior
 {
-    [SerializeField] GameObject spellTemplate;
     [SerializeField] List<EnemySpellStats> spellsToChooseFrom = new List<EnemySpellStats>();
 
     private int curSpellIndex = 0;
@@ -39,7 +39,7 @@ public class EnemyBehavior : CharacterBehavior
     override public void startTurn()
     {
         available = isActive();
-        characterSpriteRenderer.sprite = available ? regSprite : usedSprite;
+        characterImageManager.sprite = available ? regSprite : usedSprite;
     }
 
     //chooses a spell and executes it
@@ -66,7 +66,7 @@ public class EnemyBehavior : CharacterBehavior
             }
             DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage.");
             available = false;
-            characterSpriteRenderer.sprite = usedSprite;
+            //characterImageManager.sprite = usedSprite;
         }
         else
         {
@@ -136,7 +136,7 @@ public class EnemyBehavior : CharacterBehavior
         characterName = stats.characterName;
         iconSprite = null;
         regSprite = stats.characterSprite;
-        GetComponent<SpriteRenderer>().sprite = stats.characterSprite;
+        GetComponent<Image>().sprite = stats.characterSprite;
         damagedSprite = stats.characterDamagedSprite;
         usedSprite = stats.characterUsedSprite;
         

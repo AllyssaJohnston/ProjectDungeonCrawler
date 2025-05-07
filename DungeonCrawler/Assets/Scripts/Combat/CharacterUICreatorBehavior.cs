@@ -14,6 +14,7 @@ public class CharacterUICreatorBehavior : MonoBehaviour
     [SerializeField] GameObject panel;
 
     private CharacterBehavior characterBehavior;
+    private RectTransform characterRect;
     private GameObject healthBarManager;
     private HealthBarManager healthBarManagerBehavior;
     private GameObject moraleBarManager;
@@ -22,6 +23,7 @@ public class CharacterUICreatorBehavior : MonoBehaviour
     public void SetUp(CharacterBehavior givenCharacterBehavior)
     {
         characterBehavior = givenCharacterBehavior;
+        characterRect = gameObject.GetComponent<RectTransform>();
 
         healthBarManager = createBar(healthPosY);
         healthBarManagerBehavior = healthBarManager.GetComponent<HealthBarManager>();
@@ -48,7 +50,9 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         bar.transform.SetParent(panel.transform);
         bar.transform.localScale = scale;
 
-        bar.transform.position = new Vector3(gameObject.transform.position.x + UI_OffsetX, yOffset, 0);
+        Vector3 center = characterRect.TransformPoint(characterRect.rect.center);
+
+        bar.transform.position = new Vector3(center.x + UI_OffsetX, yOffset, 0);
         return bar;
     }
 
