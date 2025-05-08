@@ -11,7 +11,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // These are here so that you can edit the characters in editor
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
-    [SerializeField] GameObject enemyTemplate;
+    [SerializeField] GameObject enemyContainerTemplate;
     [SerializeField] GameObject characterHolder;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
@@ -205,8 +205,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
-        float screenX = 380;
-        float yPos = -100;
+        float screenX = 300;
+        float yPos = 6.1f;
         float spacing = 130f;
 
         
@@ -222,10 +222,11 @@ public class CombatManagerBehavior : MonoBehaviour
         //create new enemies
         foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
         {
-            GameObject enemy = Instantiate<GameObject>(instance.enemyTemplate);
-            enemy.transform.SetParent(instance.characterHolder.transform);
-            enemy.transform.localPosition = new Vector3(screenX - i * (spacing), yPos, 0);
-            enemy.transform.localScale = Vector3.one;
+            GameObject enemyContainer = Instantiate<GameObject>(instance.enemyContainerTemplate);
+            GameObject enemy = enemyContainer.transform.GetChild(0).gameObject; // only one child of enemy container
+            RectTransform enemyContainerRect = enemyContainer.GetComponent<RectTransform>();
+            enemyContainer.transform.SetParent(instance.characterHolder.transform);
+            enemyContainerRect.anchoredPosition = new Vector3(screenX - i * (spacing), yPos, 0);
             foreach (Behaviour component in enemy.GetComponents<Behaviour>())
             {
                 component.enabled = true;

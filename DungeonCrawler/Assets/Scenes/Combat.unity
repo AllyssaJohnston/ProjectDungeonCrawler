@@ -947,6 +947,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
+      propertyPath: enemyContainerTemplate
+      value: 
+      objectReference: {fileID: 1753411342693668174, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+    - target: {fileID: 1109715392010407700, guid: a30424dfee8b4fb479d0b4962a684423, type: 3}
       propertyPath: inputEnemyCharacters.Array.size
       value: 2
       objectReference: {fileID: 0}

@@ -110,7 +110,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 zRot = instance.spellRotation;
                 break;
             case (E_Arrow_Type.END_TURN_PTR):
-                curArrow.transform.localPosition = new Vector3(instance.buttonXOffset, instance.buttonYOffset, 0);
+                arrowRect.anchoredPosition = new Vector3(instance.buttonXOffset, instance.buttonYOffset, 0);
                 arrowRect.Rotate(0, 0, instance.buttonRotation);
                 zRot = instance.buttonRotation;
                 break;
