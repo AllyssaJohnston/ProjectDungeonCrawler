@@ -12,8 +12,10 @@ public class DebugBehavior : MonoBehaviour
     [SerializeField] TMP_Text debugLog;
 
     private static string curLog;
-    [SerializeField] int infoPosY = -10; // pos of the cur statement outside of mode
-    private int debugInfoPosY = -35; // pos of the cur statement in debug mode
+    [SerializeField] int statementPosY = 0; // pos of the cur statement outside of debug mode
+    [SerializeField] int statementDebugPosY = -35; // pos of the cur statement in debug mode
+
+    private RectTransform statementRect;
 
     private void Awake()
     {
@@ -36,6 +38,8 @@ public class DebugBehavior : MonoBehaviour
 
         instance = this;
         Debug.Log("debug info manager initialized");
+
+        statementRect = debugLog.GetComponent<RectTransform>();
     }
 
     private DebugBehavior() {}
@@ -45,17 +49,16 @@ public class DebugBehavior : MonoBehaviour
     {
         if (lastFrameDebugMode != debugMode)
         {
-            Vector3 pos = debugLog.transform.localPosition;
             if (debugMode)
             {
                 stateText.color = Color.black;
                 stateText.text = StateManagerBehavior.getState().ToString();
-                debugLog.transform.localPosition = new Vector3(pos.x, debugInfoPosY, 0);
+                statementRect.anchoredPosition = new Vector3(statementRect.anchoredPosition.x, statementDebugPosY, 0);
             }
             else
             {
                 stateText.color = new Color(0, 0, 0, 0);
-                debugLog.transform.localPosition = new Vector3(pos.x, infoPosY, 0);
+                statementRect.anchoredPosition = new Vector3(statementRect.anchoredPosition.x, statementPosY, 0);
             }
         }
         lastFrameDebugMode = debugMode;

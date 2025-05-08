@@ -116,10 +116,10 @@ TextureImporter:
       name: DruidGrayed_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 716
-        height: 1268
+        width: 712
+        height: 1258
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8606541137196120288
+--- !u!1 &6873472488657315147
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1681580900483152208}
-  - component: {fileID: 1873158380422245176}
-  - component: {fileID: 5155041045309974684}
-  - component: {fileID: 5408803055309376266}
-  - component: {fileID: 6325745158641421145}
+  - component: {fileID: 4389296164201363854}
+  - component: {fileID: 1800000262255742506}
+  - component: {fileID: 9128039722826344512}
+  - component: {fileID: 9221959643852116315}
+  - component: {fileID: 4811999712675437589}
   m_Layer: 5
   m_Name: Enemy
   m_TagString: Enemy
@@ -20,40 +20,40 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1681580900483152208
+--- !u!224 &4389296164201363854
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8606541137196120288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 6873472488657315147}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -41.253357, y: -43.579338}
-  m_SizeDelta: {x: 78.58, y: 86.63}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -50.429993, y: -117.17046}
+  m_SizeDelta: {x: 100.86, y: 174.5201}
   m_Pivot: {x: 0, y: 0}
---- !u!222 &1873158380422245176
+--- !u!222 &1800000262255742506
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8606541137196120288}
+  m_GameObject: {fileID: 6873472488657315147}
   m_CullTransparentMesh: 1
---- !u!114 &5155041045309974684
+--- !u!114 &9128039722826344512
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8606541137196120288}
+  m_GameObject: {fileID: 6873472488657315147}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6747511057611931477, guid: af9371917005f3f4dac5633bf0a6e58c, type: 3}
+  m_Sprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77,13 +77,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5408803055309376266
+--- !u!114 &9221959643852116315
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8606541137196120288}
+  m_GameObject: {fileID: 6873472488657315147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70630536c978206419df575fc1aeef64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Demon
+  damagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
+  usedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
+  iconSprite: {fileID: 0}
+  iconUsedSprite: {fileID: 0}
+  maxHealth: 60
+  maxMorale: 10
+  spellsToChooseFrom:
+  - spellName: Torture
+    damage: 10
+    damageAllEnemies: 0
+    targeting: 1
+--- !u!114 &4811999712675437589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873472488657315147}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d029537f52d4944b85613814962e225, type: 3}
@@ -95,35 +119,6 @@ MonoBehaviour:
   moraleBarColor: {r: 1, g: 1, b: 1, a: 1}
   moraleTextColor: {r: 0, g: 0, b: 0, a: 1}
   UI_OffsetX: 0
-  healthPosY: 2.1
-  moralePosY: 1.4
+  healthPosY: 175
+  moralePosY: 140
   includeMorale: 1
-  panel: {fileID: 0}
---- !u!114 &6325745158641421145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8606541137196120288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70630536c978206419df575fc1aeef64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: C
-  damagedSprite: {fileID: -428637643890943686, guid: 7f4d04ef07d5b5041b775cf0fb7b1811, type: 3}
-  usedSprite: {fileID: -6181369391358852801, guid: db6b564f78e6f934186774a738b307c7, type: 3}
-  iconSprite: {fileID: 0}
-  iconUsedSprite: {fileID: 0}
-  maxHealth: 60
-  maxMorale: 10
-  spellsToChooseFrom:
-  - spellName: Basic Attack
-    damage: 5
-    damageAllEnemies: 1
-    targeting: 0
-  - spellName: Targeted Attack
-    damage: 10
-    damageAllEnemies: 0
-    targeting: 0
