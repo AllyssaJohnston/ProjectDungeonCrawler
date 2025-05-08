@@ -232,7 +232,6 @@ public class CombatManagerBehavior : MonoBehaviour
                 component.enabled = true;
             }
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
-            enemy.GetComponent<CharacterUICreatorBehavior>().setPanel(instance.characterStatsPanel);
             enemyBehavior.setUpFromStats(curEnemyStat);
             enemyCharacterBehaviors.Add(enemyBehavior);
             enemyBehavior.startBattle();

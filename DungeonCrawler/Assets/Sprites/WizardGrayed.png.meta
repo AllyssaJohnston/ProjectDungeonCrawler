@@ -116,10 +116,10 @@ TextureImporter:
       name: WizardGrayed_0
       rect:
         serializedVersion: 2
-        x: 8
+        x: 0
         y: 0
         width: 627
-        height: 1409
+        height: 1406
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

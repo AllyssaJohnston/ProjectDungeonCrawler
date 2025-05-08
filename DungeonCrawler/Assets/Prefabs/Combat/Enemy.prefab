@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6747511057611931477, guid: af9371917005f3f4dac5633bf0a6e58c, type: 3}
+  m_Sprite: {fileID: 8749302817991680212, guid: ad62c764c230a9342b9938e5d7fddcc2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -95,10 +95,9 @@ MonoBehaviour:
   moraleBarColor: {r: 1, g: 1, b: 1, a: 1}
   moraleTextColor: {r: 0, g: 0, b: 0, a: 1}
   UI_OffsetX: 0
-  healthPosY: 2.1
-  moralePosY: 1.4
-  includeMorale: 1
-  panel: {fileID: 0}
+  healthPosY: 175
+  moralePosY: 140
+  includeMorale: 0
 --- !u!114 &6325745158641421145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,9 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70630536c978206419df575fc1aeef64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: C
-  damagedSprite: {fileID: -428637643890943686, guid: 7f4d04ef07d5b5041b775cf0fb7b1811, type: 3}
-  usedSprite: {fileID: -6181369391358852801, guid: db6b564f78e6f934186774a738b307c7, type: 3}
+  characterName: Goblin
+  damagedSprite: {fileID: -8431113766686589518, guid: 0e811aa15f79d884da983167048f2ed9, type: 3}
+  usedSprite: {fileID: 7980891568568816697, guid: bbacee7044622ed458171b0d065836c3, type: 3}
   iconSprite: {fileID: 0}
   iconUsedSprite: {fileID: 0}
   maxHealth: 60
@@ -122,8 +121,4 @@ MonoBehaviour:
   - spellName: Basic Attack
     damage: 5
     damageAllEnemies: 1
-    targeting: 0
-  - spellName: Targeted Attack
-    damage: 10
-    damageAllEnemies: 0
     targeting: 0

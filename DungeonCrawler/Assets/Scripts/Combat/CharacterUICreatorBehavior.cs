@@ -11,7 +11,6 @@ public class CharacterUICreatorBehavior : MonoBehaviour
     [SerializeField] float healthPosY = 3;
     [SerializeField] float moralePosY = 2;
     [SerializeField] bool includeMorale = true;
-    [SerializeField] GameObject panel;
 
     private CharacterBehavior characterBehavior;
     private RectTransform characterRect;
@@ -23,7 +22,7 @@ public class CharacterUICreatorBehavior : MonoBehaviour
     public void SetUp(CharacterBehavior givenCharacterBehavior)
     {
         characterBehavior = givenCharacterBehavior;
-        characterRect = gameObject.GetComponent<RectTransform>();
+        characterRect = gameObject.transform.parent.gameObject.GetComponent<RectTransform>();
 
         healthBarManager = createBar(healthPosY);
         healthBarManagerBehavior = healthBarManager.GetComponent<HealthBarManager>();
@@ -38,21 +37,16 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         }
     }
 
-    public void setPanel(GameObject panel)
-    {
-        this.panel = panel;
-    }
-
     private GameObject createBar(float yOffset)
     {
         GameObject bar = Instantiate(healthBarTemplate);
+        RectTransform rectTransform = bar.GetComponent<RectTransform>();
         Vector3 scale = bar.transform.localScale;
-        bar.transform.SetParent(panel.transform);
+        bar.transform.SetParent(gameObject.transform.parent);
         bar.transform.localScale = scale;
 
-        Vector3 center = characterRect.TransformPoint(characterRect.rect.center);
-
-        bar.transform.position = new Vector3(center.x + UI_OffsetX, yOffset, 0);
+        Vector3 center = characterRect.TransformPoint(characterRect.anchoredPosition);
+        rectTransform.anchoredPosition = new Vector3(UI_OffsetX, yOffset, 0);
         return bar;
     }
 
