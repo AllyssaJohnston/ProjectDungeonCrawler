@@ -14,7 +14,6 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 {
     private static ArrowIndicatorManagerBehavior instance;
     [SerializeField] GameObject arrow;
-    [SerializeField] GameObject arrowsPanel;
     [SerializeField] GameObject button;
     [SerializeField] float enemySelectionXOffset;
     [SerializeField] float enemySelectionYOffset;
@@ -84,7 +83,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_BUFFER:
                 deleteArrows();
-                createArrow(E_Arrow_Type.ENEMY_TURN_PTR, instance.arrowsPanel);
+                createArrow(E_Arrow_Type.ENEMY_TURN_PTR, CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex].gameObject.transform.parent.gameObject);
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
                 break;

@@ -13,7 +13,6 @@ public class CombatManagerBehavior : MonoBehaviour
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
     [SerializeField] GameObject enemyTemplate;
     [SerializeField] GameObject characterHolder;
-    [SerializeField] GameObject characterStatsPanel;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
 
