@@ -9,6 +9,8 @@ public class CombatEntranceTrigger : MonoBehaviour
         if (other.CompareTag("Player")) {
             Debug.Log("Entering combat!");
             if (selfDestruct) Destroy(this.gameObject);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             GameManagerBehavior.enterCombat(encounter);
         }
     }
