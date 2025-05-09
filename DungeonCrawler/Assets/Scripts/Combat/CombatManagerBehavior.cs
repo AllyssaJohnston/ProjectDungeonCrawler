@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 // Singleton
@@ -77,7 +78,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         if (alive == false)
         {
-            endCombat();
+            endCombat(true);
         }
 
         alive = false;
@@ -87,7 +88,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         if (alive == false)
         {
-            endCombat();
+            endCombat(false);
         }
     }
 
@@ -146,6 +147,19 @@ public class CombatManagerBehavior : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    // reset all stats
+    public static void reset()
+    {
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
+        {
+            character.reset();
+        }
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
+        {
+            character.reset();
         }
     }
 
@@ -228,12 +242,18 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // called to end combat
-    private static void endCombat()
+    private static void endCombat(bool died)
     {
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             Debug.Log("end combat");
             GameManagerBehavior.enterLevel();
+        }
+        if (died)
+        {
+            // go to main menu
+            reset();
+            SceneManager.LoadScene("Menu");
         }
     }
 

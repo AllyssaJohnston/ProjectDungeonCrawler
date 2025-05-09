@@ -30,6 +30,12 @@ public class FriendlyBehavior : CharacterBehavior
         UI_ManagerBehavior.UpdateMoraleBar();
     }
 
+    override public void reset()
+    {
+        base.reset();
+        morale = maxMorale;
+    }
+
     // called at start of battle
     // use this method to reset things between fights
     override public void startBattle()

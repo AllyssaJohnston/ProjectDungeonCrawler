@@ -5,15 +5,8 @@ using UnityEngine.UI;
 public class EnemyBehavior : CharacterBehavior
 {
     [SerializeField] List<EnemySpellStats> spellsToChooseFrom = new List<EnemySpellStats>();
-
     private int curSpellIndex = 0;
 
-
-    // use this method to reset things between fights
-    override public void startBattle()
-    {
-        base.startBattle();
-    }
 
     override protected void SetUp()
     {
@@ -26,10 +19,16 @@ public class EnemyBehavior : CharacterBehavior
 
     }
 
-    // use this method to reset things between turns
-    override public void startTurn()
+    public override void reset()
     {
-        base.startTurn();
+        base.reset();
+        curSpellIndex = 0;
+    }
+
+    public override void startBattle()
+    {
+        base.startBattle();
+        curSpellIndex = 0;
     }
 
     //chooses a spell and executes it
@@ -125,8 +124,8 @@ public class EnemyBehavior : CharacterBehavior
     {
         characterName = stats.characterName;
 
-        regSprite = stats.characterSprite;
         GetComponent<Image>().sprite = stats.characterSprite;
+        regSprite = stats.characterSprite;
         damagedSprite = stats.characterDamagedSprite;
         usedSprite = stats.characterUsedSprite;
 

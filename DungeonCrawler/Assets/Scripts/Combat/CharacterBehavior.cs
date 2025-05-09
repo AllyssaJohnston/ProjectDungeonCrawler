@@ -6,13 +6,12 @@ public class CharacterBehavior : MonoBehaviour
 {
     public bool friendly = true;
     public string characterName = "unnamed";
-    // alt character images
-    public Sprite regSprite;
+
+    protected Sprite regSprite;
     public Sprite damagedSprite;
     public Sprite usedSprite;
 
     protected Image characterImageManager;
-    protected Color regColor;
 
     [SerializeField] protected int maxHealth = 100;
     protected int health;
@@ -25,7 +24,6 @@ public class CharacterBehavior : MonoBehaviour
     {
         characterImageManager = GetComponent<Image>();
         regSprite = characterImageManager.sprite;
-        regColor = characterImageManager.color;
 
         health = maxHealth;
 
@@ -38,15 +36,15 @@ public class CharacterBehavior : MonoBehaviour
     // updates the character's health
     public void updateHealth(int healthChange)
     {
-        if (healthChange < 0)
-        {
-            StartCoroutine(takeDamageEffect());
-        }
-
         health += healthChange;
         health = Mathf.Max(health, 0);
         available = isActive();
         UI_ManagerBehavior.UpdateHealthBar();
+
+        if (healthChange < 0)
+        {
+            StartCoroutine(takeDamageEffect());
+        }
     }
 
     public void setHealth(int givenHealth)
@@ -57,13 +55,18 @@ public class CharacterBehavior : MonoBehaviour
 
     public IEnumerator takeDamageEffect()
     {
-        Color curColor = characterImageManager.color;
-        Sprite curSprite = characterImageManager.sprite;
         characterImageManager.color = Color.red;
         characterImageManager.sprite = damagedSprite;
         yield return new WaitForSeconds(.2f);
-        characterImageManager.color = curColor;
-        characterImageManager.sprite = curSprite;
+        characterImageManager.color = Color.white;
+        characterImageManager.sprite = available ? regSprite : usedSprite;
+    }
+
+    virtual public void reset()
+    {
+        health = maxHealth = 0;
+        characterImageManager.color = Color.white;
+        characterImageManager.sprite = regSprite;
     }
 
     // called at start of battle
@@ -90,9 +93,6 @@ public class CharacterBehavior : MonoBehaviour
     {
         // set availability
         available = isActive();
-        Debug.Log(characterImageManager.sprite == null);
-        Debug.Log(regSprite == null);
-        Debug.Log(usedSprite == null);
         characterImageManager.sprite = available ? regSprite : usedSprite;
     }
 
