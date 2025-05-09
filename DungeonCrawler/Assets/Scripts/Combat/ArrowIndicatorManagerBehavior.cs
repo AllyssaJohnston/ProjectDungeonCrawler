@@ -20,9 +20,13 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
     [SerializeField] float enemyTurnXOffset;
     [SerializeField] float enemyTurnYOffset;
     [SerializeField] float enemyRotation;
+    [SerializeField] float enemyMoveDist;
+    [SerializeField] float enemyScale;
     [SerializeField] float spellXOffset;
     [SerializeField] float spellYOffset;
     [SerializeField] float spellRotation;
+    [SerializeField] float spellMoveDist;
+    [SerializeField] float spellScale;
     [SerializeField] float buttonXOffset;
     [SerializeField] float buttonYOffset;
     [SerializeField] float buttonRotation;
@@ -110,38 +114,44 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         curArrow.transform.SetParent(parent.transform);
         RectTransform arrowRect = curArrow.GetComponent<RectTransform>();
         arrowRect.localScale = scale;
-        // TODO scaling bug
 
         float zRot = 0;
-        bool move = true;
+        float moveDist = 0f;
         switch (type)
         {
             case (E_Arrow_Type.SPELL_PTR):
+                arrowRect.localScale *= instance.spellScale;
                 arrowRect.anchoredPosition = new Vector3(instance.spellXOffset, instance.spellYOffset, 0);
                 arrowRect.Rotate(0, 0, instance.spellRotation);
                 zRot = instance.spellRotation;
+                moveDist = instance.spellMoveDist;
                 break;
             case (E_Arrow_Type.END_TURN_PTR):
+                arrowRect.localScale *= instance.spellScale;
                 arrowRect.anchoredPosition = new Vector3(instance.buttonXOffset, instance.buttonYOffset, 0);
                 arrowRect.Rotate(0, 0, instance.buttonRotation);
                 zRot = instance.buttonRotation;
+                moveDist = instance.spellMoveDist;
                 break;
             case (E_Arrow_Type.ENEMY_SELECTION_PTR):
+                arrowRect.localScale *= instance.enemyScale;
                 arrowRect.anchoredPosition = new Vector3(instance.enemySelectionXOffset, instance.enemySelectionYOffset, 0);
                 arrowRect.Rotate(0, 0, instance.enemyRotation);
                 zRot = instance.enemyRotation;
+                moveDist = instance.enemyMoveDist;
                 break;
             case (E_Arrow_Type.ENEMY_TURN_PTR):
+                arrowRect.localScale *= instance.enemyScale;
                 arrowRect.anchoredPosition = new Vector3(instance.enemyTurnXOffset, instance.enemyTurnYOffset, 0);
                 arrowRect.Rotate(0, 0, instance.enemyRotation);
                 zRot = instance.enemyRotation;
-                move = false;
+                moveDist = 0f;
                 break;
             default:
                 Debug.Log("unrecognized arrow type");
                 break;
         }
-        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot, move);
+        curArrow.GetComponent<ArrowIndicatorBehavior>().setUp(zRot, moveDist);
         return curArrow;
     }
 

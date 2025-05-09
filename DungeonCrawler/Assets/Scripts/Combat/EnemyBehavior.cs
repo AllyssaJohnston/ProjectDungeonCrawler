@@ -37,8 +37,7 @@ public class EnemyBehavior : CharacterBehavior
     // use this method to reset things between turns
     override public void startTurn()
     {
-        available = isActive();
-        characterImageManager.sprite = available ? regSprite : usedSprite;
+        base.startTurn();
     }
 
     //chooses a spell and executes it

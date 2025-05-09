@@ -8,12 +8,12 @@ public class ArrowIndicatorBehavior : MonoBehaviour
     float bufferTimer = 0f;
     [SerializeField] float movementTime;
 
-    public void setUp(float rot, bool move)
+    public void setUp(float rot, float moveDist)
     {
         startPos = transform.localPosition;
         float rad = (rot * Mathf.PI) / 180f;
-        movementVect = 60 * new Vector3(Mathf.Cos(rad), Mathf.Sin(rad));
-        this.move = move;
+        movementVect = moveDist * new Vector3(Mathf.Cos(rad), Mathf.Sin(rad));
+        this.move = (moveDist != 0f);
     }
 
     private void Update()

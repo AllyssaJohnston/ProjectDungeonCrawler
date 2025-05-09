@@ -946,9 +946,13 @@ MonoBehaviour:
   enemyTurnXOffset: 0
   enemyTurnYOffset: 100
   enemyRotation: -90
+  enemyMoveDist: 30
+  enemyScale: 0.7
   spellXOffset: -440
   spellYOffset: 0
   spellRotation: 0
+  spellMoveDist: 60
+  spellScale: 1
   buttonXOffset: -240
   buttonYOffset: 0
   buttonRotation: 0
