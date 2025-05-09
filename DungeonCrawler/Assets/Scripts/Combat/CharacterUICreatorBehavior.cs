@@ -10,7 +10,6 @@ public class CharacterUICreatorBehavior : MonoBehaviour
     [SerializeField] float UI_OffsetX = 0;
     [SerializeField] float healthPosY = 3;
     [SerializeField] float moralePosY = 2;
-    [SerializeField] bool includeMorale = true;
 
     private CharacterBehavior characterBehavior;
     private RectTransform characterRect;
@@ -28,11 +27,11 @@ public class CharacterUICreatorBehavior : MonoBehaviour
         healthBarManagerBehavior = healthBarManager.GetComponent<HealthBarManager>();
         healthBarManagerBehavior.SetUp(characterBehavior.getHealth(), healthBarColor, healthTextColor);
 
-        if (includeMorale)
+        if (givenCharacterBehavior.friendly)
         {
             moraleBarManager = createBar(moralePosY);
             moraleBarManagerBehavior = moraleBarManager.GetComponent<HealthBarManager>();
-            moraleBarManagerBehavior.SetUp(characterBehavior.getMorale(), moraleBarColor, moraleTextColor);
+            moraleBarManagerBehavior.SetUp(((FriendlyBehavior)characterBehavior).getMorale(), moraleBarColor, moraleTextColor);
 
         }
     }
@@ -57,9 +56,9 @@ public class CharacterUICreatorBehavior : MonoBehaviour
 
     public void UpdateMoraleBar()
     {
-        if (includeMorale)
+        if (characterBehavior.friendly)
         {
-            moraleBarManagerBehavior.SetValue(characterBehavior.getMorale());
+            moraleBarManagerBehavior.SetValue(((FriendlyBehavior)characterBehavior).getMorale());
         }
     }
 }

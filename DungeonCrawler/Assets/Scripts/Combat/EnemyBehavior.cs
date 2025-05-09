@@ -5,24 +5,8 @@ using UnityEngine.UI;
 public class EnemyBehavior : CharacterBehavior
 {
     [SerializeField] List<EnemySpellStats> spellsToChooseFrom = new List<EnemySpellStats>();
-
     private int curSpellIndex = 0;
 
-
-    // use this method to reset things between fights
-    override public void startBattle()
-    {
-        if (firstCombat)
-        {
-            health = maxHealth;
-            morale = maxMorale;
-            firstCombat = false;
-        }
-
-        available = true;
-        curSpellIndex = 0;
-        SetUp();
-    }
 
     override protected void SetUp()
     {
@@ -35,15 +19,20 @@ public class EnemyBehavior : CharacterBehavior
 
     }
 
-    // use this method to reset things between turns
-    override public void startTurn()
+    public override void reset()
     {
-        available = isActive();
-        characterImageManager.sprite = available ? regSprite : usedSprite;
+        base.reset();
+        curSpellIndex = 0;
+    }
+
+    public override void startBattle()
+    {
+        base.startBattle();
+        curSpellIndex = 0;
     }
 
     //chooses a spell and executes it
-    public void castSpell(List<CharacterBehavior> friendlyCharacters)
+    public void castSpell(List<FriendlyBehavior> friendlyCharacters)
     {
         if (canCast())
         {
@@ -60,13 +49,13 @@ public class EnemyBehavior : CharacterBehavior
             else
             {
                 //select character to target based on spell targeting data, and attack them
-                CharacterBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
+                FriendlyBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
                 characterBehavior.updateHealth(-spell.damage);
                 target = characterBehavior.characterName;
             }
             DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage.");
             available = false;
-            //characterImageManager.sprite = usedSprite;
+            characterImageManager.sprite = usedSprite;
         }
         else
         {
@@ -87,7 +76,7 @@ public class EnemyBehavior : CharacterBehavior
     }
 
     // choose target
-    private CharacterBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<CharacterBehavior> friendlyCharacters)
+    private FriendlyBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<FriendlyBehavior> friendlyCharacters)
     {
         int highestHealthIndex = 0;
         int lowestHealthIndex = 0;
@@ -134,12 +123,18 @@ public class EnemyBehavior : CharacterBehavior
     public void setUpFromStats(EnemyStats stats)
     {
         characterName = stats.characterName;
-        iconSprite = null;
-        regSprite = stats.characterSprite;
+
         GetComponent<Image>().sprite = stats.characterSprite;
+        regSprite = stats.characterSprite;
         damagedSprite = stats.characterDamagedSprite;
         usedSprite = stats.characterUsedSprite;
-        
+
+        RectTransform rect = GetComponent<RectTransform>();
+        float anchorX = rect.anchoredPosition.x;
+        float anchorY = rect.anchoredPosition.y;
+        rect.offsetMax = new Vector2(stats.imageWidth, stats.imageHeight - 80) / 2f;
+        rect.anchoredPosition = new Vector2(anchorX, anchorY);
+
         maxHealth = stats.maxHealth;
 
         spellsToChooseFrom = stats.spells;

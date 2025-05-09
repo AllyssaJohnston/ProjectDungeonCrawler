@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 
 // Singleton
@@ -17,12 +18,12 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] private int manaRegen = 2;
 
     // These are the fields we actually want to work with
-    [HideInInspector] public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
+    [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
 
     private static FriendlySpellBehavior curSpellToCast = null;
 
-    public static bool combatStarted {get; private set;}
+    public static bool combatStarted { get; private set; }
 
     public void Start()
     {
@@ -33,6 +34,11 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         instance = this;
         Debug.Log("combat manager initialized");
+
+        foreach (GameObject character in instance.inputFriendlyCharacters)
+        {
+            friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
+        }
     }
 
     private void Awake()
@@ -66,13 +72,13 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         // check if all characters or all enemies are dead
         bool alive = false;
-        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
             alive = alive | character.isActive();
         }
         if (alive == false)
         {
-            endCombat();
+            endCombat(true);
         }
 
         alive = false;
@@ -82,7 +88,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         if (alive == false)
         {
-            endCombat();
+            endCombat(false);
         }
     }
 
@@ -93,21 +99,6 @@ public class CombatManagerBehavior : MonoBehaviour
         E_State curState = StateManagerBehavior.getState();
         if (Input.GetMouseButtonDown(0)) //left click
         {
-            // get game objects
-            //if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
-            //{
-            //    Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //    RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
-            //    if (hit.collider != null)
-            //    {
-            //        GameObject gameObject = hit.collider.gameObject;
-            //        if (gameObject.tag == "Enemy")
-            //        {
-            //            castSpellOnTarget(gameObject.GetComponent<EnemyBehavior>());
-            //        }
-            //    }
-            //}
-
             // find UI elements
             if (EventSystem.current.IsPointerOverGameObject())
             {
@@ -158,37 +149,47 @@ public class CombatManagerBehavior : MonoBehaviour
             }
         }
     }
-    
+
+    // reset all stats
+    public static void reset()
+    {
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
+        {
+            character.reset();
+        }
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
+        {
+            character.reset();
+        }
+    }
+
     // called at the start of each combat
     public static void startBattle(CombatEncounterBehavior inputCombatData)
     {
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
+            TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
             if (inputCombatData == null)
             {
-                battleSetUp();
                 useDefaultEnemies();
             }
             else
             {
-                battleSetUp();
                 createEnemies(inputCombatData);
             }
+            battleSetUp();
         }
         combatStarted = true;
     }
 
-
     private static void battleSetUp()
     {
-        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
-        friendlyCharacterBehaviors.Clear();
-        foreach (GameObject character in instance.inputFriendlyCharacters)
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
-            friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
-            character.GetComponent<CharacterBehavior>().startBattle();
+            character.startBattle();
         }
         PartySpellManagerBehavior.UpdateSpellOrder();
+        ArrowIndicatorManagerBehavior.createArrows();
         StateManagerBehavior.StartBattle();
     }
 
@@ -198,18 +199,19 @@ public class CombatManagerBehavior : MonoBehaviour
         enemyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputEnemyCharacters)
         {
-            enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
-            character.GetComponent<CharacterBehavior>().startBattle();
+            EnemyBehavior behavior = character.GetComponent<EnemyBehavior>();
+            enemyCharacterBehaviors.Add(behavior);
+            behavior.startBattle();
         }
     }
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
-        float screenX = 300;
-        float yPos = 6.1f;
-        float spacing = 130f;
+        float screenX = instance.characterHolder.GetComponent<RectTransform>().offsetMax.x - 50;
+        float yPos = friendlyCharacterBehaviors[0].gameObject.transform.parent.localPosition.y;
+        float spacing = 90f;
 
-        
+
         int i = inputCombatData.enemies.Count - 1;
         //clear old enemies
         foreach (GameObject defaultEnemy in instance.inputEnemyCharacters)
@@ -240,22 +242,27 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // called to end combat
-    private static void endCombat()
+    private static void endCombat(bool died)
     {
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             Debug.Log("end combat");
             GameManagerBehavior.enterLevel();
         }
+        if (died)
+        {
+            // go to main menu
+            reset();
+            SceneManager.LoadScene("Menu");
+        }
     }
 
-    public static void OnNextState(E_State nextState)
+    public static void OnNextState(E_State oldState, E_State nextState)
     {
-        switch (nextState)
+        if (oldState == E_State.ENEMY_END_TURN_BUFFER && nextState == E_State.PLAYER_SPELL_SELECTION)
         {
-            case E_State.ENEMY_END_TURN_BUFFER:
-                playerStartTurn();
-                break;
+            playerStartTurn();
+            enemiesStartTurn();
         }
     }
 
@@ -265,11 +272,11 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         // make sure everyone is available to cast
         bool canCast = true;
-        foreach (CharacterBehavior character in spellBehavior.castingCharacterBehaviors)
+        foreach (FriendlyBehavior character in spellBehavior.castingCharacterBehaviors)
         {
             canCast = canCast && character.canCast();
         }
- 
+
         // make sure there is enough mana
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
@@ -290,7 +297,7 @@ public class CombatManagerBehavior : MonoBehaviour
             DebugBehavior.updateLog("Failed to cast spell.");
         }
     }
-    
+
     // for player casted spells
     // deal with mana and morale cost
     // to be used with other cast methods
@@ -298,7 +305,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         TeamManaBehavior.updateMana(-curSpellToCast.manaCost);
 
-        foreach (CharacterBehavior character in curSpellToCast.castingCharacterBehaviors)
+        foreach (FriendlyBehavior character in curSpellToCast.castingCharacterBehaviors)
         {
             // do morale damage against the casters
             character.cast(curSpellToCast.moraleDamage);
@@ -323,9 +330,13 @@ public class CombatManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on the enemy selected by the player
     private static void castSpellOnTarget(EnemyBehavior selectedEnemy)
     {
-        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
-        selectedEnemy.updateHealth(-curSpellToCast.damage);
-        cast();
+        if (selectedEnemy.isActive())
+        {
+
+            DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
+            selectedEnemy.updateHealth(-curSpellToCast.damage);
+            cast();
+        }
     }
 
     // called at the start of the player turn
@@ -335,7 +346,7 @@ public class CombatManagerBehavior : MonoBehaviour
         TeamManaBehavior.updateMana(instance.manaRegen);
 
         // reset all friendly characters
-        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
             character.startTurn();
         }

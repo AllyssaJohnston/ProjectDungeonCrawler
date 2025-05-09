@@ -48,6 +48,7 @@ public class TeamManaBehavior : MonoBehaviour
         prevMana = curMana;
         mana = curMana;
         manaText.text = mana.ToString();
+        image.color = regColor;
     }
 
     public static void updateManaWithoutEffect(int curMana)

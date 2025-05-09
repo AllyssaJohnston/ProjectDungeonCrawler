@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7125804270730469483}
   - component: {fileID: 5111860533853689807}
   - component: {fileID: 2352945408882586021}
-  - component: {fileID: 5608975940991784616}
+  - component: {fileID: 8893097176478924425}
   - component: {fileID: -7147862833875646992}
   m_Layer: 5
   m_Name: Friendly
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5608975940991784616
+--- !u!114 &8893097176478924425
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,15 +86,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 101720692608466094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ebf7f106080123409e69d9286cbbee3, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d0d25592329aab43bb7af029e5f22fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  friendly: 1
   characterName: Wizard
   damagedSprite: {fileID: 4170082088831816181, guid: f6b0b25f7e63b464aac908e3945c11c2, type: 3}
   usedSprite: {fileID: 246816776284562217, guid: 262f36ed6b21667418b6ca5623d06dfa, type: 3}
+  maxHealth: 100
   iconSprite: {fileID: -1335188855448512003, guid: 5d139cc0555e12243a2d65905aaf314e, type: 3}
   iconUsedSprite: {fileID: 4639776591035538505, guid: 1e83758ec02b5834dad0d9a612afd502, type: 3}
-  maxHealth: 100
   maxMorale: 10
 --- !u!114 &-7147862833875646992
 MonoBehaviour:
@@ -116,4 +117,3 @@ MonoBehaviour:
   UI_OffsetX: 0
   healthPosY: 175
   moralePosY: 140
-  includeMorale: 1

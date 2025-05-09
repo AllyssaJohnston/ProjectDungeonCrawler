@@ -89,13 +89,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70630536c978206419df575fc1aeef64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  friendly: 0
   characterName: Demon
   damagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
   usedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
-  iconSprite: {fileID: 0}
-  iconUsedSprite: {fileID: 0}
   maxHealth: 60
-  maxMorale: 10
   spellsToChooseFrom:
   - spellName: Torture
     damage: 10
@@ -121,4 +119,3 @@ MonoBehaviour:
   UI_OffsetX: 0
   healthPosY: 175
   moralePosY: 140
-  includeMorale: 1

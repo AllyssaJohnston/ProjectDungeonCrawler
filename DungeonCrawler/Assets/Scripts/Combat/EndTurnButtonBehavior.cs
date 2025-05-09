@@ -17,7 +17,6 @@ public class EndTurnButtonBehavior : MonoBehaviour
         instance = this;
 
         button = GetComponent<Button>();
-        Debug.Log(button == null);
     }
 
     private void Awake()
