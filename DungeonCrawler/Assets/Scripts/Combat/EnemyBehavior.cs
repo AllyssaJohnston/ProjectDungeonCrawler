@@ -12,15 +12,7 @@ public class EnemyBehavior : CharacterBehavior
     // use this method to reset things between fights
     override public void startBattle()
     {
-        if (firstCombat)
-        {
-            health = maxHealth;
-            firstCombat = false;
-        }
-
-        available = true;
-        curSpellIndex = 0;
-        SetUp();
+        base.startBattle();
     }
 
     override protected void SetUp()
@@ -64,7 +56,7 @@ public class EnemyBehavior : CharacterBehavior
             }
             DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage.");
             available = false;
-            //characterImageManager.sprite = usedSprite;
+            characterImageManager.sprite = usedSprite;
         }
         else
         {

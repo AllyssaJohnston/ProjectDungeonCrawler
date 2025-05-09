@@ -7,7 +7,7 @@ public class CharacterBehavior : MonoBehaviour
     public bool friendly = true;
     public string characterName = "unnamed";
     // alt character images
-    protected Sprite regSprite;
+    public Sprite regSprite;
     public Sprite damagedSprite;
     public Sprite usedSprite;
 
@@ -44,11 +44,8 @@ public class CharacterBehavior : MonoBehaviour
         }
 
         health += healthChange;
-        if (health <= 0)
-        {
-            health = 0;
-            available = false;
-        }
+        health = Mathf.Max(health, 0);
+        available = isActive();
         UI_ManagerBehavior.UpdateHealthBar();
     }
 
@@ -60,11 +57,13 @@ public class CharacterBehavior : MonoBehaviour
 
     public IEnumerator takeDamageEffect()
     {
+        Color curColor = characterImageManager.color;
+        Sprite curSprite = characterImageManager.sprite;
         characterImageManager.color = Color.red;
         characterImageManager.sprite = damagedSprite;
         yield return new WaitForSeconds(.2f);
-        characterImageManager.color = regColor;
-        characterImageManager.sprite = regSprite;
+        characterImageManager.color = curColor;
+        characterImageManager.sprite = curSprite;
     }
 
     // called at start of battle

@@ -71,7 +71,6 @@ public class StateManagerBehavior : MonoBehaviour
             case E_State.PLAYER_END_TURN_BUFFER:
                 // prep/reset enemies for next round
                 curEnemyIndex = 0;
-                CombatManagerBehavior.enemiesStartTurn();
                 buffer(instance.playerEndTurnBuffer);
                 break;
             case E_State.ENEMY_BUFFER:
@@ -129,12 +128,12 @@ public class StateManagerBehavior : MonoBehaviour
     public static void NextState(E_State nextState)
     {
         Debug.Log(nextState);
-        curState = nextState;
 
         DebugBehavior.OnNextState(nextState);
-        CombatManagerBehavior.OnNextState(nextState);
+        CombatManagerBehavior.OnNextState(curState, nextState);
         ArrowIndicatorManagerBehavior.OnNextState(nextState);
         EndTurnButtonBehavior.OnNextState(nextState);
+        curState = nextState;
     }
 
     // go to the next state

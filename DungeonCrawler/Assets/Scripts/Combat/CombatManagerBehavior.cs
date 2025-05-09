@@ -33,6 +33,12 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         instance = this;
         Debug.Log("combat manager initialized");
+
+        foreach (GameObject character in instance.inputFriendlyCharacters)
+        {
+            friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
+            character.GetComponent<FriendlyBehavior>().startBattle();
+        }
     }
 
     private void Awake()
@@ -93,21 +99,6 @@ public class CombatManagerBehavior : MonoBehaviour
         E_State curState = StateManagerBehavior.getState();
         if (Input.GetMouseButtonDown(0)) //left click
         {
-            // get game objects
-            //if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
-            //{
-            //    Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //    RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.one, .5f);
-            //    if (hit.collider != null)
-            //    {
-            //        GameObject gameObject = hit.collider.gameObject;
-            //        if (gameObject.tag == "Enemy")
-            //        {
-            //            castSpellOnTarget(gameObject.GetComponent<EnemyBehavior>());
-            //        }
-            //    }
-            //}
-
             // find UI elements
             if (EventSystem.current.IsPointerOverGameObject())
             {
@@ -164,38 +155,29 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
+            TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
             if (inputCombatData == null)
             {
-                createFriendlies();
                 useDefaultEnemies();
-                battleSetUp();
             }
             else
             {
-                createFriendlies();
                 createEnemies(inputCombatData);
-                battleSetUp();
             }
+            battleSetUp();
         }
         combatStarted = true;
     }
 
     private static void battleSetUp()
     {
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
+        {
+            character.startTurn();
+        }
         PartySpellManagerBehavior.UpdateSpellOrder();
         ArrowIndicatorManagerBehavior.createArrows();
         StateManagerBehavior.StartBattle();
-    }
-
-    private static void createFriendlies()
-    {
-        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
-        friendlyCharacterBehaviors.Clear();
-        foreach (GameObject character in instance.inputFriendlyCharacters)
-        {
-            friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
-            character.GetComponent<FriendlyBehavior>().startBattle();
-        }
     }
 
     private static void useDefaultEnemies()
@@ -256,13 +238,12 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
-    public static void OnNextState(E_State nextState)
+    public static void OnNextState(E_State oldState, E_State nextState)
     {
-        switch (nextState)
+        if (oldState == E_State.ENEMY_END_TURN_BUFFER && nextState == E_State.PLAYER_SPELL_SELECTION)
         {
-            case E_State.ENEMY_END_TURN_BUFFER:
-                playerStartTurn();
-                break;
+            playerStartTurn();
+            enemiesStartTurn();
         }
     }
 

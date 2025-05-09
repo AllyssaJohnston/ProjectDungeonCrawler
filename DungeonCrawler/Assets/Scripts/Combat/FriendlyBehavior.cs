@@ -19,11 +19,8 @@ public class FriendlyBehavior : CharacterBehavior
     public void updateMorale(int moraleChange)
     {
         morale += moraleChange;
-        if (morale <= 0)
-        {
-            morale = 0;
-            available = false;
-        }
+        morale = Mathf.Max(morale, 0);
+        available = isActive();
         UI_ManagerBehavior.UpdateMoraleBar();
     }
 
