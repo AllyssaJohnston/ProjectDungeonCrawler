@@ -90,6 +90,9 @@ public class CharacterBehavior : MonoBehaviour
     {
         // set availability
         available = isActive();
+        Debug.Log(characterImageManager.sprite == null);
+        Debug.Log(regSprite == null);
+        Debug.Log(usedSprite == null);
         characterImageManager.sprite = available ? regSprite : usedSprite;
     }
 
