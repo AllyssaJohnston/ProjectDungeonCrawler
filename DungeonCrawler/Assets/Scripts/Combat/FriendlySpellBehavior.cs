@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FriendlySpellBehavior : SpellBehavior
 {
     [Header("Spell details")]
-    public List<CharacterBehavior> castingCharacterBehaviors = new List<CharacterBehavior>();
+    public List<FriendlyBehavior> castingCharacterBehaviors = new List<FriendlyBehavior>();
 
     [Header("UI Elements")]
     public TMP_Text spellNameText;
@@ -86,7 +86,7 @@ public class FriendlySpellBehavior : SpellBehavior
         regManaColor = manaImage.color;
     }
 
-    private void setUpIcon(float x, float y, float scale, CharacterBehavior character)
+    private void setUpIcon(float x, float y, float scale, FriendlyBehavior character)
     {
         GameObject curCharacterIcon = Instantiate(characterIconTemplate);
         curCharacterIcon.transform.SetParent(gameObject.transform);

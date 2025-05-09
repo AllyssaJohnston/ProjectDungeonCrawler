@@ -17,7 +17,7 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] private int manaRegen = 2;
 
     // These are the fields we actually want to work with
-    [HideInInspector] public static List<CharacterBehavior> friendlyCharacterBehaviors = new List<CharacterBehavior>();
+    [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
 
     private static FriendlySpellBehavior curSpellToCast = null;
@@ -66,7 +66,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         // check if all characters or all enemies are dead
         bool alive = false;
-        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
             alive = alive | character.isActive();
         }
@@ -193,8 +193,8 @@ public class CombatManagerBehavior : MonoBehaviour
         friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
-            friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
-            character.GetComponent<CharacterBehavior>().startBattle();
+            friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
+            character.GetComponent<FriendlyBehavior>().startBattle();
         }
     }
 
@@ -205,7 +205,7 @@ public class CombatManagerBehavior : MonoBehaviour
         foreach (GameObject character in instance.inputEnemyCharacters)
         {
             enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
-            character.GetComponent<CharacterBehavior>().startBattle();
+            character.GetComponent<EnemyBehavior>().startBattle();
         }
     }
 
@@ -272,7 +272,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         // make sure everyone is available to cast
         bool canCast = true;
-        foreach (CharacterBehavior character in spellBehavior.castingCharacterBehaviors)
+        foreach (FriendlyBehavior character in spellBehavior.castingCharacterBehaviors)
         {
             canCast = canCast && character.canCast();
         }
@@ -305,7 +305,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         TeamManaBehavior.updateMana(-curSpellToCast.manaCost);
 
-        foreach (CharacterBehavior character in curSpellToCast.castingCharacterBehaviors)
+        foreach (FriendlyBehavior character in curSpellToCast.castingCharacterBehaviors)
         {
             // do morale damage against the casters
             character.cast(curSpellToCast.moraleDamage);
@@ -342,7 +342,7 @@ public class CombatManagerBehavior : MonoBehaviour
         TeamManaBehavior.updateMana(instance.manaRegen);
 
         // reset all friendly characters
-        foreach (CharacterBehavior character in friendlyCharacterBehaviors)
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
             character.startTurn();
         }

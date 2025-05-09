@@ -15,7 +15,6 @@ public class EnemyBehavior : CharacterBehavior
         if (firstCombat)
         {
             health = maxHealth;
-            morale = maxMorale;
             firstCombat = false;
         }
 
@@ -43,7 +42,7 @@ public class EnemyBehavior : CharacterBehavior
     }
 
     //chooses a spell and executes it
-    public void castSpell(List<CharacterBehavior> friendlyCharacters)
+    public void castSpell(List<FriendlyBehavior> friendlyCharacters)
     {
         if (canCast())
         {
@@ -60,7 +59,7 @@ public class EnemyBehavior : CharacterBehavior
             else
             {
                 //select character to target based on spell targeting data, and attack them
-                CharacterBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
+                FriendlyBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
                 characterBehavior.updateHealth(-spell.damage);
                 target = characterBehavior.characterName;
             }
@@ -87,7 +86,7 @@ public class EnemyBehavior : CharacterBehavior
     }
 
     // choose target
-    private CharacterBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<CharacterBehavior> friendlyCharacters)
+    private FriendlyBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<FriendlyBehavior> friendlyCharacters)
     {
         int highestHealthIndex = 0;
         int lowestHealthIndex = 0;
@@ -134,7 +133,6 @@ public class EnemyBehavior : CharacterBehavior
     public void setUpFromStats(EnemyStats stats)
     {
         characterName = stats.characterName;
-        iconSprite = null;
         regSprite = stats.characterSprite;
         GetComponent<Image>().sprite = stats.characterSprite;
         damagedSprite = stats.characterDamagedSprite;
