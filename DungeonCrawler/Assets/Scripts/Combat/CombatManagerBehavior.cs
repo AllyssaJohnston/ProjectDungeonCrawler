@@ -166,11 +166,13 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             if (inputCombatData == null)
             {
+                createFriendlies();
                 useDefaultEnemies();
                 battleSetUp();
             }
             else
             {
+                createFriendlies();
                 createEnemies(inputCombatData);
                 battleSetUp();
             }
@@ -178,8 +180,14 @@ public class CombatManagerBehavior : MonoBehaviour
         combatStarted = true;
     }
 
-
     private static void battleSetUp()
+    {
+        PartySpellManagerBehavior.UpdateSpellOrder();
+        ArrowIndicatorManagerBehavior.createArrows();
+        StateManagerBehavior.StartBattle();
+    }
+
+    private static void createFriendlies()
     {
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
         friendlyCharacterBehaviors.Clear();
@@ -188,9 +196,6 @@ public class CombatManagerBehavior : MonoBehaviour
             friendlyCharacterBehaviors.Add(character.GetComponent<CharacterBehavior>());
             character.GetComponent<CharacterBehavior>().startBattle();
         }
-        PartySpellManagerBehavior.UpdateSpellOrder();
-        ArrowIndicatorManagerBehavior.createArrows();
-        StateManagerBehavior.StartBattle();
     }
 
     private static void useDefaultEnemies()
@@ -206,9 +211,10 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
-        float screenX = 300;
-        float yPos = 6.1f;
-        float spacing = 130f;
+        float screenX = instance.characterHolder.GetComponent<RectTransform>().offsetMax.x - 50;
+        Debug.Log(screenX);
+        float yPos = friendlyCharacterBehaviors[0].gameObject.transform.parent.localPosition.y;
+        float spacing = 90f;
 
         
         int i = inputCombatData.enemies.Count - 1;
