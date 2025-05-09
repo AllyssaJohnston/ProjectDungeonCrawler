@@ -132,11 +132,18 @@ public class EnemyBehavior : CharacterBehavior
     public void setUpFromStats(EnemyStats stats)
     {
         characterName = stats.characterName;
+
         regSprite = stats.characterSprite;
         GetComponent<Image>().sprite = stats.characterSprite;
         damagedSprite = stats.characterDamagedSprite;
         usedSprite = stats.characterUsedSprite;
-        
+
+        RectTransform rect = GetComponent<RectTransform>();
+        float anchorX = rect.anchoredPosition.x;
+        float anchorY = rect.anchoredPosition.y;
+        rect.offsetMax = new Vector2(stats.imageWidth, stats.imageHeight - 80) / 2f;
+        rect.anchoredPosition = new Vector2(anchorX, anchorY);
+
         maxHealth = stats.maxHealth;
 
         spellsToChooseFrom = stats.spells;

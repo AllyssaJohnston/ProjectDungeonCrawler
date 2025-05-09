@@ -10,6 +10,8 @@ public class EnemyStats
     public Sprite characterSprite;
     public Sprite characterDamagedSprite;
     public Sprite characterUsedSprite;
+    public float imageWidth;
+    public float imageHeight;
 
     public int maxHealth = 100;
 
