@@ -166,13 +166,13 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             if (inputCombatData == null)
             {
-                battleSetUp();
                 useDefaultEnemies();
+                battleSetUp();
             }
             else
             {
-                battleSetUp();
                 createEnemies(inputCombatData);
+                battleSetUp();
             }
         }
         combatStarted = true;
@@ -189,6 +189,7 @@ public class CombatManagerBehavior : MonoBehaviour
             character.GetComponent<CharacterBehavior>().startBattle();
         }
         PartySpellManagerBehavior.UpdateSpellOrder();
+        ArrowIndicatorManagerBehavior.createArrows();
         StateManagerBehavior.StartBattle();
     }
 
