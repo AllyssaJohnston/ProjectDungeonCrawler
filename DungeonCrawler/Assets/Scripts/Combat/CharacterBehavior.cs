@@ -20,6 +20,7 @@ public class CharacterBehavior : MonoBehaviour
 
     protected CharacterUICreatorBehavior UI_ManagerBehavior;
 
+    // called at the start of first battle
     virtual protected void SetUp()
     {
         characterImageManager = GetComponent<Image>();
@@ -62,11 +63,14 @@ public class CharacterBehavior : MonoBehaviour
         characterImageManager.sprite = available ? regSprite : usedSprite;
     }
 
+    // called after failed combat
     virtual public void reset()
     {
-        health = maxHealth = 0;
+        health = maxHealth;
         characterImageManager.color = Color.white;
         characterImageManager.sprite = regSprite;
+        available = true;
+        firstCombat = true;
     }
 
     // called at start of battle
@@ -99,11 +103,10 @@ public class CharacterBehavior : MonoBehaviour
     // returns whether character can cast spells
     public bool canCast() { return available; }
 
-    // returns whether character is 'in' the fight
+    // returns whether character is still alive in the fight
     virtual public bool isActive() { return health > 0; }
 
-    // take effects of casting a spell
-    // and then makes the character unable to cast more spells
+    // Sets the character unable to cast more spells for this turn
     virtual public void cast()
     {
         available = false;

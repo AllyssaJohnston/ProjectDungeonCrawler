@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -7,7 +8,7 @@ using UnityEngine.SceneManagement;
 // Singleton
 public class CombatManagerBehavior : MonoBehaviour
 {
-    private static CombatManagerBehavior instance;
+    private static CombatManagerBehavior instance = null;
 
     // These are here so that you can edit the characters in editor
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
@@ -22,19 +23,22 @@ public class CombatManagerBehavior : MonoBehaviour
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
 
     private static FriendlySpellBehavior curSpellToCast = null;
-
     public static bool combatStarted { get; private set; }
 
     public void Start()
     {
         if (instance != null && instance != this)
         {
+            // destroy all new copies
             Destroy(gameObject);
             return;
         }
+
         instance = this;
         Debug.Log("combat manager initialized");
 
+        // will get called each reload from the main menu
+        friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
             friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
@@ -48,8 +52,8 @@ public class CombatManagerBehavior : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         instance = this;
+        return;
     }
 
     private CombatManagerBehavior() { }
@@ -153,6 +157,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // reset all stats
     public static void reset()
     {
+        Debug.Log("resetting combat");
         foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
             character.reset();
@@ -178,8 +183,8 @@ public class CombatManagerBehavior : MonoBehaviour
                 createEnemies(inputCombatData);
             }
             battleSetUp();
+            combatStarted = true;
         }
-        combatStarted = true;
     }
 
     private static void battleSetUp()
@@ -244,16 +249,16 @@ public class CombatManagerBehavior : MonoBehaviour
     // called to end combat
     private static void endCombat(bool died)
     {
+        Debug.Log("end combat");
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
-            Debug.Log("end combat");
+            if (died)
+            {
+                // go to main menu
+                reset();
+                SceneManager.LoadScene("Menu");
+            }
             GameManagerBehavior.enterLevel();
-        }
-        if (died)
-        {
-            // go to main menu
-            reset();
-            SceneManager.LoadScene("Menu");
         }
     }
 
