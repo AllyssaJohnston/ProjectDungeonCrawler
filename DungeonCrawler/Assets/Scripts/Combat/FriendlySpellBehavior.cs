@@ -43,7 +43,7 @@ public class FriendlySpellBehavior : SpellBehavior
     {
         spellNameText.text = spellName;
         damageText.text = damage + " DAMAGE";
-        if (moraleDamage == 0f)
+        if (moraleDamageToSelf == 0f)
         {
             // remove morale from the list of attributes
             Destroy(moraleDamageText.gameObject);
@@ -51,7 +51,7 @@ public class FriendlySpellBehavior : SpellBehavior
         }
         else
         {
-            moraleDamageText.text = moraleDamage + " MORALE DAMAGE";
+            moraleDamageText.text = moraleDamageToSelf + " MORALE DAMAGE";
         }
         if (manaCost == 0)
         {

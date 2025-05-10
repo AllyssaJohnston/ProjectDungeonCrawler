@@ -41,9 +41,10 @@ public class EnemyBehavior : CharacterBehavior
             string target = "all party members";
             if (spell.damageAllEnemies)
             {
-                foreach (CharacterBehavior characterBehavior in friendlyCharacters)
+                foreach (FriendlyBehavior characterBehavior in friendlyCharacters)
                 {
                     characterBehavior.updateHealth(-spell.damage);
+                    characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
                 }
             }
             else
@@ -51,9 +52,10 @@ public class EnemyBehavior : CharacterBehavior
                 //select character to target based on spell targeting data, and attack them
                 FriendlyBehavior characterBehavior = getCharacterTarget(spell.targeting, friendlyCharacters);
                 characterBehavior.updateHealth(-spell.damage);
+                characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
                 target = characterBehavior.characterName;
             }
-            DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage.");
+            DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage and " + spell.moraleDamageToEnemies + " morale damage to the party.");
             available = false;
             characterImageManager.sprite = usedSprite;
         }

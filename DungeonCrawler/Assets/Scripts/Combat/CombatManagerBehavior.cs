@@ -313,7 +313,7 @@ public class CombatManagerBehavior : MonoBehaviour
         foreach (FriendlyBehavior character in curSpellToCast.castingCharacterBehaviors)
         {
             // do morale damage against the casters
-            character.cast(curSpellToCast.moraleDamage);
+            character.cast(curSpellToCast.moraleDamageToSelf);
         }
         PartySpellManagerBehavior.UpdateSpellOrder();
         StateManagerBehavior.NextState(E_State.PLAYER_BETWEEN_SPELLS_BUFFFER);
@@ -323,7 +323,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on all enemies
     private static void castSpellOnAll()
     {
-        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
+        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale.");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
             character.updateHealth(-curSpellToCast.damage);
@@ -338,7 +338,7 @@ public class CombatManagerBehavior : MonoBehaviour
         if (selectedEnemy.isActive())
         {
 
-            DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
+            DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale.");
             selectedEnemy.updateHealth(-curSpellToCast.damage);
             cast();
         }

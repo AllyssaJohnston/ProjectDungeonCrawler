@@ -133,13 +133,6 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 zRot = instance.buttonRotation;
                 moveDist = instance.spellMoveDist;
                 break;
-            //case (E_Arrow_Type.ENEMY_SELECTION_PTR):
-            //    arrowRect.localScale *= instance.enemyScale;
-            //    arrowRect.anchoredPosition = new Vector3(instance.enemySelectionXOffset, instance.enemySelectionYOffset, 0);
-            //    arrowRect.Rotate(0, 0, instance.enemyRotation);
-            //    zRot = instance.enemyRotation;
-            //    moveDist = instance.enemyMoveDist;
-            //    break;
             case (E_Arrow_Type.ENEMY_PTR):
                 arrowRect.localScale *= instance.enemyScale;
                 arrowRect.anchoredPosition = new Vector3(instance.enemyTurnXOffset, instance.enemyTurnYOffset, 0);
