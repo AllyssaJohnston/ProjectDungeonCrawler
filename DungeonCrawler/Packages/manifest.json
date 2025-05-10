@@ -2,7 +2,6 @@
   "dependencies": {
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.2d": "2.0.1",
-    "com.unity.ide.neovim": "file:/home/kartoffelsaft/Documents/makes/com.unity.ide.neovim-fork",
     "com.unity.ide.rider": "3.0.31",
     "com.unity.ide.visualstudio": "2.0.22",
     "com.unity.inputsystem": "1.13.1",
