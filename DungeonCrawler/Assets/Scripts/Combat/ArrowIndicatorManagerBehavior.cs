@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public enum E_Arrow_Type 
 {
@@ -58,6 +57,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
 
     private ArrowIndicatorManagerBehavior() {}
 
+    // get called at the start of combat
     public static void createArrows()
     {
         deleteArrows();
@@ -82,6 +82,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
     }
 
+    // update arrow visibility based on cur state
     public static void OnNextState(E_State nextState)
     {
         switch (nextState)
@@ -107,6 +108,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 break;
         }
     }
+
     private static GameObject createArrow(E_Arrow_Type type, GameObject parent)
     {
         GameObject curArrow = Instantiate(instance.arrow);
@@ -155,7 +157,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         return curArrow;
     }
 
-    public static void updateArrowVisibility(List<E_Arrow_Type> visibleArrowTypes)
+    private static void updateArrowVisibility(List<E_Arrow_Type> visibleArrowTypes)
     {
         foreach(var pair in arrows)
         {
@@ -167,7 +169,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
     }
 
-    public static void updateEnemyTurnArrowVisibility(EnemyBehavior curEnemy)
+    private static void updateEnemyTurnArrowVisibility(EnemyBehavior curEnemy)
     {
         foreach(var pair in enemyTurnArrows) 
         {
@@ -182,7 +184,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
     }
 
-    public static void deleteArrows()
+    private static void deleteArrows()
     {
         foreach (var pair in arrows)
         {
@@ -193,6 +195,11 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
             }
         }
         arrows.Clear();
-    }
 
+        foreach (var pair in enemyTurnArrows)
+        {
+            Destroy(pair.Value);
+        }
+        enemyTurnArrows.Clear();
+    }
 }

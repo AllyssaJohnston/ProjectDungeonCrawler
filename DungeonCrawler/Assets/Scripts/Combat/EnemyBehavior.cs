@@ -49,7 +49,7 @@ public class EnemyBehavior : CharacterBehavior
             else
             {
                 //select character to target based on spell targeting data, and attack them
-                FriendlyBehavior characterBehavior = getCharacterTarget(getSpell().targeting, friendlyCharacters);
+                FriendlyBehavior characterBehavior = getCharacterTarget(spell.targeting, friendlyCharacters);
                 characterBehavior.updateHealth(-spell.damage);
                 target = characterBehavior.characterName;
             }
@@ -67,6 +67,7 @@ public class EnemyBehavior : CharacterBehavior
     private EnemySpellStats getSpell()
     {
         EnemySpellStats spellStat = spellsToChooseFrom[curSpellIndex];
+        // increment for next turn
         curSpellIndex++;
         if (curSpellIndex >= spellsToChooseFrom.Count)
         {
@@ -120,6 +121,7 @@ public class EnemyBehavior : CharacterBehavior
         return friendlyCharacters[0];
     }
 
+    // Called at start of battle to set up the enemy character
     public void setUpFromStats(EnemyStats stats)
     {
         characterName = stats.characterName;

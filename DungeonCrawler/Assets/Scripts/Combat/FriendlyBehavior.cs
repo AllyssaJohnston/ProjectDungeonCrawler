@@ -9,11 +9,13 @@ public class FriendlyBehavior : CharacterBehavior
     [SerializeField] int maxMorale = 10;
     protected int morale;
 
+    // called at the start of the first battle
     override protected void SetUp()
     {
         morale = maxMorale;
         base.SetUp();
     }
+
     public int getMorale() { return morale; }
 
     public void updateMorale(int moraleChange)
@@ -30,6 +32,7 @@ public class FriendlyBehavior : CharacterBehavior
         UI_ManagerBehavior.UpdateMoraleBar();
     }
 
+    // called after failed combat
     override public void reset()
     {
         base.reset();
@@ -49,11 +52,10 @@ public class FriendlyBehavior : CharacterBehavior
         setMorale(Mathf.Min(morale, maxMorale));
     }
 
-    // returns whether character is 'in' the fight
+    // returns whether character is still alive in the fight
     override public bool isActive() { return health > 0 && morale > 0; }
 
-    // take effects of casting a spell
-    // and then makes the character unable to cast more spells
+    // Sets the character unable to cast more spells
     public void cast(int moraleChange)
     {
         updateMorale(moraleChange);
