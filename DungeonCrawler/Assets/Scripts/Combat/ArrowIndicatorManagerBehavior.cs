@@ -5,8 +5,7 @@ public enum E_Arrow_Type
 {
     SPELL_PTR,
     END_TURN_PTR,
-    ENEMY_SELECTION_PTR,
-    ENEMY_TURN_PTR
+    ENEMY_PTR,
 }
 
 public class ArrowIndicatorManagerBehavior : MonoBehaviour
@@ -74,11 +73,9 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         arrows.Add(E_Arrow_Type.END_TURN_PTR, new List<GameObject> { createArrow(E_Arrow_Type.END_TURN_PTR, instance.button.gameObject)  });
 
         //enemy turn and target selection
-        arrows.Add(E_Arrow_Type.ENEMY_SELECTION_PTR, new List<GameObject> { });
         foreach (EnemyBehavior enemy in CombatManagerBehavior.enemyCharacterBehaviors)
         {
-            arrows[E_Arrow_Type.ENEMY_SELECTION_PTR].Add(createArrow(E_Arrow_Type.ENEMY_SELECTION_PTR, enemy.gameObject.transform.parent.gameObject));
-            enemyTurnArrows.Add(enemy, createArrow(E_Arrow_Type.ENEMY_TURN_PTR, enemy.gameObject.transform.parent.gameObject));
+            enemyTurnArrows.Add(enemy, createArrow(E_Arrow_Type.ENEMY_PTR, enemy.gameObject.transform.parent.gameObject));
         }
     }
 
@@ -92,10 +89,11 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 updateArrowVisibility(new List<E_Arrow_Type> { E_Arrow_Type.SPELL_PTR, E_Arrow_Type.END_TURN_PTR });
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
-                updateArrowVisibility(new List<E_Arrow_Type> { E_Arrow_Type.ENEMY_SELECTION_PTR});
+                updateEnemySelectionArrowVisibility();
                 break;
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
             case E_State.PLAYER_END_TURN_BUFFER:
+                updateEnemyTurnArrowVisibility(null);
                 updateArrowVisibility(new List<E_Arrow_Type> { });
                 break;
             case E_State.ENEMY_BUFFER:
@@ -135,19 +133,19 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 zRot = instance.buttonRotation;
                 moveDist = instance.spellMoveDist;
                 break;
-            case (E_Arrow_Type.ENEMY_SELECTION_PTR):
-                arrowRect.localScale *= instance.enemyScale;
-                arrowRect.anchoredPosition = new Vector3(instance.enemySelectionXOffset, instance.enemySelectionYOffset, 0);
-                arrowRect.Rotate(0, 0, instance.enemyRotation);
-                zRot = instance.enemyRotation;
-                moveDist = instance.enemyMoveDist;
-                break;
-            case (E_Arrow_Type.ENEMY_TURN_PTR):
+            //case (E_Arrow_Type.ENEMY_SELECTION_PTR):
+            //    arrowRect.localScale *= instance.enemyScale;
+            //    arrowRect.anchoredPosition = new Vector3(instance.enemySelectionXOffset, instance.enemySelectionYOffset, 0);
+            //    arrowRect.Rotate(0, 0, instance.enemyRotation);
+            //    zRot = instance.enemyRotation;
+            //    moveDist = instance.enemyMoveDist;
+            //    break;
+            case (E_Arrow_Type.ENEMY_PTR):
                 arrowRect.localScale *= instance.enemyScale;
                 arrowRect.anchoredPosition = new Vector3(instance.enemyTurnXOffset, instance.enemyTurnYOffset, 0);
                 arrowRect.Rotate(0, 0, instance.enemyRotation);
                 zRot = instance.enemyRotation;
-                moveDist = 0f;
+                moveDist = instance.enemyMoveDist;
                 break;
             default:
                 Debug.Log("unrecognized arrow type");
@@ -175,7 +173,24 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         {
             if (curEnemy != null && pair.Key == curEnemy)
             {
+                enemyTurnArrows[curEnemy].GetComponent<ArrowIndicatorBehavior>().UpdateMove(false);
                 enemyTurnArrows[curEnemy].SetActive(true);
+            }
+            else
+            {
+                enemyTurnArrows[pair.Key].SetActive(false);
+            }
+        }
+    }
+
+    private static void updateEnemySelectionArrowVisibility()
+    {
+        foreach (var pair in enemyTurnArrows)
+        {
+            if (pair.Key.canCast())
+            {
+                enemyTurnArrows[pair.Key].GetComponent<ArrowIndicatorBehavior>().UpdateMove(true);
+                enemyTurnArrows[pair.Key].SetActive(true);
             }
             else
             {

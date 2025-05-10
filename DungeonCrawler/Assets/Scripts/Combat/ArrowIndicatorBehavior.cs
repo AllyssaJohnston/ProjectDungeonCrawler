@@ -24,6 +24,13 @@ public class ArrowIndicatorBehavior : MonoBehaviour
         }
     }
 
+    public void UpdateMove(bool move)
+    {
+        bufferTimer = 0f;
+        transform.localPosition = startPos;
+        this.move = move;
+    }
+
     private void FixedUpdate()
     {
         if (move)
