@@ -69,7 +69,7 @@ public class GameManagerBehavior : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("quit");
-            Application.Quit();
+            SceneManager.LoadScene("Menu");
         }
 
         // call load combat to see if combat scene has loaded
