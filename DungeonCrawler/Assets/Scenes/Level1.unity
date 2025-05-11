@@ -540,11 +540,18 @@ MonoBehaviour:
     spells:
     - spellName: Basic Attack
       damage: 10
+      moraleDamageToEnemies: 0
       damageAllEnemies: 1
       targeting: 0
     - spellName: Targeted Attack
       damage: 15
+      moraleDamageToEnemies: 0
       damageAllEnemies: 0
+      targeting: 0
+    - spellName: Demoralize All
+      damage: 0
+      moraleDamageToEnemies: 3
+      damageAllEnemies: 1
       targeting: 0
   - characterName: Demmy the Demon
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
@@ -556,8 +563,14 @@ MonoBehaviour:
     spells:
     - spellName: Basic Attack
       damage: 10
+      moraleDamageToEnemies: 0
       damageAllEnemies: 1
       targeting: 0
+    - spellName: Sneak Attack
+      damage: 10
+      moraleDamageToEnemies: 0
+      damageAllEnemies: 1
+      targeting: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,10 +1355,12 @@ MonoBehaviour:
     spells:
     - spellName: Torture
       damage: 10
+      moraleDamageToEnemies: 0
       damageAllEnemies: 1
       targeting: 0
     - spellName: Taunt
-      damage: 10
+      damage: 5
+      moraleDamageToEnemies: 2
       damageAllEnemies: 1
       targeting: 2
   - characterName: Derek the Demon
@@ -1358,6 +1373,7 @@ MonoBehaviour:
     spells:
     - spellName: Mischievous Jab
       damage: 20
+      moraleDamageToEnemies: 0
       damageAllEnemies: 0
       targeting: 1
 --- !u!1001 &1606029490

@@ -39,6 +39,7 @@ public class CharacterBehavior : MonoBehaviour
     {
         health += healthChange;
         health = Mathf.Max(health, 0);
+        health = Mathf.Min(health, maxHealth);
         available = isActive();
         UI_ManagerBehavior.UpdateHealthBar();
 

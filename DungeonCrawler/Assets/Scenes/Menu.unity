@@ -485,8 +485,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -45.159485, y: -30.027157}
-  m_SizeDelta: {x: 178.1048, y: 261.78}
+  m_AnchoredPosition: {x: -44.2, y: -23.519907}
+  m_SizeDelta: {x: 178.1048, y: 277.2569}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &251183554
 MonoBehaviour:
@@ -843,7 +843,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -102.33954, y: -17.834255}
+  m_AnchoredPosition: {x: 127.3, y: -24.8}
   m_SizeDelta: {x: 178.1048, y: 232.7783}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &454758858
@@ -918,8 +918,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.44049, y: 8.5}
-  m_SizeDelta: {x: 178.1048, y: 347.6387}
+  m_AnchoredPosition: {x: 30.44049, y: 21.9049}
+  m_SizeDelta: {x: 178.1048, y: 383.8407}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659839013
 MonoBehaviour:
@@ -976,7 +976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &663307853
 RectTransform:
   m_ObjectHideFlags: 0
@@ -993,10 +993,10 @@ RectTransform:
   - {fileID: 1107586933}
   m_Father: {fileID: 1645097654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -5.61261}
-  m_SizeDelta: {x: -646.3513, y: -164.9964}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -3, y: -5.61261}
+  m_SizeDelta: {x: 453.64868, y: 455.0036}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &663307854
 MonoBehaviour:
@@ -1065,14 +1065,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2003880829}
-  - {fileID: 659839012}
   - {fileID: 454758857}
+  - {fileID: 659839012}
   - {fileID: 251183553}
   m_Father: {fileID: 1645097654}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -269.8, y: 13.13176}
+  m_AnchoredPosition: {x: -277, y: 1}
   m_SizeDelta: {x: 354.44733, y: 280.18512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &841198840
@@ -1605,7 +1605,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 155.86, y: 177}
+  m_AnchoredPosition: {x: 168, y: 189}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1107586934
@@ -2483,8 +2483,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 109.6205, y: -22.6}
-  m_SizeDelta: {x: 178.1048, y: 281.78}
+  m_AnchoredPosition: {x: -132.5, y: -10.6759}
+  m_SizeDelta: {x: 178.1048, y: 313.1949}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2003880830
 MonoBehaviour:
@@ -2708,7 +2708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015736, y: 27}
+  m_AnchoredPosition: {x: 0.000015736, y: 9}
   m_SizeDelta: {x: 341.7297, y: 312.6332}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2100586771
@@ -2731,8 +2731,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Doom movement combined with dungeon crawler combined with turn based strategy
-    combat against evil letters. Pretty simple ...right?
+  m_text: 'Tank movement combined with dungeon crawler combined with turn based strategy
+    combat against evil enemies. Pretty simple ...right?
 
 
     -WASD, Arrow, & Click
@@ -2801,7 +2801,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -25.827576, y: 0, z: -35.051758, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

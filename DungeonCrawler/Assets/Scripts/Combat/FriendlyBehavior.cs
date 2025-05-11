@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FriendlyBehavior : CharacterBehavior
@@ -22,6 +23,7 @@ public class FriendlyBehavior : CharacterBehavior
     {
         morale += moraleChange;
         morale = Mathf.Max(morale, 0);
+        morale = Mathf.Min(morale, maxMorale);
         available = isActive();
         UI_ManagerBehavior.UpdateMoraleBar();
     }

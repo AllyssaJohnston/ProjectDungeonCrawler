@@ -145,7 +145,7 @@ public class CombatManagerBehavior : MonoBehaviour
                             if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
                             {
                                 Debug.Log("hit enemy");
-                                castSpellOnTarget(result.gameObject.GetComponent<EnemyBehavior>());
+                                friendlyCastSpellOnTarget(result.gameObject.GetComponent<EnemyBehavior>());
                             }
                         }
                     }
@@ -286,15 +286,19 @@ public class CombatManagerBehavior : MonoBehaviour
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
             curSpellToCast = spellBehavior;
-            if (spellBehavior.damageAllEnemies)
+            if (spellBehavior.damage == 0)
+            {
+                friendlyCastSpellOnNone();
+            }
+            else if (spellBehavior.damageAllEnemies)
             {
                 // cast spell on all enemies
-                castSpellOnAll();
+                friendlyCastSpellOnAll();
             }
             else
             {
-                // go to target selection state
-                StateManagerBehavior.NextState(); // select enemy state
+                // go to enemy selection state
+                StateManagerBehavior.NextState();
             }
         }
         else
@@ -306,14 +310,21 @@ public class CombatManagerBehavior : MonoBehaviour
     // for player casted spells
     // deal with mana and morale cost
     // to be used with other cast methods
-    private static void cast()
+    private static void friendlyCast()
     {
         TeamManaBehavior.updateMana(-curSpellToCast.manaCost);
 
         foreach (FriendlyBehavior character in curSpellToCast.castingCharacterBehaviors)
         {
-            // do morale damage against the casters
-            character.cast(curSpellToCast.moraleDamage);
+            character.cast(-curSpellToCast.moraleDamageToSelf); // do morale damage against the casters
+        }
+        if (curSpellToCast.moraleRegen > 0 || curSpellToCast.heal > 0)
+        {
+            foreach(FriendlyBehavior character in friendlyCharacterBehaviors)
+            {
+                character.updateHealth(curSpellToCast.heal); // regen health
+                character.updateMorale(curSpellToCast.moraleRegen); // regen morale
+            }
         }
         PartySpellManagerBehavior.UpdateSpellOrder();
         StateManagerBehavior.NextState(E_State.PLAYER_BETWEEN_SPELLS_BUFFFER);
@@ -321,26 +332,71 @@ public class CombatManagerBehavior : MonoBehaviour
 
     // for player casted spells
     // casts the stored spell selected by the player on all enemies
-    private static void castSpellOnAll()
+    private static void friendlyCastSpellOnAll()
     {
-        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
+        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale.");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
             character.updateHealth(-curSpellToCast.damage);
         }
-        cast();
+        friendlyCast();
     }
 
     // for player casted spells
     // casts the stored spell selected by the player on the enemy selected by the player
-    private static void castSpellOnTarget(EnemyBehavior selectedEnemy)
+    private static void friendlyCastSpellOnTarget(EnemyBehavior selectedEnemy)
     {
         if (selectedEnemy.isActive())
         {
 
-            DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamage + " morale.");
+            DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale.");
             selectedEnemy.updateHealth(-curSpellToCast.damage);
-            cast();
+            friendlyCast();
+        }
+    }
+
+    // for player casted spells
+    // casts the stored spell selected by the player on the enemy selected by the player
+    private static void friendlyCastSpellOnNone()
+    {
+        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale and " + curSpellToCast.moraleRegen + " morale regen.");
+        friendlyCast();
+    }
+
+
+
+    //chooses a spell and executes it
+    public static void enemyCastSpell()
+    {
+        EnemyBehavior curEnemy = enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex];
+        if (curEnemy.canCast())
+        {
+            EnemySpellStats spell = curEnemy.getSpell();
+
+            string target = "all party members";
+            if (spell.damageAllEnemies)
+            {
+                foreach (FriendlyBehavior characterBehavior in friendlyCharacterBehaviors)
+                {
+                    characterBehavior.updateHealth(-spell.damage);
+                    characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
+                }
+            }
+            else
+            {
+                //select character to target based on spell targeting data, and attack them
+                FriendlyBehavior characterBehavior = curEnemy.getCharacterTarget(spell.targeting, friendlyCharacterBehaviors);
+                characterBehavior.updateHealth(-spell.damage);
+                characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
+                target = characterBehavior.characterName;
+            }
+            curEnemy.updateHealth(curSpellToCast.heal); // heal enemy
+            DebugBehavior.updateLog(curEnemy.characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage and " + spell.moraleDamageToEnemies + " morale damage to the party.");
+            curEnemy.cast();
+        }
+        else
+        {
+            DebugBehavior.updateLog(curEnemy.characterName + " can't cast!");
         }
     }
 
