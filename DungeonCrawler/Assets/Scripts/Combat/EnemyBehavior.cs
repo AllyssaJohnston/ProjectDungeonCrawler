@@ -31,42 +31,8 @@ public class EnemyBehavior : CharacterBehavior
         curSpellIndex = 0;
     }
 
-    //chooses a spell and executes it
-    public void castSpell(List<FriendlyBehavior> friendlyCharacters)
-    {
-        if (canCast())
-        {
-            EnemySpellStats spell = getSpell();
-
-            string target = "all party members";
-            if (spell.damageAllEnemies)
-            {
-                foreach (FriendlyBehavior characterBehavior in friendlyCharacters)
-                {
-                    characterBehavior.updateHealth(-spell.damage);
-                    characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
-                }
-            }
-            else
-            {
-                //select character to target based on spell targeting data, and attack them
-                FriendlyBehavior characterBehavior = getCharacterTarget(spell.targeting, friendlyCharacters);
-                characterBehavior.updateHealth(-spell.damage);
-                characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
-                target = characterBehavior.characterName;
-            }
-            DebugBehavior.updateLog(characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage and " + spell.moraleDamageToEnemies + " morale damage to the party.");
-            available = false;
-            characterImageManager.sprite = usedSprite;
-        }
-        else
-        {
-            DebugBehavior.updateLog(characterName + " can't cast!");
-        }
-    }
-
     // rotate through spells
-    private EnemySpellStats getSpell()
+    public EnemySpellStats getSpell()
     {
         EnemySpellStats spellStat = spellsToChooseFrom[curSpellIndex];
         // increment for next turn
@@ -79,7 +45,7 @@ public class EnemyBehavior : CharacterBehavior
     }
 
     // choose target
-    private FriendlyBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<FriendlyBehavior> friendlyCharacters)
+    public FriendlyBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<FriendlyBehavior> friendlyCharacters)
     {
         int highestHealthIndex = 0;
         int lowestHealthIndex = 0;

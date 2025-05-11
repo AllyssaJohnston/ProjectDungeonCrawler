@@ -21,7 +21,7 @@ public class EnemySpellStats
 public class EnemySpellBehavior : SpellBehavior
 {
     public E_SPELL_TARGETING targeting;
-    
+    public int moraleDamageToEnemies = 0; // to the opposing side
 
     public void setUpFromStat(EnemySpellStats curStat)
     {     

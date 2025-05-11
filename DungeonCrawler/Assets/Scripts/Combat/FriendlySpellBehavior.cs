@@ -7,11 +7,14 @@ public class FriendlySpellBehavior : SpellBehavior
 {
     [Header("Spell details")]
     public List<FriendlyBehavior> castingCharacterBehaviors = new List<FriendlyBehavior>();
+    public int moraleRegen = 0; // for party
 
     [Header("UI Elements")]
     public TMP_Text spellNameText;
     public TMP_Text damageText;
+    public TMP_Text healText;
     public TMP_Text moraleDamageText;
+    public TMP_Text moraleRegenText;
 
     public GameObject manaGroup;
     public Image manaImage;
@@ -42,7 +45,29 @@ public class FriendlySpellBehavior : SpellBehavior
     private void Start()
     {
         spellNameText.text = spellName;
-        damageText.text = damage + " DAMAGE";
+
+        if (damage == 0f)
+        {
+            // remove morale from the list of attributes
+            Destroy(damageText.gameObject);
+            damageText = null;
+        }
+        else
+        {
+            damageText.text = damage + " DAMAGE";
+        }
+
+        if (heal == 0f)
+        {
+            // remove heal from the list of attributes
+            Destroy(healText.gameObject);
+            healText = null;
+        }
+        else
+        {
+            healText.text = heal + " PARTY HEALTH REGEN";
+        }
+
         if (moraleDamageToSelf == 0f)
         {
             // remove morale from the list of attributes
@@ -51,8 +76,20 @@ public class FriendlySpellBehavior : SpellBehavior
         }
         else
         {
-            moraleDamageText.text = moraleDamageToSelf + " MORALE DAMAGE";
+            moraleDamageText.text = moraleDamageToSelf + " SELF MORALE DAMAGE";
         }
+
+        if (moraleRegen == 0f)
+        {
+            // remove morale from the list of attributes
+            Destroy(moraleRegenText.gameObject);
+            moraleRegenText = null;
+        }
+        else
+        {
+            moraleRegenText.text = moraleRegen + " PARTY MORALE REGEN";
+        }
+
         if (manaCost == 0)
         {
             //hide the mana group

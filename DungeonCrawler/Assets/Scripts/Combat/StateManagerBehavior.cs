@@ -80,7 +80,7 @@ public class StateManagerBehavior : MonoBehaviour
                 buffer(instance.enemyBetweenTurnsWaitTime);
                 break;
             case E_State.ENEMY_ACTION:
-                CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].castSpell(CombatManagerBehavior.friendlyCharacterBehaviors);
+                CombatManagerBehavior.enemyCastSpell();
                 if (curEnemyIndex < CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
                 {
                     // continue rotating through enemies

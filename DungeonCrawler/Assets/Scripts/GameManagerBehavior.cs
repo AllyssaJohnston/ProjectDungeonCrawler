@@ -143,6 +143,7 @@ public class GameManagerBehavior : MonoBehaviour
     {
         if (combatOnlyMode)
         {
+            DebugBehavior.updateLog("COMBAT ENDED");
             Application.Quit();
         }
         else
