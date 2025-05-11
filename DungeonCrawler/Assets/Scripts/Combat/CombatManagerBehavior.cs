@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class CombatManagerBehavior : MonoBehaviour
 {
     private static CombatManagerBehavior instance = null;
-
+    public GameObject mainMenu;
     // These are here so that you can edit the characters in editor
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
@@ -17,7 +17,7 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] GameObject characterHolder;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
-
+    
     // These are the fields we actually want to work with
     [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
@@ -61,10 +61,17 @@ public class CombatManagerBehavior : MonoBehaviour
     public static bool loaded() {
         return instance != null;
     }
-
+    
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("pause");
+            TrackerScript.Instance.started = true;
+            TrackerScript.Instance.sceneToLoad = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
+        }
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             checkCombatStatus();

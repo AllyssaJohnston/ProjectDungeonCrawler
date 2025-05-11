@@ -19,7 +19,7 @@ public class GameManagerBehavior : MonoBehaviour
     static GameObject levelData;
     static bool getData = false;
     public static bool combatOnlyMode = false;
-
+    public GameObject mainMenu;
     //private List<GameObject> inactiveLevelObjects = new List<GameObject>();
 
     private void Awake()
@@ -29,7 +29,7 @@ public class GameManagerBehavior : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        Time.timeScale = 1f;
         instance = this;
     }
 
@@ -68,8 +68,12 @@ public class GameManagerBehavior : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("quit");
-            SceneManager.LoadScene("Menu");
+            Debug.Log("pause");
+            PlayButton playButton = mainMenu.GetComponent<PlayButton>();
+            TrackerScript.Instance.started = true;
+            TrackerScript.Instance.sceneToLoad = SceneManager.GetActiveScene().name;
+            Time.timeScale = 0f;
+            SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
         }
 
         // call load combat to see if combat scene has loaded
