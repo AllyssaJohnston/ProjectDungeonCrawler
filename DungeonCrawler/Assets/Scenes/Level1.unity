@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 135679625}
   - component: {fileID: 135679624}
   - component: {fileID: 135679626}
+  - component: {fileID: 135679627}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -286,6 +287,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 125
   rotationSpeed: 64
+--- !u!114 &135679627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135679621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 794faead27bc3d846af306b70a035d4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
 --- !u!1 &271524050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1178,7 +1192,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 32, y: 32}
+  m_CellSize: {x: 64, y: 64}
   m_Spacing: {x: 5, y: 5}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -19508,14 +19522,46 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: LootContents.Array.size
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: LootContents.Array.data[0].icon
       value: 
       objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
     - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[1].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[2].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[3].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[4].icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: LootContents.Array.data[0].itemName
+      value: Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[1].itemName
+      value: Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[2].itemName
+      value: Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[3].itemName
+      value: Potion
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.data[4].itemName
       value: Potion
       objectReference: {fileID: 0}
     - target: {fileID: 9144235709468297681, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
