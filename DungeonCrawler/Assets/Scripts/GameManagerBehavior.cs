@@ -111,7 +111,7 @@ public class GameManagerBehavior : MonoBehaviour
         if (combatOnlyMode)
         {
             DebugBehavior.updateLog("COMBAT ENDED");
-            Application.Quit();
+            exit();
         }
         else
         {
@@ -154,6 +154,7 @@ public class GameManagerBehavior : MonoBehaviour
     public static void exit()
     {
         SceneManager.LoadScene("Exit");
+        Application.Quit();
     }
 
     private IEnumerator StartLoad()
