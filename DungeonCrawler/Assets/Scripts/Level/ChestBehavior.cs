@@ -1,9 +1,13 @@
+using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class ChestBehavior : MonoBehaviour
 {
 
-    public const float ChestResetTime = 1.5f;
+    public float ChestResetTime = 1.5f;
+    
+    public List<Item> LootContents = new List<Item>(32);
     private Animator animator;
     private bool isOpen = false;
     private bool playerInRange = false;
@@ -19,6 +23,7 @@ public class ChestBehavior : MonoBehaviour
         {
             animator.SetTrigger("Open");
             isOpen = true;
+            FindFirstObjectByType<ChestUI>().OpenChest(LootContents);
             StartCoroutine(ResetChest());
         }
     }
@@ -37,7 +42,9 @@ public class ChestBehavior : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")) {
             playerInRange = false;
+            FindFirstObjectByType<ChestUI>().CloseChest();
+        }
     }
 }
