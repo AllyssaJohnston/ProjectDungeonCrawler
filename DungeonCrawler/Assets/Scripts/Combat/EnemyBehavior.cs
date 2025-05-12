@@ -16,6 +16,10 @@ public class EnemyBehavior : CharacterBehavior
         {
             Debug.Log("No spells");
         }
+        foreach (EnemySpellStats spell in spellsToChooseFrom)
+        {
+            spell.setUpStringStats();
+        }
 
     }
 
@@ -108,5 +112,9 @@ public class EnemyBehavior : CharacterBehavior
         maxHealth = stats.maxHealth;
 
         spellsToChooseFrom = stats.spells;
+        foreach (EnemySpellStats spell in spellsToChooseFrom)
+        {
+            spell.setUpStringStats();
+        }
     }
 }

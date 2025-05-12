@@ -332,7 +332,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on all enemies
     private static void friendlyCastSpellOnAll()
     {
-        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on all enemies, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale.");
+        DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + ", on all enemies");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
             character.updateHealth(-curSpellToCast.damage);
@@ -346,8 +346,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         if (selectedEnemy.canCast())
         {
-
-            DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale.");
+            DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + ", on " + selectedEnemy.characterName);
             selectedEnemy.updateHealth(-curSpellToCast.damage);
             friendlyCast();
         }
@@ -357,7 +356,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on the enemy selected by the player
     private static void friendlyCastSpellOnNone()
     {
-        DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage, costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale and " + curSpellToCast.moraleRegen + " morale regen.");
+        DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText);
         friendlyCast();
     }
 
@@ -388,8 +387,8 @@ public class CombatManagerBehavior : MonoBehaviour
                 characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
                 target = characterBehavior.characterName;
             }
-            curEnemy.updateHealth(curSpellToCast.heal); // heal enemy
-            DebugBehavior.updateLog(curEnemy.characterName + " cast " + spell.spellName + " on " + target + " for " + spell.damage + " damage and " + spell.moraleDamageToEnemies + " morale damage to the party.");
+            curEnemy.updateHealth(spell.heal); // heal enemy
+            DebugBehavior.updateLog(curEnemy.characterName + " cast " + spell.spellDescriptionText + ", on " + target);
             curEnemy.cast();
         }
         else
