@@ -44,6 +44,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
 
         instance = this;
+        curSceneToLoad = 0;
         curScene = SceneManager.GetActiveScene().name;
         if (curScene == "Combat")
         {
