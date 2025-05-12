@@ -151,6 +151,11 @@ public class GameManagerBehavior : MonoBehaviour
         }
     }
 
+    public static void exit()
+    {
+        SceneManager.LoadScene("Exit");
+    }
+
     private IEnumerator StartLoad()
     {
         loading = true;

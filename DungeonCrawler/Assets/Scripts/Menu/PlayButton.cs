@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayButton : MonoBehaviour
 {
-    public void LoadScene() 
+    public void startLevel() 
     {
         GameManagerBehavior.leaveMenu();
     }
