@@ -89,15 +89,16 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 updateArrowVisibility(new List<E_Arrow_Type> { E_Arrow_Type.SPELL_PTR, E_Arrow_Type.END_TURN_PTR });
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
+                updateArrowVisibility();
                 updateEnemySelectionArrowVisibility();
                 break;
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
             case E_State.PLAYER_END_TURN_BUFFER:
                 updateEnemyTurnArrowVisibility(null);
-                updateArrowVisibility(new List<E_Arrow_Type> { });
+                updateArrowVisibility();
                 break;
             case E_State.ENEMY_BUFFER:
-                updateArrowVisibility(new List<E_Arrow_Type> { });
+                updateArrowVisibility();
                 updateEnemyTurnArrowVisibility(CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex]);
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
@@ -156,6 +157,18 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
             foreach(GameObject arrow in curArrows)
             {
                 arrow.SetActive(visibleArrowTypes.Contains(pair.Key));
+            }
+        }
+    }
+
+    private static void updateArrowVisibility()
+    {
+        foreach (var pair in arrows)
+        {
+            List<GameObject> curArrows = pair.Value;
+            foreach (GameObject arrow in curArrows)
+            {
+                arrow.SetActive(false);
             }
         }
     }

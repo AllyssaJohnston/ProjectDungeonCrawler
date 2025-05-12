@@ -7,7 +7,9 @@ public class FriendlySpellBehavior : SpellBehavior
 {
     [Header("Spell details")]
     public List<FriendlyBehavior> castingCharacterBehaviors = new List<FriendlyBehavior>();
+    public int moraleDamageToSelf = 0; // to the casting character
     public int moraleRegen = 0; // for party
+    public int manaCost = 0;
 
     [Header("UI Elements")]
     public TMP_Text spellNameText;
@@ -45,6 +47,7 @@ public class FriendlySpellBehavior : SpellBehavior
     private void Start()
     {
         spellNameText.text = spellName;
+
 
         if (damage == 0f)
         {
@@ -95,6 +98,7 @@ public class FriendlySpellBehavior : SpellBehavior
             //hide the mana group
             manaGroup.SetActive(false);
         }
+      
         targetingText.text = (damageAllEnemies? "TARGET ALL" : "SINGLE TARGET");
 
         if (castingCharacterBehaviors.Count == 0 )
@@ -111,7 +115,6 @@ public class FriendlySpellBehavior : SpellBehavior
             //double characters
             setUpIcon(firstCharacterX, firstCharacterY, doubleCharacterScale, castingCharacterBehaviors[0]);
             setUpIcon(secondCharacterX, secondCharacterY, doubleCharacterScale, castingCharacterBehaviors[1]);
-            characterIcons[0].gameObject.transform.SetAsLastSibling(); // render the first character on top, which requires putting it at the bottom of the list
         }
         else
         {
@@ -121,6 +124,38 @@ public class FriendlySpellBehavior : SpellBehavior
         panelImage = gameObject.GetComponent<Image>();
         regPanelColor = panelImage.color;
         regManaColor = manaImage.color;
+
+        setUpStringStats();
+    }
+
+    override protected void setUpStringStats()
+    {
+        base.setUpStringStats();
+
+        if (moraleDamageToSelf != 0f)
+        {
+            spellDescriptionText += " costing " + moraleDamageToSelf + " morale";
+        }
+
+        if (moraleRegen != 0f)
+        {
+            spellDescriptionText += " for " + moraleRegen + " party morale regen";
+        }
+
+        if (manaCost != 0)
+        {
+            spellDescriptionText += " costing " + manaCost + " mana";
+        }
+
+
+        if (castingCharacterBehaviors.Count == 1)
+        {
+            castingCharactersText = castingCharacterBehaviors[0].characterName;
+        }
+        else if (castingCharacterBehaviors.Count == 2)
+        {
+            castingCharactersText = castingCharacterBehaviors[0].characterName + " and " + castingCharacterBehaviors[1].characterName;
+        }
     }
 
     private void setUpIcon(float x, float y, float scale, FriendlyBehavior character)

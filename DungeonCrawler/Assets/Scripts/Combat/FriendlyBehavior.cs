@@ -24,7 +24,6 @@ public class FriendlyBehavior : CharacterBehavior
         morale += moraleChange;
         morale = Mathf.Max(morale, 0);
         morale = Mathf.Min(morale, maxMorale);
-        available = isActive();
         UI_ManagerBehavior.UpdateMoraleBar();
     }
 
@@ -55,7 +54,7 @@ public class FriendlyBehavior : CharacterBehavior
     }
 
     // returns whether character is still alive in the fight
-    override public bool isActive() { return health > 0 && morale > 0; }
+    override public bool isAlive() { return health > 0 && morale > 0; }
 
     // Sets the character unable to cast more spells
     public void cast(int moraleChange)
