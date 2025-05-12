@@ -144,7 +144,7 @@ public class FriendlySpellBehavior : SpellBehavior
 
         if (manaCost != 0)
         {
-            spellDescriptionText += " costing " + manaCost;
+            spellDescriptionText += " costing " + manaCost + " mana";
         }
 
 
