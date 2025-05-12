@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -9,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class CombatManagerBehavior : MonoBehaviour
 {
     private static CombatManagerBehavior instance = null;
-    public GameObject mainMenu;
     // These are here so that you can edit the characters in editor
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
@@ -65,13 +63,6 @@ public class CombatManagerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("pause");
-            TrackerScript.Instance.started = true;
-            TrackerScript.Instance.sceneToLoad = SceneManager.GetActiveScene().name;
-            SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
-        }
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             checkCombatStatus();
