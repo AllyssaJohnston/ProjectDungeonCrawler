@@ -15,7 +15,7 @@ public class CharacterBehavior : MonoBehaviour
 
     [SerializeField] protected int maxHealth = 100;
     protected int health;
-    protected bool available = true;
+    protected bool castThisTurn = false;
     protected bool firstCombat = true;
 
     protected CharacterUICreatorBehavior UI_ManagerBehavior;
@@ -40,7 +40,6 @@ public class CharacterBehavior : MonoBehaviour
         health += healthChange;
         health = Mathf.Max(health, 0);
         health = Mathf.Min(health, maxHealth);
-        available = isActive();
         UI_ManagerBehavior.UpdateHealthBar();
 
         if (healthChange < 0)
@@ -61,7 +60,7 @@ public class CharacterBehavior : MonoBehaviour
         characterImageManager.sprite = damagedSprite;
         yield return new WaitForSeconds(.2f);
         characterImageManager.color = Color.white;
-        characterImageManager.sprite = available ? regSprite : usedSprite;
+        characterImageManager.sprite = canCast() ? regSprite : usedSprite;
     }
 
     // called after failed combat
@@ -70,7 +69,7 @@ public class CharacterBehavior : MonoBehaviour
         health = maxHealth;
         characterImageManager.color = Color.white;
         characterImageManager.sprite = regSprite;
-        available = true;
+        castThisTurn = false;
         firstCombat = true;
     }
 
@@ -81,11 +80,11 @@ public class CharacterBehavior : MonoBehaviour
         // start gets called AFTER startBattle, so do setup here
         if (firstCombat)
         {
-            this.SetUp();
+            SetUp();
             firstCombat = false;
         }
 
-        available = true;
+        castThisTurn = false;
 
         // health regen
         // start with a minimum of 1 health
@@ -97,20 +96,20 @@ public class CharacterBehavior : MonoBehaviour
     virtual public void startTurn()
     {
         // set availability
-        available = isActive();
-        characterImageManager.sprite = available ? regSprite : usedSprite;
+        castThisTurn = false;
+        characterImageManager.sprite = canCast() ? regSprite : usedSprite;
     }
 
     // returns whether character can cast spells
-    public bool canCast() { return available; }
+    public bool canCast() { return isAlive() && !castThisTurn; }
 
     // returns whether character is still alive in the fight
-    virtual public bool isActive() { return health > 0; }
+    virtual public bool isAlive() { return health > 0; }
 
     // Sets the character unable to cast more spells for this turn
     virtual public void cast()
     {
-        available = false;
+        castThisTurn = true;
         characterImageManager.sprite = usedSprite;
     }
 }

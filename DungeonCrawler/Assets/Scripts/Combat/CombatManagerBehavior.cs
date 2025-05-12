@@ -76,7 +76,7 @@ public class CombatManagerBehavior : MonoBehaviour
         bool alive = false;
         foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
-            alive = alive | character.isActive();
+            alive = alive | character.isAlive();
         }
         if (alive == false)
         {
@@ -86,7 +86,7 @@ public class CombatManagerBehavior : MonoBehaviour
         alive = false;
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
-            alive = alive | character.isActive();
+            alive = alive | character.isAlive();
         }
         if (alive == false)
         {
@@ -344,7 +344,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on the enemy selected by the player
     private static void friendlyCastSpellOnTarget(EnemyBehavior selectedEnemy)
     {
-        if (selectedEnemy.isActive())
+        if (selectedEnemy.canCast())
         {
 
             DebugBehavior.updateLog("Cast " + curSpellToCast.spellName + " for " + curSpellToCast.damage + " damage on " + selectedEnemy.characterName + ", costing " + curSpellToCast.manaCost + " mana and " + curSpellToCast.moraleDamageToSelf + " morale.");
