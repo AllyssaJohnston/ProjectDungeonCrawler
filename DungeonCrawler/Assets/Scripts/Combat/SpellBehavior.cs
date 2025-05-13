@@ -22,12 +22,12 @@ public class SpellBehavior : MonoBehaviour
 
         if (damage != 0f)
         {
-            spellDescriptionText += " for " + damage + " damage";
+            spellDescriptionText += " for " + damage + " damage,";
         }
 
         if (heal != 0f)
         {
-            spellDescriptionText += " for " + heal + " party health regen";
+            spellDescriptionText += " for " + heal + " party health regen,";
         }
     }
 }
