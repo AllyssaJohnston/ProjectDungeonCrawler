@@ -204,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 135679621}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.48, y: 0.22, z: -10.020564}
+  m_LocalPosition: {x: 3.48, y: -3.63, z: -10.020564}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -656,19 +656,25 @@ MonoBehaviour:
     spells:
     - spellName: Basic Attack
       damage: 10
+      heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
       targeting: 0
+      spellDescriptionText: 
     - spellName: Targeted Attack
       damage: 15
+      heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
       targeting: 0
+      spellDescriptionText: 
     - spellName: Demoralize All
       damage: 0
+      heal: 0
       moraleDamageToEnemies: 3
       damageAllEnemies: 1
       targeting: 0
+      spellDescriptionText: 
   - characterName: Demmy the Demon
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
@@ -679,14 +685,18 @@ MonoBehaviour:
     spells:
     - spellName: Basic Attack
       damage: 10
+      heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
       targeting: 0
+      spellDescriptionText: 
     - spellName: Sneak Attack
       damage: 10
+      heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
       targeting: 1
+      spellDescriptionText: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,14 +1707,18 @@ MonoBehaviour:
     spells:
     - spellName: Torture
       damage: 10
+      heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
       targeting: 0
+      spellDescriptionText: 
     - spellName: Taunt
       damage: 5
+      heal: 0
       moraleDamageToEnemies: 2
       damageAllEnemies: 1
       targeting: 2
+      spellDescriptionText: 
   - characterName: Derek the Demon
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
@@ -1715,9 +1729,11 @@ MonoBehaviour:
     spells:
     - spellName: Mischievous Jab
       damage: 20
+      heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
       targeting: 1
+      spellDescriptionText: 
 --- !u!1001 &1606029490
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4269,6 +4285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df4a48c2c08f6846a51cb29b0ef079e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestPanel: {fileID: 0}
+  itemSlotParent: {fileID: 0}
+  itemSlotPrefab: {fileID: 0}
 --- !u!1 &1753817852
 GameObject:
   m_ObjectHideFlags: 0
@@ -19489,42 +19508,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   whatToFace: {fileID: 603356562}
---- !u!58 &2044241533
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2044241526}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.09548782
 --- !u!1001 &2553997430160311286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19628,9 +19611,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9144235709468297681, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       insertIndex: 2
       addedObject: {fileID: 2044241532}
-    - targetCorrespondingSourceObject: {fileID: 9144235709468297681, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2044241533}
   m_SourcePrefab: {fileID: 100100000, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
