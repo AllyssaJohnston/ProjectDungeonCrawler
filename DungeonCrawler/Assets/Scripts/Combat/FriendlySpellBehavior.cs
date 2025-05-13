@@ -134,17 +134,17 @@ public class FriendlySpellBehavior : SpellBehavior
 
         if (moraleDamageToSelf != 0f)
         {
-            spellDescriptionText += " costing " + moraleDamageToSelf + " morale";
+            spellDescriptionText += " costing " + moraleDamageToSelf + " morale,";
         }
 
         if (moraleRegen != 0f)
         {
-            spellDescriptionText += " for " + moraleRegen + " party morale regen";
+            spellDescriptionText += " for " + moraleRegen + " party morale regen,";
         }
 
         if (manaCost != 0)
         {
-            spellDescriptionText += " costing " + manaCost + " mana";
+            spellDescriptionText += " costing " + manaCost + " mana,";
         }
 
 
