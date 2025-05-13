@@ -5,9 +5,29 @@ public class SpellBehavior : MonoBehaviour
     [Header("Spell details")]
     public string spellName = "unnamed";
     public int damage = 10;
-    public int moraleDamageToSelf = 0; // to the casting character
     public int heal = 0;
-    public int manaCost = 0;
     public bool damageAllEnemies = false;
-    //public bool targetEnemies = true; // false means target friendlies
+
+    [HideInInspector] public string spellDescriptionText;
+    [HideInInspector] public string castingCharactersText;
+
+    private void Start()
+    {
+        setUpStringStats();
+    }
+
+    virtual protected void setUpStringStats()
+    {
+        spellDescriptionText = spellName;
+
+        if (damage != 0f)
+        {
+            spellDescriptionText += " for " + damage + " damage";
+        }
+
+        if (heal != 0f)
+        {
+            spellDescriptionText += " for " + heal + " party health regen";
+        }
+    }
 }
