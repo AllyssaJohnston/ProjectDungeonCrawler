@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: cobble_0
+  m_Name: brick 1_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 774799491551923509, guid: 9ba9dbb0ead66c64982a04871ae30524, type: 3}
+  m_Sprite: {fileID: -1377440025160967106, guid: 62f7d7ad8e45863469d304acca02c9e0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
