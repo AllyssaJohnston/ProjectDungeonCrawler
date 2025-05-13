@@ -7,7 +7,9 @@ public class Billboard : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (whatToFace == null) {
+            whatToFace = FindFirstObjectByType<FirstPerson>().gameObject.transform;
+        }
     }
 
     // Update is called once per frame
