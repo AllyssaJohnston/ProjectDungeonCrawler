@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2690141479594367574}
   - component: {fileID: 3669740973804885963}
   - component: {fileID: 8531818396850305424}
+  - component: {fileID: 8135072897519308845}
   m_Layer: 9
   m_Name: Chest
   m_TagString: Untagged
@@ -123,3 +124,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bcd28057346eb14ca8c3485120efba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &8135072897519308845
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9144235709468297681}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 326114.72}
+  m_Radius: 0.08112411

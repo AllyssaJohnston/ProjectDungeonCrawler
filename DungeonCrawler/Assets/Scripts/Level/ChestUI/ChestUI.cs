@@ -1,0 +1,32 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ChestUI : MonoBehaviour
+{
+    public GameObject chestPanel;
+    public Transform itemSlotParent;
+    public GameObject itemSlotPrefab;
+
+    public void OpenChest(List<Item> contents)
+    {
+        chestPanel.SetActive(true);
+
+        // Clear existing slots
+        foreach (Transform child in itemSlotParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Create new slots
+        foreach (var item in contents)
+        {
+            GameObject slot = Instantiate(itemSlotPrefab, itemSlotParent);
+            slot.GetComponent<ItemSlot>().Setup(item);
+        }
+    }
+
+    public void CloseChest()
+    {
+        chestPanel.SetActive(false);
+    }
+}
