@@ -22,6 +22,7 @@ public class GameManagerBehavior : MonoBehaviour
     static GameObject menuData;
     static string curScene;
     public static bool combatOnlyMode = false;
+    public GameObject LevelCommon;
     //private List<GameObject> inactiveLevelObjects = new List<GameObject>();
 
     private void Awake()
@@ -41,6 +42,8 @@ public class GameManagerBehavior : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        LevelCommon.SetActive(true);
 
         instance = this;
         curSceneToLoad = 0;
