@@ -59,6 +59,11 @@ public class CombatManagerBehavior : MonoBehaviour
     public static bool loaded() {
         return instance != null;
     }
+
+    public static List<GameObject> getParty() {
+        if (instance == null) return null;
+        else return instance.inputFriendlyCharacters;
+    }
     
     // Update is called once per frame
     void Update()
