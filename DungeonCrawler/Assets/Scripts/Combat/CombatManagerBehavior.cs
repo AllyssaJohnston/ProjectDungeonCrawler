@@ -332,7 +332,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on all enemies
     private static void friendlyCastSpellOnAll()
     {
-        DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + ", on all enemies");
+        DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on all enemies");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
             character.updateHealth(-curSpellToCast.damage);
@@ -346,7 +346,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         if (selectedEnemy.canCast())
         {
-            DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + ", on " + selectedEnemy.characterName);
+            DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on " + selectedEnemy.characterName);
             selectedEnemy.updateHealth(-curSpellToCast.damage);
             friendlyCast();
         }
@@ -388,7 +388,7 @@ public class CombatManagerBehavior : MonoBehaviour
                 target = characterBehavior.characterName;
             }
             curEnemy.updateHealth(spell.heal); // heal enemy
-            DebugBehavior.updateLog(curEnemy.characterName + " cast " + spell.spellDescriptionText + ", on " + target);
+            DebugBehavior.updateLog(curEnemy.characterName + " cast " + spell.spellDescriptionText + " on " + target);
             curEnemy.cast();
         }
         else

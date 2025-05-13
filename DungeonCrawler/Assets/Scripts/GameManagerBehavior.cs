@@ -55,7 +55,7 @@ public class GameManagerBehavior : MonoBehaviour
             // combat already loaded, don't have to load it
             enterCombat(null);
         }
-        else if (curScene.Contains("Level"))
+        else if (curScene.Contains("Level") || curScene == "DesignPlayground")
         {
             Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;

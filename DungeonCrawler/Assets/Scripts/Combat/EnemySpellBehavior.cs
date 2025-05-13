@@ -26,17 +26,17 @@ public class EnemySpellStats
 
         if (damage != 0f)
         {
-            spellDescriptionText += " for " + damage + " damage";
+            spellDescriptionText += " for " + damage + " damage,";
         }
 
         if (heal != 0f)
         {
-            spellDescriptionText += " for " + heal + " party health regen";
+            spellDescriptionText += " for " + heal + " party health regen,";
         }
 
         if (moraleDamageToEnemies != 0)
         {
-            spellDescriptionText += moraleDamageToEnemies + " morale damage to the party.";
+            spellDescriptionText += " for " + moraleDamageToEnemies + " morale damage,";
         }
     }
 

@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Exit.unity
     guid: 69532402f99d1df459f7f911be6554b4
+  - enabled: 1
+    path: Assets/Scenes/DesignPlayground.unity
+    guid: f814e5efee974034b998e2970477d2f8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
