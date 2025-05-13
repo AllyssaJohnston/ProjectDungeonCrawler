@@ -4285,9 +4285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df4a48c2c08f6846a51cb29b0ef079e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestPanel: {fileID: 0}
-  itemSlotParent: {fileID: 0}
-  itemSlotPrefab: {fileID: 0}
+  chestPanel: {fileID: 914903276}
+  itemSlotParent: {fileID: 851120354}
+  itemSlotPrefab: {fileID: 51233026887119720, guid: bcbb7a393b8bd6840a9dee369002cc4c, type: 3}
 --- !u!1 &1753817852
 GameObject:
   m_ObjectHideFlags: 0
