@@ -70,18 +70,18 @@ public class GameManagerBehavior : MonoBehaviour
             Debug.Log("starting in menu");
             gameMode = E_GameMode.LEVEL;
             menuData = GameObject.FindWithTag("MenuData");
-            modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
-            sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
             scenesToLoad = new List<string> { "Level1", "Combat" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
     }
+
     public void updateSettings()
     {
         modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
         sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -226,6 +226,8 @@ public class GameManagerBehavior : MonoBehaviour
             if (menuData != null)
             {
                 menuData.SetActive(false);
+                modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
+                sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
             }
         }
     }
