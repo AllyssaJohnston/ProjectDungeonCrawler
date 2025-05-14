@@ -55,24 +55,28 @@ public class EnemyBehavior : CharacterBehavior
         int lowestHealthIndex = 0;
         int highestMoraleIndex = 0;
         int lowestMoraleIndex = 0;
+        bool firstCharAlive = friendlyCharacters[0].isAlive();
 
         for (int i = 1; i < friendlyCharacters.Count; i++)
         {
-            if (friendlyCharacters[i].getHealth() >= friendlyCharacters[highestHealthIndex].getHealth())
+            if (friendlyCharacters[i].isAlive())
             {
-                highestHealthIndex = i;
-            }
-            if (friendlyCharacters[i].getHealth() <= friendlyCharacters[lowestHealthIndex].getHealth())
-            {
-                lowestHealthIndex = i;
-            }
-            if (friendlyCharacters[i].getMorale() >= friendlyCharacters[highestMoraleIndex].getMorale())
-            {
-                highestMoraleIndex = i;
-            }
-            if (friendlyCharacters[i].getMorale() <= friendlyCharacters[lowestMoraleIndex].getMorale())
-            {
-                lowestMoraleIndex = i;
+                if ((friendlyCharacters[i].getHealth() >= friendlyCharacters[highestHealthIndex].getHealth()) || !firstCharAlive)
+                {
+                    highestHealthIndex = i;
+                }
+                if ((friendlyCharacters[i].getHealth() <= friendlyCharacters[lowestHealthIndex].getHealth()) || !firstCharAlive)
+                {
+                    lowestHealthIndex = i;
+                }
+                if ((friendlyCharacters[i].getMorale() >= friendlyCharacters[highestMoraleIndex].getMorale()) || !firstCharAlive)
+                {
+                    highestMoraleIndex = i;
+                }
+                if ((friendlyCharacters[i].getMorale() <= friendlyCharacters[lowestMoraleIndex].getMorale()) || !firstCharAlive)
+                {
+                    lowestMoraleIndex = i;
+                }
             }
         }
         switch (targeting)
