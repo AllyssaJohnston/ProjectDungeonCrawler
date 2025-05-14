@@ -135,22 +135,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3963251713906975093, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
-      propertyPath: m_text
-      value: "ESC: \nMain Menu/ Pause"
-      objectReference: {fileID: 0}
-    - target: {fileID: 3963251713906975093, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
-      propertyPath: m_margin.y
-      value: 66.49481
-      objectReference: {fileID: 0}
-    - target: {fileID: 3963251713906975093, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4184428678823091286, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 74
-      objectReference: {fileID: 0}
     - target: {fileID: 4202645958964593902, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
