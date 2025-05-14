@@ -81,8 +81,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 456.13, y: -25}
-  m_SizeDelta: {x: 885.73, y: 50}
+  m_AnchoredPosition: {x: 449.5, y: -56.217}
+  m_SizeDelta: {x: 899, y: 112.423}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3036324887925694119
 CanvasRenderer:
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.31059265, y: 0, z: 0.039855957, w: -66.95691}
+  m_margin: {x: -0.31059265, y: 0, z: 9.521484, w: 3.116211}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -817,7 +817,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1595315726908375441
@@ -904,6 +904,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipPanel: {fileID: 5955946519642916060}
   tooltipText: {fileID: 1201187082430240212}
+  xOffset: 0
+  yOffset: 0
 --- !u!1 &5015584141407054519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1025,6 +1027,7 @@ GameObject:
   - component: {fileID: 6359775252489094367}
   - component: {fileID: 7713522953149343067}
   - component: {fileID: 5651829834751850596}
+  - component: {fileID: 1896074831866856347}
   m_Layer: 5
   m_Name: ToolTipPanel
   m_TagString: Untagged
@@ -1049,8 +1052,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -192.92188}
-  m_SizeDelta: {x: -0.00012207, y: -387.684}
+  m_AnchoredPosition: {x: 0.00012207031, y: 192.526}
+  m_SizeDelta: {x: -0.001, y: -385.048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7713522953149343067
 CanvasRenderer:
@@ -1073,7 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.25157225, g: 0.099675246, b: 0.057750825, a: 0.8980392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1090,6 +1093,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1896074831866856347
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955946519642916060}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5991564163613699589
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,7 +1396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.85, y: 0}
   m_AnchorMax: {x: 1, y: 0.3}
-  m_AnchoredPosition: {x: 0, y: 3.9996033}
+  m_AnchoredPosition: {x: 0, y: 3.9996338}
   m_SizeDelta: {x: -40, y: -32.0008}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3644437816687293390
@@ -1802,7 +1817,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3783813146751896637, guid: bc13bac12178be07c8e7d6fc2ae634ba, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.6
+      value: -0.5999985
       objectReference: {fileID: 0}
     - target: {fileID: 3783813146751896637, guid: bc13bac12178be07c8e7d6fc2ae634ba, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
