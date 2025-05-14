@@ -11,7 +11,7 @@ public class FriendlyBehavior : CharacterBehavior
     protected int morale;
 
     // called at the start of the first battle
-    override protected void SetUp()
+    override public void SetUp()
     {
         morale = maxMorale;
         base.SetUp();

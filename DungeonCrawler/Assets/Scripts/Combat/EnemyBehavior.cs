@@ -8,7 +8,7 @@ public class EnemyBehavior : CharacterBehavior
     private int curSpellIndex = 0;
 
 
-    override protected void SetUp()
+    override public void SetUp()
     {
         base.SetUp();
         friendly = false;

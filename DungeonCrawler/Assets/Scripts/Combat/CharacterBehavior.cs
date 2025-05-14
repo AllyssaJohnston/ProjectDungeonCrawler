@@ -16,12 +16,12 @@ public class CharacterBehavior : MonoBehaviour
     [SerializeField] protected int maxHealth = 100;
     protected int health;
     protected bool castThisTurn = false;
-    protected bool firstCombat = true;
+    protected bool setUp = false;
 
     protected CharacterUICreatorBehavior UI_ManagerBehavior;
 
     // called at the start of first battle
-    virtual protected void SetUp()
+    virtual public void SetUp()
     {
         characterImageManager = GetComponent<Image>();
         regSprite = characterImageManager.sprite;
@@ -30,6 +30,7 @@ public class CharacterBehavior : MonoBehaviour
 
         UI_ManagerBehavior = gameObject.GetComponent<CharacterUICreatorBehavior>();
         UI_ManagerBehavior.SetUp(this);
+        setUp = true;
     }
 
     public int getHealth() { return health; }
@@ -70,7 +71,7 @@ public class CharacterBehavior : MonoBehaviour
         characterImageManager.color = Color.white;
         characterImageManager.sprite = regSprite;
         castThisTurn = false;
-        firstCombat = true;
+        setUp = false;
     }
 
     // called at start of battle
@@ -78,10 +79,9 @@ public class CharacterBehavior : MonoBehaviour
     virtual public void startBattle()
     {
         // start gets called AFTER startBattle, so do setup here
-        if (firstCombat)
+        if (!setUp)
         {
             SetUp();
-            firstCombat = false;
         }
 
         castThisTurn = false;
