@@ -1,28 +1,41 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class CharstatusPortrait : MonoBehaviour
 {
-    public int index = 0;
-    private List<GameObject> party = null;
-    private UnityEngine.UI.Image image;
+    [SerializeField] int index = 0;
+    [SerializeField] Image characterIcon;
+    [SerializeField] HealthBarManager healthBarManager;
+    [SerializeField] HealthBarManager moraleBarManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        image = this.GetComponent<UnityEngine.UI.Image>();
-    }
+    private FriendlyBehavior character;
+    private bool setUp = false;
 
     // Update is called once per frame
     void Update()
     {
-        if (party == null) setupParty();
+        if (setUp)
+        {
+            healthBarManager.SetValue(character.getHealth());
+            moraleBarManager.SetValue(character.getMorale());
+        }
+        else
+        {
+            setUpCharacterUI();
+        }
     }
 
-    void setupParty() 
+    void setUpCharacterUI() 
     {
+        List<GameObject> party = new List<GameObject>();
         party = CombatManagerBehavior.getParty();
         if (party == null) return;
-        image.sprite = party[index].GetComponent<FriendlyBehavior>().iconSprite;
+        character = party[index].GetComponent<FriendlyBehavior>();
+        character.SetUp();
+        characterIcon.sprite = character.iconSprite;
+        healthBarManager.SetUp(character.getHealth(), Color.red, Color.white);
+        moraleBarManager.SetUp(character.getMorale(), Color.white, Color.black);
+        setUp = true;
     }
 }
