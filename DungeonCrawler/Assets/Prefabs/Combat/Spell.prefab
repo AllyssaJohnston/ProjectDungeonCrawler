@@ -501,12 +501,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellName: Individual Spell
   damage: 5
-  moraleDamageToSelf: 0
   heal: 0
-  manaCost: 0
   damageAllEnemies: 0
+  spellDescriptionText: 
+  castingCharactersText: 
   castingCharacterBehaviors: []
+  moraleDamageToSelf: 0
   moraleRegen: 0
+  manaCost: 0
   spellNameText: {fileID: 2804035500408673637}
   damageText: {fileID: 7381832984964397368}
   healText: {fileID: 4232146784360535973}
@@ -517,14 +519,14 @@ MonoBehaviour:
   manaText: {fileID: 513161153689856309}
   targetingText: {fileID: 2698795282960515603}
   characterIconTemplate: {fileID: 6994409047722642919, guid: ac723c099affa944fb52463abca069e0, type: 3}
-  singleCharacterX: -55
-  singleCharacterY: 55
-  singleCharacterScale: 1.13
-  firstCharacterX: -74.5
-  firstCharacterY: 77
-  secondCharacterX: -36.6
-  secondCharacterY: 35
-  doubleCharacterScale: 0.735
+  singleCharacterX: -67.6
+  singleCharacterY: 70
+  singleCharacterScale: 1.38
+  firstCharacterX: -90.5
+  firstCharacterY: 92
+  secondCharacterX: -43.5
+  secondCharacterY: 44
+  doubleCharacterScale: 0.9
   canCast: 0
 --- !u!1 &4973260043500930015
 GameObject:
