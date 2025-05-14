@@ -27,6 +27,7 @@ public class GameManagerBehavior : MonoBehaviour
     //private List<GameObject> inactiveLevelObjects = new List<GameObject>();
     public static float sensSlider;
     public static bool modernControls;
+    private static AudioSource ambience;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -48,8 +49,10 @@ public class GameManagerBehavior : MonoBehaviour
         instance = this;
         curSceneToLoad = 0;
         curScene = SceneManager.GetActiveScene().name;
+        ambience = GetComponent<AudioSource>();
         if (curScene == "Combat")
         {
+            ambience.Pause();
             Debug.Log("starting in combat");
             gameMode = E_GameMode.COMBAT;
             combatData = GameObject.FindWithTag("CombatData");
@@ -59,6 +62,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
         else if (curScene.Contains("Level") || curScene == "DesignPlayground")
         {
+            ambience.Play();
             Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
@@ -68,6 +72,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
         else if (curScene == "Menu")
         {
+            ambience.Pause();
             Debug.Log("starting in menu");
             gameMode = E_GameMode.LEVEL;
             menuData = GameObject.FindWithTag("MenuData");
@@ -103,6 +108,7 @@ public class GameManagerBehavior : MonoBehaviour
     // load combat
     public static void enterCombat(CombatEncounterBehavior encounter)
     {
+        ambience.Pause();
         Debug.Log("entering combat");
         if (!combatOnlyMode) //combat only mode is used to just test combat, so don't go back to the level
         {
@@ -124,6 +130,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
         else
         {
+            ambience.Play();
             combatData.SetActive(false);
             menuData.SetActive(false);
             levelData.SetActive(true);
@@ -134,7 +141,7 @@ public class GameManagerBehavior : MonoBehaviour
     private static void enterMenu()
     {
         Debug.Log("Enter pause menu");
-
+        ambience.Pause();
         levelData.SetActive(false);
         combatData.SetActive(false);
         menuData.SetActive(true);
@@ -148,12 +155,14 @@ public class GameManagerBehavior : MonoBehaviour
         if (gameMode == E_GameMode.LEVEL)
         {
             DebugBehavior.updateLog("RE-ENTER LEVEL");
+            ambience.Play();
             menuData.SetActive(false);
             levelData.SetActive(true);
 
         } 
         else // COMBAT
         {
+            ambience.Pause();
             DebugBehavior.updateLog("RE-ENTER COMBAT");
             menuData.SetActive(false);
             combatData.SetActive(true);
