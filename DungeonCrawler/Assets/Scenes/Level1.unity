@@ -19212,46 +19212,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[0].icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[1].icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[2].icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[3].icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[4].icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[0].itemName
-      value: Potion
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[1].itemName
-      value: Potion
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[2].itemName
-      value: Potion
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[3].itemName
-      value: Potion
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[4].itemName
-      value: Potion
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: LootContents.Array.data[0].description
       value: +20 Party Health \n *Everyone gathers around the sweet smell arising
         from the potion*
@@ -19324,10 +19284,6 @@ PrefabInstance:
     - target: {fileID: 7728098150185048439, guid: 087e759bc25c2004c8c38df4a5794bb8, type: 3}
       propertyPath: m_Name
       value: LootUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 9078042308615836503, guid: 087e759bc25c2004c8c38df4a5794bb8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

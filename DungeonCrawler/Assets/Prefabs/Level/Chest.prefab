@@ -142,11 +142,9 @@ MonoBehaviour:
   LootContents:
   - itemName: Potion
     icon: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
-    description: +20 Party Health \n *A sweet smell tickles the parties nose*
-  - itemName: Potion
-    icon: {fileID: 21300000, guid: 6a3c07a62468ddc46bff2f9d6df4d0d0, type: 3}
     description: +20 Party Health \n *Everyone gathers around the sweet smell arising
       from the potion*
+  chestUI: {fileID: 0}
 --- !u!58 &8135072897519308845
 CircleCollider2D:
   m_ObjectHideFlags: 0
