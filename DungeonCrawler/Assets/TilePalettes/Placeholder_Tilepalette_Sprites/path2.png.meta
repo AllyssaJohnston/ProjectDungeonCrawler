@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bb19c9cc9b70b18358d12b627dbb0e3c
+guid: 63dec62c2e4e7484f857ca2b7e74f0b8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6680556436121249758
-    second: mountain_0
+      213: -5429287974753484429
+    second: path2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,12 +48,12 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 256
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -113,27 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mountain_0
+      name: path2_0
       rect:
         serializedVersion: 2
-        x: 13
-        y: 13
-        width: 228
-        height: 202
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape:
-      - - {x: 114, y: 101}
-        - {x: -114, y: 101}
-        - {x: -114, y: -101}
-        - {x: 114, y: -101}
-      tessellationDetail: 0
+      physicsShape: []
+      tessellationDetail: -1
       bones: []
-      spriteID: 2281b030155e943a0800000000000000
-      internalID: -6680556436121249758
+      spriteID: 371c4814a5b47a4b0800000000000000
+      internalID: -5429287974753484429
       vertices: []
       indices: 
       edges: []
@@ -142,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e54beb161514c37009e4c74f0f5ba9dd
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -152,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mountain_0: -6680556436121249758
+      path2_0: -5429287974753484429
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
