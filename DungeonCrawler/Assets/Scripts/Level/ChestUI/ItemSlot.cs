@@ -20,16 +20,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             // Show the tooltip offset from the current mouse position
             Vector3 offset = new Vector3(200f, -15f); // Adjust as needed
-            TooltipManager.Instance.ShowTooltip(
+            TooltipManager.instance.ShowTooltip(
                 storedItem.description,
                 Input.mousePosition + offset
             );
-            }
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        TooltipManager.Instance.HideTooltip();
+        TooltipManager.instance.HideTooltip();
     }
 
     public void OnClick()

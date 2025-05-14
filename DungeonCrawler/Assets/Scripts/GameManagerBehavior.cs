@@ -23,7 +23,7 @@ public class GameManagerBehavior : MonoBehaviour
     public static GameObject menuData;
     static string curScene;
     public static bool combatOnlyMode = false;
-    public GameObject LevelCommon;
+    //public GameObject LevelCommon;
     //private List<GameObject> inactiveLevelObjects = new List<GameObject>();
     public static float sensSlider;
     public static bool modernControls;
@@ -44,8 +44,6 @@ public class GameManagerBehavior : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        LevelCommon.SetActive(true);
 
         instance = this;
         curSceneToLoad = 0;

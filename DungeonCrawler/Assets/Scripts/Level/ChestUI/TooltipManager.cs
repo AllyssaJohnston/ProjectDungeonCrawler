@@ -1,17 +1,34 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TooltipManager : MonoBehaviour
 {
     public GameObject tooltipPanel;
-    public TextMeshProUGUI tooltipText; // Or TMP_Text if using TextMeshPro
+    public TMP_Text tooltipText;
 
-    public static TooltipManager Instance;
+    public static TooltipManager instance;
 
     private void Awake()
     {
-        Instance = this;
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        Debug.Log("tooltip manager initialized");
+        tooltipPanel.SetActive(false);
+    }
+
+    public void Start()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
         tooltipPanel.SetActive(false);
     }
 
