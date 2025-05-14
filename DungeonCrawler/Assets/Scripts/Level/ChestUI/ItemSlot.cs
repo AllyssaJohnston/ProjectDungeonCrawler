@@ -36,7 +36,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         
         FindFirstObjectByType<PlayerInventory>()?.AddItem(storedItem);
-
+        TooltipManager.instance.HideTooltip();
         // remove this UI element after picking it up
         Destroy(gameObject);
     }
