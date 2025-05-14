@@ -4,11 +4,14 @@ using UnityEngine.EventSystems;
 
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+
+    private PlayerInventory inventory;
     public Image iconImage;
     private Item storedItem;
 
-    public void Setup(Item item)
+    public void Setup(Item item, PlayerInventory inventory)
     {
+        this.inventory = inventory;
         storedItem = item;
         iconImage.sprite = item.icon;
         iconImage.enabled = true;
@@ -16,11 +19,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("on pointer enter");
         if (storedItem != null)
         {
             // Show the tooltip offset from the current mouse position
             Vector3 offset = new Vector3(120f, -15f); // Adjust as needed
-            TooltipManager.instance.ShowTooltip(
+            TooltipManager.ShowTooltip(
                 storedItem.description,
                 Input.mousePosition + offset
             );
@@ -29,14 +33,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        TooltipManager.instance.HideTooltip();
+        TooltipManager.HideTooltip();
     }
 
     public void OnClick()
     {
         
-        FindFirstObjectByType<PlayerInventory>()?.AddItem(storedItem);
-        TooltipManager.instance.HideTooltip();
+        inventory.AddItem(storedItem);
+        TooltipManager.HideTooltip();
         // remove this UI element after picking it up
         Destroy(gameObject);
     }

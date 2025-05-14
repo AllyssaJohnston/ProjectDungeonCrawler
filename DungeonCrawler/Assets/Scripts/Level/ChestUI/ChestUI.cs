@@ -6,6 +6,7 @@ public class ChestUI : MonoBehaviour
     public GameObject chestPanel;
     public Transform itemSlotParent;
     public GameObject itemSlotPrefab;
+    public PlayerInventory inventory;
 
     public void OpenChest(List<Item> contents)
     {
@@ -21,7 +22,7 @@ public class ChestUI : MonoBehaviour
         foreach (var item in contents)
         {
             GameObject slot = Instantiate(itemSlotPrefab, itemSlotParent);
-            slot.GetComponent<ItemSlot>().Setup(item);
+            slot.GetComponent<ItemSlot>().Setup(item, inventory);
         }
     }
 
