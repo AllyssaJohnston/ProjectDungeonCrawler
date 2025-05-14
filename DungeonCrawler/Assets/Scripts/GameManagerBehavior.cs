@@ -97,7 +97,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
 
         // load scenes async
-        if (loading)
+        if (loading && instance != null)
         {
             instance.StartCoroutine(instance.ContinueLoad());
         }
