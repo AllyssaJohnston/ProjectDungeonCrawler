@@ -19,7 +19,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (storedItem != null)
         {
             // Show the tooltip offset from the current mouse position
-            Vector3 offset = new Vector3(200f, -15f); // Adjust as needed
+            Vector3 offset = new Vector3(120f, -15f); // Adjust as needed
             TooltipManager.instance.ShowTooltip(
                 storedItem.description,
                 Input.mousePosition + offset

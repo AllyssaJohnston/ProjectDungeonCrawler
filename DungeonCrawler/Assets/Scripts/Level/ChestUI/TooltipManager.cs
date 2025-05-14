@@ -32,6 +32,15 @@ public class TooltipManager : MonoBehaviour
         tooltipPanel.SetActive(false);
     }
 
+    void Update()
+{
+    if (tooltipPanel.activeSelf)
+    {
+        Vector3 offset = new Vector3(120f, -15f);
+        tooltipPanel.transform.position = Input.mousePosition + offset;
+    }
+}
+
     public void ShowTooltip(string message, Vector3 position)
     {
         tooltipText.text = message;
