@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public enum E_GameMode
 {
@@ -19,12 +20,13 @@ public class GameManagerBehavior : MonoBehaviour
     AsyncOperation asyncLoad;
     static GameObject combatData;
     static GameObject levelData;
-    static GameObject menuData;
+    public static GameObject menuData;
     static string curScene;
     public static bool combatOnlyMode = false;
     public GameObject LevelCommon;
     //private List<GameObject> inactiveLevelObjects = new List<GameObject>();
-
+    public static float sensSlider;
+    public static bool modernControls;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -62,7 +64,7 @@ public class GameManagerBehavior : MonoBehaviour
             Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
-            scenesToLoad = new List<string>{"Combat", "Menu"};
+            scenesToLoad = new List<string> { "Combat", "Menu" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -75,6 +77,12 @@ public class GameManagerBehavior : MonoBehaviour
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
+    }
+
+    public void updateSettings()
+    {
+        modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
+        sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
     }
 
     // Update is called once per frame
@@ -221,6 +229,8 @@ public class GameManagerBehavior : MonoBehaviour
             if (menuData != null)
             {
                 menuData.SetActive(false);
+                modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
+                sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
             }
         }
     }

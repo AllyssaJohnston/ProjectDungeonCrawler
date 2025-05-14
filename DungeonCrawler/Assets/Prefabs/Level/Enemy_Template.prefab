@@ -60,33 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0240dee501b2456439904cfb1722e774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - characterName: Alice
-    iconSprite: {fileID: 5853414339950614613, guid: 09fb4aa5261f8424bb0ab81d82c40039, type: 3}
-    characterSprite: {fileID: 5853414339950614613, guid: 09fb4aa5261f8424bb0ab81d82c40039, type: 3}
-    maxHealth: 10
-    spells:
-    - spellName: Argue
-      damage: 3
-      damageAllEnemies: 1
-      targeting: 0
-    - spellName: Aim
-      damage: 0
-      damageAllEnemies: 0
-      targeting: 2
-  - characterName: Bob
-    iconSprite: {fileID: 1440170682504469450, guid: 79dace1d439ebda4a927ffc1a7c43d98, type: 3}
-    characterSprite: {fileID: 1440170682504469450, guid: 79dace1d439ebda4a927ffc1a7c43d98, type: 3}
-    maxHealth: 12
-    spells:
-    - spellName: Bash
-      damage: 5
-      damageAllEnemies: 0
-      targeting: 0
-    - spellName: Bloat
-      damage: 1
-      damageAllEnemies: 1
-      targeting: 2
+  encounter: {fileID: 0}
+  selfDestruct: 1
 --- !u!58 &4449380173548110300
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -175,6 +150,6 @@ SpriteRenderer:
   m_Size: {x: 1.175, y: 1.535}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

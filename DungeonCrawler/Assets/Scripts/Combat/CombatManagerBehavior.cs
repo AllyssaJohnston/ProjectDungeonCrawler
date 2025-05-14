@@ -215,16 +215,17 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
-        float screenX = instance.characterHolder.GetComponent<RectTransform>().offsetMax.x - 50;
+        Debug.Log("create enemeies");
+        float screenX = instance.characterHolder.GetComponent<RectTransform>().offsetMax.x - 40;
         float yPos = friendlyCharacterBehaviors[0].gameObject.transform.parent.localPosition.y;
-        float spacing = 90f;
+        float spacing = 70f;
 
 
         int i = inputCombatData.enemies.Count - 1;
         //clear old enemies
         foreach (GameObject defaultEnemy in instance.inputEnemyCharacters)
         {
-            Destroy(defaultEnemy);
+            Destroy(defaultEnemy.transform.parent.gameObject);
         }
         enemyCharacterBehaviors.Clear();
         instance.inputEnemyCharacters.Clear();
@@ -235,7 +236,12 @@ public class CombatManagerBehavior : MonoBehaviour
             GameObject enemyContainer = Instantiate<GameObject>(instance.enemyContainerTemplate);
             GameObject enemy = enemyContainer.transform.GetChild(0).gameObject; // only one child of enemy container
             RectTransform enemyContainerRect = enemyContainer.GetComponent<RectTransform>();
+            Vector3 scale = enemyContainerRect.localScale;
+            Vector3 pos = enemyContainerRect.position;
+            Debug.Log(pos);
             enemyContainer.transform.SetParent(instance.characterHolder.transform);
+            //enemyContainer.transform.localPosition = pos;
+            enemyContainer.transform.localScale = scale;
             enemyContainerRect.anchoredPosition = new Vector3(screenX - i * (spacing), yPos, 0);
             foreach (Behaviour component in enemy.GetComponents<Behaviour>())
             {
