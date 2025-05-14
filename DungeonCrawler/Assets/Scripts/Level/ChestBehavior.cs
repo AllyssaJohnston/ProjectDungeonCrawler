@@ -7,6 +7,7 @@ public class ChestBehavior : MonoBehaviour
     public float ChestResetTime = 1.5f;
     
     public List<Item> LootContents = new List<Item>(32);
+    public ChestUI chestUI;
     private Animator animator;
     private bool isOpen = false;
     private bool playerInRange = false;
@@ -22,7 +23,7 @@ public class ChestBehavior : MonoBehaviour
         {
             animator.SetTrigger("Open");
             isOpen = true;
-            FindFirstObjectByType<ChestUI>().OpenChest(LootContents);
+            chestUI.OpenChest(LootContents);
             StartCoroutine(ResetChest());
         }
     }
@@ -43,7 +44,7 @@ public class ChestBehavior : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-            playerInRange = false;
-            FindFirstObjectByType<ChestUI>().CloseChest();
+        playerInRange = false;
+        chestUI.CloseChest();
     }
 }

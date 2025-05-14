@@ -8,7 +8,7 @@ public class TooltipManager : MonoBehaviour
     [SerializeField] int xOffset;
     [SerializeField] int yOffset;
 
-    public static TooltipManager instance;
+    private static TooltipManager instance;
 
     private void Awake()
     {
@@ -35,23 +35,23 @@ public class TooltipManager : MonoBehaviour
     }
 
     void Update()
-{
-    if (tooltipPanel.activeSelf)
     {
-        Vector3 offset = new Vector3(instance.xOffset, instance.yOffset);
-        tooltipPanel.transform.position = Input.mousePosition + offset;
-    }
-}
-
-    public void ShowTooltip(string message, Vector3 position)
-    {
-        tooltipText.text = message;
-        tooltipPanel.transform.position = position;
-        tooltipPanel.SetActive(true);
+        if (tooltipPanel.activeSelf)
+        {
+            Vector3 offset = new Vector3(instance.xOffset, instance.yOffset);
+            tooltipPanel.transform.position = Input.mousePosition + offset;
+        }
     }
 
-    public void HideTooltip()
+    public static void ShowTooltip(string message, Vector3 position)
     {
-        tooltipPanel.SetActive(false);
+        instance.tooltipText.text = message;
+        instance.tooltipPanel.transform.position = position;
+        instance.tooltipPanel.SetActive(true);
+    }
+
+    public static void HideTooltip()
+    {
+        instance.tooltipPanel.SetActive(false);
     }
 }
