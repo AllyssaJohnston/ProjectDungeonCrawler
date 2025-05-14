@@ -1017,8 +1017,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.8627451, b: 1, a: 1}
+    m_PressedColor: {r: 0.6784314, g: 0.6156863, b: 0.7254902, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1993,8 +1993,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.8627451, b: 1, a: 1}
+    m_PressedColor: {r: 0.6784314, g: 0.6156863, b: 0.7254902, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2997,8 +2997,8 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.8627451, b: 1, a: 1}
+    m_PressedColor: {r: 0.6784314, g: 0.6156863, b: 0.7254902, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -3770,6 +3770,30 @@ PrefabInstance:
     - target: {fileID: 899099051180343066, guid: be764b16916948f4b957424a12387509, type: 3}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561741028384536583, guid: be764b16916948f4b957424a12387509, type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.7216981
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561741028384536583, guid: be764b16916948f4b957424a12387509, type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.6127626
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561741028384536583, guid: be764b16916948f4b957424a12387509, type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.67775524
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561741028384536583, guid: be764b16916948f4b957424a12387509, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561741028384536583, guid: be764b16916948f4b957424a12387509, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.8632076
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561741028384536583, guid: be764b16916948f4b957424a12387509, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.9610311
       objectReference: {fileID: 0}
     - target: {fileID: 1561741028384536583, guid: be764b16916948f4b957424a12387509, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
