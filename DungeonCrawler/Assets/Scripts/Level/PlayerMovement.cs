@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
     public float rotationSpeed;
     public float rotation {get; private set;} = 0f;
-
+    AudioSource footsteps;
     private Rigidbody2D rb;
     private Vector2 moveDirection;
 
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         rotationSpeed = GameManagerBehavior.sensSlider * 60f;
+        footsteps = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,22 @@ public class PlayerMovement : MonoBehaviour
             moveDirection = Quaternion.AngleAxis(rotation, Vector3.back) * new Vector2(Input.GetAxisRaw("Vertical"), 0f).normalized;
     
         }
+
+        if (rb.linearVelocity.magnitude > 0f)
+        {
+            if (!footsteps.isPlaying)
+            {
+                footsteps.Play();
+            }
+
+        }
+        else
+        {
+            if (footsteps.isPlaying)
+            {
+                footsteps.Pause();
+            }
+        }
     }
     private void Awake()
     {
@@ -47,6 +65,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rotationSpeed = GameManagerBehavior.sensSlider * 60f;
         rb.linearVelocity = moveSpeed * Time.fixedDeltaTime * moveDirection;
-    }
 
+    }
 }
