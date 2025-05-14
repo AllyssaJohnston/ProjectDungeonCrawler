@@ -214,4 +214,13 @@ public class FriendlySpellBehavior : SpellBehavior
         panelImage.color = canCastSpell ? regPanelColor : Color.gray;
         canCast = canCastSpell;
     }
+
+    public void applyDamageModifier(float damageModifer)
+    {
+        //TODO don't do this
+        int baseDamage = damage;
+        damage = (int)((float)damage * damageModifer);
+        setUpStringStats();
+        damage = baseDamage;
+    }
 }
