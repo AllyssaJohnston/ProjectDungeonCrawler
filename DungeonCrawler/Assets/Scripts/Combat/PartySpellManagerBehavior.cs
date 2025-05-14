@@ -50,6 +50,14 @@ public class PartySpellManagerBehavior : MonoBehaviour
         }
     }
 
+    public static void UpdateSpellTextStats(float damageModifier)
+    {
+        foreach (FriendlySpellBehavior spell in spells)
+        {
+            spell.applyDamageModifier(damageModifier);
+        }
+    }
+
     public static FriendlySpellBehavior[] getSpells()
     {
         return spells;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class CombatManagerBehavior : MonoBehaviour
 {
     private static CombatManagerBehavior instance = null;
-    // These are here so that you can edit the characters in editor
+
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
     [SerializeField] GameObject enemyContainerTemplate;
@@ -16,9 +17,10 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
     
-    // These are the fields we actually want to work with
+
     [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
+    private static float damageModifier = 1;
 
     private static FriendlySpellBehavior curSpellToCast = null;
     public static bool combatStarted { get; private set; }
@@ -280,6 +282,12 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    public static void updateDamageModifier(float givenDamageModifier)
+    {
+        damageModifier = givenDamageModifier;
+        PartySpellManagerBehavior.UpdateSpellTextStats(damageModifier);
+    }
+
     // takes a spell and determines if it can be cast
     // if it can, cast it or go to enemy selection state depending on the spell
     private static void resolveSpell(FriendlySpellBehavior spellBehavior)
@@ -346,7 +354,7 @@ public class CombatManagerBehavior : MonoBehaviour
         DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on all enemies");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
-            character.updateHealth(-curSpellToCast.damage);
+            character.updateHealth(-(int)(curSpellToCast.damage * damageModifier));
         }
         friendlyCast();
     }
@@ -358,7 +366,7 @@ public class CombatManagerBehavior : MonoBehaviour
         if (selectedEnemy.canCast())
         {
             DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on " + selectedEnemy.characterName);
-            selectedEnemy.updateHealth(-curSpellToCast.damage);
+            selectedEnemy.updateHealth(-(int)(curSpellToCast.damage * damageModifier));
             friendlyCast();
         }
     }
