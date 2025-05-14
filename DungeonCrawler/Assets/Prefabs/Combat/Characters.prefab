@@ -38,8 +38,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.00055933, y: -0.000020981}
-  m_SizeDelta: {x: 710.57, y: 507.23}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 511.07, y: 421.73}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2460154460125948167
 PrefabInstance:
@@ -54,6 +54,22 @@ PrefabInstance:
       value: DemContainer
       objectReference: {fileID: 0}
     - target: {fileID: 3422348165205825901, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422348165205825901, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422348165205825901, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422348165205825901, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3422348165205825901, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_SizeDelta.x
       value: 115.9832
       objectReference: {fileID: 0}
@@ -65,6 +81,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -58.7
       objectReference: {fileID: 0}
+    - target: {fileID: 3422348165205825901, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -117.17047
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545071140204938664, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: m_Name
+      value: Demon
+      objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -75,7 +99,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.48600003
+      value: 0.933
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMax.y
@@ -83,7 +107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.48600003
+      value: 0.933
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMin.y
@@ -127,7 +151,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 319
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -163,26 +187,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2712307895628595851}
     m_Modifications:
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: iconSprite
-      value: 
-      objectReference: {fileID: 1672402939440415416, guid: 6f74a9b01a977f946be9c72b28c9450b, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: usedSprite
-      value: 
-      objectReference: {fileID: -3521959738306325299, guid: ed28181557c072740bca69423d37e768, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: characterName
-      value: Druid
-      objectReference: {fileID: 0}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: damagedSprite
-      value: 
-      objectReference: {fileID: -4621436302482222445, guid: e3928de52ccd86543ada2fc8108eea88, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: iconUsedSprite
-      value: 
-      objectReference: {fileID: 1212483190314141224, guid: 3574c1f7050344d4d8497ef49770e786, type: 3}
     - target: {fileID: 3377450072843656195, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_SizeDelta.y
       value: 174.5201
@@ -347,7 +351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.48600003
+      value: 0.81100005
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMax.y
@@ -355,7 +359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.48600003
+      value: 0.81100005
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchorMin.y
@@ -399,7 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 231
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7053279827343400474, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -431,7 +435,7 @@ PrefabInstance:
       objectReference: {fileID: -8431113766686589518, guid: 0e811aa15f79d884da983167048f2ed9, type: 3}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: spellsToChooseFrom.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: spellsToChooseFrom.Array.data[0].damage
@@ -439,6 +443,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: spellsToChooseFrom.Array.data[1].damage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[2].damage
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
@@ -451,7 +459,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: spellsToChooseFrom.Array.data[1].spellName
+      value: Demoralize
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[1].targeting
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[2].spellName
       value: Stab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[2].targeting
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: spellsToChooseFrom.Array.data[0].damageAllEnemies
@@ -459,6 +479,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: spellsToChooseFrom.Array.data[1].damageAllEnemies
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[2].damageAllEnemies
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[1].moraleDamageToEnemies
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[2].moraleDamageToEnemies
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7870666928510027939, guid: 119134c0e13dc5946990f5828999e984, type: 3}
@@ -483,26 +515,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2712307895628595851}
     m_Modifications:
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: iconSprite
-      value: 
-      objectReference: {fileID: -3345627800716566970, guid: c557177453e611347a80bdedd1b70b4e, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: usedSprite
-      value: 
-      objectReference: {fileID: -1116633784250275462, guid: 5a65c5f10003da44ab9c695d1c435a7f, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: characterName
-      value: Necromancer
-      objectReference: {fileID: 0}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: damagedSprite
-      value: 
-      objectReference: {fileID: -4945899742553517763, guid: 21a82bffc043b844ebca4b9010245920, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: iconUsedSprite
-      value: 
-      objectReference: {fileID: -4566061145497078506, guid: 47885d2258fd696489dd5ca5056713dc, type: 3}
     - target: {fileID: 3377450072843656195, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_SizeDelta.x
       value: 125.7493
@@ -775,26 +787,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2712307895628595851}
     m_Modifications:
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: iconSprite
-      value: 
-      objectReference: {fileID: -3263863412985163991, guid: fe0c430ece1aa9f4585fb2a66db8ef9a, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: usedSprite
-      value: 
-      objectReference: {fileID: 8297021490466672290, guid: f823ca8e2bd41b847978df750a25ffe6, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: characterName
-      value: Pyromancer
-      objectReference: {fileID: 0}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: damagedSprite
-      value: 
-      objectReference: {fileID: 8273288665434634557, guid: 0006f75bf4cbc8f42bbed29a9b6b3b62, type: 3}
-    - target: {fileID: 138477090774739648, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
-      propertyPath: iconUsedSprite
-      value: 
-      objectReference: {fileID: -3448556763345359548, guid: 0d86ce94b731ebe48af7103408ab7fa7, type: 3}
     - target: {fileID: 3377450072843656195, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_SizeDelta.x
       value: 102.8761
