@@ -4050,11 +4050,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_margin.w
-      value: -35.609985
+      value: -27.556274
       objectReference: {fileID: 0}
     - target: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_margin.z
-      value: -189.05338
+      value: -1.1339111
       objectReference: {fileID: 0}
     - target: {fileID: 3731916077256824266, guid: c54d206a01bb3f3479ca9092fb5adafa, type: 3}
       propertyPath: m_fontColor.b
