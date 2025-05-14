@@ -43,7 +43,11 @@ public class ChestBehavior : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-            playerInRange = false;
-            FindFirstObjectByType<ChestUI>().CloseChest();
+        playerInRange = false;
+        ChestUI chest = FindFirstObjectByType<ChestUI>();
+        if (chest!= null)
+        {
+            chest.CloseChest();
+        }
     }
 }
