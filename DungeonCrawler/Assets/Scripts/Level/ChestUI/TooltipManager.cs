@@ -39,7 +39,7 @@ public class TooltipManager : MonoBehaviour
     if (tooltipPanel.activeSelf)
     {
         Vector3 offset = new Vector3(instance.xOffset, instance.yOffset);
-        tooltipPanel.transform.position = Input.mousePosition + offset;
+        tooltipPanel.transform.localPosition = Input.mousePosition + offset;
     }
 }
 

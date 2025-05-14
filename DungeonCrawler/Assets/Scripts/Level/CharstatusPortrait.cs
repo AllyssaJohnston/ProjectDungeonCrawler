@@ -24,7 +24,6 @@ public class CharstatusPortrait : MonoBehaviour
         party = CombatManagerBehavior.getParty();
         if (party == null) return;
 
-        Debug.Log("Party will be setup here");
         image.sprite = party[index].GetComponent<FriendlyBehavior>().iconSprite;
     }
 }
