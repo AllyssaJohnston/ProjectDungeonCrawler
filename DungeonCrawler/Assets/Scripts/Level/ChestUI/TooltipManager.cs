@@ -5,6 +5,8 @@ public class TooltipManager : MonoBehaviour
 {
     public GameObject tooltipPanel;
     public TMP_Text tooltipText;
+    [SerializeField] int xOffset;
+    [SerializeField] int yOffset;
 
     public static TooltipManager instance;
 
@@ -31,6 +33,15 @@ public class TooltipManager : MonoBehaviour
         instance = this;
         tooltipPanel.SetActive(false);
     }
+
+    void Update()
+{
+    if (tooltipPanel.activeSelf)
+    {
+        Vector3 offset = new Vector3(instance.xOffset, instance.yOffset);
+        tooltipPanel.transform.position = Input.mousePosition + offset;
+    }
+}
 
     public void ShowTooltip(string message, Vector3 position)
     {
