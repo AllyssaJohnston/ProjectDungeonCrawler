@@ -5,9 +5,6 @@ TextureImporter:
   - first:
       213: 6682738439518977790
     second: Ground_0
-  - first:
-      213: -562605217060080129
-    second: Ground_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -121,8 +118,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 3000
-        height: 747
+        width: 2909
+        height: 716
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,28 +130,6 @@ TextureImporter:
       bones: []
       spriteID: efe706e343bddbc50800000000000000
       internalID: 6682738439518977790
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ground_1
-      rect:
-        serializedVersion: 2
-        x: 1535
-        y: 733
-        width: 163
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ff53a5039893138f0800000000000000
-      internalID: -562605217060080129
       vertices: []
       indices: 
       edges: []
@@ -174,7 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Ground_0: 6682738439518977790
-      Ground_1: -562605217060080129
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

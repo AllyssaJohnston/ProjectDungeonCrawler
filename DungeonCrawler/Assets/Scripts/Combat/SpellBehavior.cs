@@ -1,12 +1,20 @@
 using UnityEngine;
 
+public enum E_SPELL_TARGETING
+{
+    SINGLE_ENEMY,
+    ALL_ENEMIES,
+    SINGLE_FRIENDLY,
+    ALL_FRIENDLIES,
+}
+
 public class SpellBehavior : MonoBehaviour
 {
     [Header("Spell details")]
     public string spellName = "unnamed";
     public int damage = 10;
     public int heal = 0;
-    public bool damageAllEnemies = false;
+    public E_SPELL_TARGETING targeting = E_SPELL_TARGETING.SINGLE_ENEMY;
 
     [HideInInspector] public string spellDescriptionText;
     [HideInInspector] public string castingCharactersText;

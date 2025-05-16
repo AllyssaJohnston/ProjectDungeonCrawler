@@ -4,6 +4,7 @@ public enum E_State
 {
     PLAYER_SPELL_SELECTION,
     PLAYER_ENEMY_TARGET_SELECTION,
+    PLAYER_FRIENDLY_TARGET_SELECTION,
     PLAYER_BETWEEN_SPELLS_BUFFFER,
     PLAYER_END_TURN_BUFFER,
     ENEMY_BUFFER,
@@ -63,6 +64,7 @@ public class StateManagerBehavior : MonoBehaviour
         {
             case E_State.PLAYER_SPELL_SELECTION:
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
+            case E_State.PLAYER_FRIENDLY_TARGET_SELECTION:
                 // do nothing, player needs to do things to end this state
                 break;
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
@@ -146,6 +148,7 @@ public class StateManagerBehavior : MonoBehaviour
                 break;
 
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
+            case E_State.PLAYER_FRIENDLY_TARGET_SELECTION:
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
             case E_State.ENEMY_END_TURN_BUFFER:
                 NextState(E_State.PLAYER_SPELL_SELECTION);

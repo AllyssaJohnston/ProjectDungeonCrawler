@@ -5,7 +5,7 @@ public enum E_Arrow_Type
 {
     SPELL_PTR,
     END_TURN_PTR,
-    ENEMY_PTR,
+    CHAR_PTR,
 }
 
 public class ArrowIndicatorManagerBehavior : MonoBehaviour
@@ -13,13 +13,13 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
     private static ArrowIndicatorManagerBehavior instance;
     [SerializeField] GameObject arrow;
     [SerializeField] GameObject button;
-    [SerializeField] float enemySelectionXOffset;
-    [SerializeField] float enemySelectionYOffset;
-    [SerializeField] float enemyTurnXOffset;
-    [SerializeField] float enemyTurnYOffset;
-    [SerializeField] float enemyRotation;
-    [SerializeField] float enemyMoveDist;
-    [SerializeField] float enemyScale;
+    [SerializeField] float charSelectionXOffset;
+    [SerializeField] float charSelectionYOffset;
+    //[SerializeField] float enemyTurnXOffset;
+    //[SerializeField] float enemyTurnYOffset;
+    [SerializeField] float charRotation;
+    [SerializeField] float charMoveDist;
+    [SerializeField] float charScale;
     [SerializeField] float spellXOffset;
     [SerializeField] float spellYOffset;
     [SerializeField] float spellRotation;
@@ -30,6 +30,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
     [SerializeField] float buttonRotation;
     private static Dictionary<E_Arrow_Type, List<GameObject>> arrows = new Dictionary<E_Arrow_Type, List<GameObject>>();
     private static Dictionary<EnemyBehavior, GameObject> enemyTurnArrows = new Dictionary<EnemyBehavior, GameObject>();
+    private static Dictionary<FriendlyBehavior, GameObject> friendlyTurnArrows = new Dictionary<FriendlyBehavior, GameObject>();
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -75,7 +76,13 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         //enemy turn and target selection
         foreach (EnemyBehavior enemy in CombatManagerBehavior.enemyCharacterBehaviors)
         {
-            enemyTurnArrows.Add(enemy, createArrow(E_Arrow_Type.ENEMY_PTR, enemy.gameObject.transform.parent.gameObject));
+            enemyTurnArrows.Add(enemy, createArrow(E_Arrow_Type.CHAR_PTR, enemy.gameObject.transform.parent.gameObject));
+        }
+
+        //enemy turn and target selection
+        foreach (FriendlyBehavior friendly in CombatManagerBehavior.friendlyCharacterBehaviors)
+        {
+            friendlyTurnArrows.Add(friendly, createArrow(E_Arrow_Type.CHAR_PTR, friendly.gameObject.transform.parent.gameObject));
         }
     }
 
@@ -85,21 +92,29 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         switch (nextState)
         {
             case E_State.PLAYER_SPELL_SELECTION:
-                updateEnemyTurnArrowVisibility(null);
+                updateEnemySelectionArrowVisibility(false);
+                updateFriendlySelectionArrowVisibility(false);
                 updateArrowVisibility(new List<E_Arrow_Type> { E_Arrow_Type.SPELL_PTR, E_Arrow_Type.END_TURN_PTR });
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
                 updateArrowVisibility();
-                updateEnemySelectionArrowVisibility();
+                updateFriendlySelectionArrowVisibility(false);
+                updateEnemySelectionArrowVisibility(true);
+                break;
+            case E_State.PLAYER_FRIENDLY_TARGET_SELECTION:
+                updateArrowVisibility();
+                updateEnemySelectionArrowVisibility(false);
+                updateFriendlySelectionArrowVisibility(true);
                 break;
             case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
             case E_State.PLAYER_END_TURN_BUFFER:
-                updateEnemyTurnArrowVisibility(null);
+                updateEnemySelectionArrowVisibility(false);
+                updateFriendlySelectionArrowVisibility(false);
                 updateArrowVisibility();
                 break;
             case E_State.ENEMY_BUFFER:
                 updateArrowVisibility();
-                updateEnemyTurnArrowVisibility(CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex]);
+                updateEnemySelectionArrowVisibility(CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex]);
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
                 break;
@@ -134,12 +149,12 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 zRot = instance.buttonRotation;
                 moveDist = instance.spellMoveDist;
                 break;
-            case (E_Arrow_Type.ENEMY_PTR):
-                arrowRect.localScale *= instance.enemyScale;
-                arrowRect.anchoredPosition = new Vector3(instance.enemyTurnXOffset, instance.enemyTurnYOffset, 0);
-                arrowRect.Rotate(0, 0, instance.enemyRotation);
-                zRot = instance.enemyRotation;
-                moveDist = instance.enemyMoveDist;
+            case (E_Arrow_Type.CHAR_PTR):
+                arrowRect.localScale *= instance.charScale;
+                arrowRect.anchoredPosition = new Vector3(instance.charSelectionXOffset, instance.charSelectionYOffset, 0);
+                arrowRect.Rotate(0, 0, instance.charRotation);
+                zRot = instance.charRotation;
+                moveDist = instance.charMoveDist;
                 break;
             default:
                 Debug.Log("unrecognized arrow type");
@@ -173,7 +188,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
     }
 
-    private static void updateEnemyTurnArrowVisibility(EnemyBehavior curEnemy)
+    private static void updateEnemySelectionArrowVisibility(EnemyBehavior curEnemy)
     {
         foreach(var pair in enemyTurnArrows) 
         {
@@ -189,11 +204,11 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
         }
     }
 
-    private static void updateEnemySelectionArrowVisibility()
+    private static void updateEnemySelectionArrowVisibility(bool show)
     {
         foreach (var pair in enemyTurnArrows)
         {
-            if (pair.Key.canCast())
+            if (pair.Key.isAlive() && show == true)
             {
                 enemyTurnArrows[pair.Key].GetComponent<ArrowIndicatorBehavior>().UpdateMove(true);
                 enemyTurnArrows[pair.Key].SetActive(true);
@@ -202,6 +217,16 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
             {
                 enemyTurnArrows[pair.Key].SetActive(false);
             }
+        }
+    }
+
+    private static void updateFriendlySelectionArrowVisibility(bool show)
+    {
+        foreach (var pair in friendlyTurnArrows)
+        {
+
+            friendlyTurnArrows[pair.Key].GetComponent<ArrowIndicatorBehavior>().UpdateMove(show);
+            friendlyTurnArrows[pair.Key].SetActive(show);
         }
     }
 
@@ -222,5 +247,6 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
             Destroy(pair.Value);
         }
         enemyTurnArrows.Clear();
+        friendlyTurnArrows.Clear();
     }
 }

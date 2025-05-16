@@ -9,8 +9,9 @@ public class TeamManaBehavior : MonoBehaviour
 
     private static int mana = 0;
     private static int prevMana = 0;
-    private static TMP_Text manaText;
-    private static Image image;
+    public TMP_Text manaText;
+    public Image image;
+    public TMP_Text manaRegenText;
     private static Color regColor;
 
     private void Awake()
@@ -34,9 +35,8 @@ public class TeamManaBehavior : MonoBehaviour
 
         instance = this;
 
-        manaText = GetComponentInChildren<TMP_Text>();
-        image = GetComponentInChildren<Image>();
         regColor = image.color;
+        manaRegenText.text = "+ " + CombatManagerBehavior.getManaRegen();
         updateManaWithoutEffect(0);
         Debug.Log("team mana manager initialized");
     }
@@ -47,15 +47,15 @@ public class TeamManaBehavior : MonoBehaviour
     {
         prevMana = curMana;
         mana = curMana;
-        manaText.text = mana.ToString();
-        image.color = regColor;
+        instance.manaText.text = mana.ToString();
+        instance.image.color = regColor;
     }
 
     public static void updateManaWithoutEffect(int curMana)
     {
         prevMana = mana;
         mana += curMana;
-        manaText.text = mana.ToString();
+        instance.manaText.text = mana.ToString();
     }
 
     public static void updateMana(int curMana)

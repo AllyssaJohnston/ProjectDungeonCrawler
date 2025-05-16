@@ -7,20 +7,30 @@ public class FriendlySpellBehavior : SpellBehavior
 {
     [Header("Spell details")]
     public List<FriendlyBehavior> castingCharacterBehaviors = new List<FriendlyBehavior>();
+    public bool stun = false;
     public int moraleDamageToSelf = 0; // to the casting character
     public int moraleRegen = 0; // for party
+    public bool revive = false;
+    public int manaRegen = 0; // for the party
     public int manaCost = 0;
 
     [Header("UI Elements")]
     public TMP_Text spellNameText;
+    public Image spellTitlePanel;
     public Image damageIcon;
     public TMP_Text damageText;
+    public Image stunIcon;
+    public TMP_Text stunText;
+    public Image reviveIcon;
+    public TMP_Text reviveText;
     public Image healIcon;
     public TMP_Text healText;
     public Image moraleDamageIcon;
     public TMP_Text moraleDamageText;
     public Image moraleRegenIcon;
     public TMP_Text moraleRegenText;
+    public Image manaRegenIcon;
+    public TMP_Text manaRegenText;
     public GameObject targetIconSlot;
     public Sprite targetSingleIcon;
     public Sprite targetAllIcon;
@@ -36,6 +46,8 @@ public class FriendlySpellBehavior : SpellBehavior
     public GameObject characterIconTemplate;
 
     private Color regPanelColor;
+    private Color regTitlePanelColor;
+    private Color grayTitlePanelColor;
     private Image panelImage;
 
     [Header("UI Spacing")]
@@ -56,6 +68,8 @@ public class FriendlySpellBehavior : SpellBehavior
     {
         panelImage = gameObject.GetComponent<Image>();
         regPanelColor = panelImage.color;
+        regTitlePanelColor = new Color(regPanelColor.r, regPanelColor.g, regPanelColor.b, .75f);
+        grayTitlePanelColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, .75f);
         regManaColor = manaImage.color;
         setUpTextIcons();
         setUpStringStats();
@@ -69,10 +83,9 @@ public class FriendlySpellBehavior : SpellBehavior
         if (damage == 0f)
         {
             // remove morale from the list of attributes
-            Destroy(damageText.gameObject);
-            Destroy(damageIcon.gameObject);
-            damageText = null;
-            damageIcon = null;
+            Destroy(damageText.gameObject); damageText = null;
+            Destroy(damageIcon.gameObject); damageIcon = null;
+
         }
         else
         {
@@ -80,13 +93,37 @@ public class FriendlySpellBehavior : SpellBehavior
             iconImages.Add(damageIcon);
         }
 
+        if (!stun)
+        {
+            // remove morale from the list of attributes
+            Destroy(stunText.gameObject); stunText = null;
+            Destroy(stunIcon.gameObject); stunIcon = null;
+
+        }
+        else
+        {
+            stunText.text = "STUN ENEMY";
+            iconImages.Add(stunIcon);
+        }
+
+        if (!revive)
+        {
+            // remove morale from the list of attributes
+            Destroy(reviveText.gameObject); reviveText = null;
+            Destroy(reviveIcon.gameObject); reviveIcon = null;
+
+        }
+        else
+        {
+            reviveText.text = "REVIVE 1 PARTY MEMBER";
+            iconImages.Add(reviveIcon);
+        }
+
         if (heal == 0f)
         {
             // remove heal from the list of attributes
-            Destroy(healText.gameObject);
-            Destroy(healIcon.gameObject);
-            healText = null;
-            healIcon = null;
+            Destroy(healText.gameObject); healText = null;
+            Destroy(healIcon.gameObject); healIcon = null;
         }
         else
         {
@@ -97,10 +134,8 @@ public class FriendlySpellBehavior : SpellBehavior
         if (moraleDamageToSelf == 0f)
         {
             // remove morale from the list of attributes
-            Destroy(moraleDamageText.gameObject);
-            Destroy(moraleDamageIcon.gameObject);
-            moraleDamageText = null;
-            moraleDamageIcon = null;
+            Destroy(moraleDamageText.gameObject); moraleDamageText = null;
+            Destroy(moraleDamageIcon.gameObject); moraleDamageIcon = null;
         }
         else
         {
@@ -111,15 +146,26 @@ public class FriendlySpellBehavior : SpellBehavior
         if (moraleRegen == 0f)
         {
             // remove morale from the list of attributes
-            Destroy(moraleRegenText.gameObject);
-            Destroy(moraleRegenIcon.gameObject);
-            moraleRegenText = null;
-            moraleRegenIcon = null;
+            Destroy(moraleRegenText.gameObject); moraleRegenText = null;
+            Destroy(moraleRegenIcon.gameObject); moraleRegenIcon = null;
+
         }
         else
         {
             moraleRegenText.text = moraleRegen + " PARTY MORALE REGEN";
             iconImages.Add(moraleRegenIcon);
+        }
+
+        if (manaRegen == 0f)
+        {
+            // remove mana regen from the list of attributes
+            Destroy(manaRegenText.gameObject); manaRegenText = null;
+            Destroy(manaRegenIcon.gameObject); manaRegenIcon = null;
+        }
+        else
+        {
+            manaRegenText.text = manaRegen + " PARTY MANA REGEN";
+            iconImages.Add(manaRegenIcon);
         }
 
         if (manaCost == 0)
@@ -128,8 +174,28 @@ public class FriendlySpellBehavior : SpellBehavior
             manaGroup.SetActive(false);
         }
 
-        targetingText.text = (damageAllEnemies ? "TARGET ALL" : "SINGLE TARGET");
-        targetIconSlot.GetComponent<Image>().sprite = (damageAllEnemies ? targetAllIcon : targetSingleIcon);
+        switch(targeting)
+        {
+            case E_SPELL_TARGETING.SINGLE_ENEMY:
+                targetingText.text = "SINGLE ENEMY";
+                targetIconSlot.GetComponent<Image>().sprite = targetSingleIcon;
+                break;
+            case E_SPELL_TARGETING.ALL_ENEMIES:
+                targetingText.text = "ALL ENEMIES";
+                targetIconSlot.GetComponent<Image>().sprite = targetAllIcon;
+                break;
+            case E_SPELL_TARGETING.SINGLE_FRIENDLY:
+                targetingText.text = "SINGLE PARTY MEMBER";
+                targetIconSlot.GetComponent<Image>().sprite = targetSingleIcon;
+                break;
+            case E_SPELL_TARGETING.ALL_FRIENDLIES:
+                targetingText.text = "ALL PARTY MEMBERS";
+                targetIconSlot.GetComponent<Image>().sprite = targetAllIcon;
+                break;
+            default:
+                Debug.Log("Unrecognized spell targeting");
+                break;
+        }
         iconImages.Add(targetIconSlot.GetComponent<Image>());
 
 
@@ -163,9 +229,24 @@ public class FriendlySpellBehavior : SpellBehavior
             spellDescriptionText += " costing " + moraleDamageToSelf + " morale,";
         }
 
+        if (stun)
+        {
+            spellDescriptionText += " stunning,";
+        }
+
+        if (revive)
+        {
+            spellDescriptionText += " reviving,";
+        }
+
         if (moraleRegen != 0f)
         {
             spellDescriptionText += " for " + moraleRegen + " party morale regen,";
+        }
+
+        if (manaRegen != 0f)
+        {
+            spellDescriptionText += " for " + manaRegen + " party mana regen,";
         }
 
         if (manaCost != 0)
@@ -246,6 +327,7 @@ public class FriendlySpellBehavior : SpellBehavior
 
         // update panel color
         panelImage.color = canCastSpell ? regPanelColor : Color.gray;
+        spellTitlePanel.color = canCastSpell ? regTitlePanelColor : grayTitlePanelColor;
         canCast = canCastSpell;
     }
 

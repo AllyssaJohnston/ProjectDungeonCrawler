@@ -101,7 +101,7 @@ public class CharacterBehavior : MonoBehaviour
         setSprite();
     }
 
-    private void setSprite()
+    protected void setSprite()
     {
         if (isAlive() == false)
         {

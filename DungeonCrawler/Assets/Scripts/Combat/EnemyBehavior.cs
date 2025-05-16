@@ -49,7 +49,7 @@ public class EnemyBehavior : CharacterBehavior
     }
 
     // choose target
-    public FriendlyBehavior getCharacterTarget(E_SPELL_TARGETING targeting, List<FriendlyBehavior> friendlyCharacters)
+    public FriendlyBehavior getCharacterTarget(E_ENEMY_SPELL_TARGETING targeting, List<FriendlyBehavior> friendlyCharacters)
     {
         int highestHealthIndex = 0;
         int lowestHealthIndex = 0;
@@ -81,13 +81,13 @@ public class EnemyBehavior : CharacterBehavior
         }
         switch (targeting)
         {
-            case E_SPELL_TARGETING.HIGHEST_HEALTH:
+            case E_ENEMY_SPELL_TARGETING.HIGHEST_HEALTH:
                 return friendlyCharacters[highestHealthIndex];
-            case E_SPELL_TARGETING.LOWEST_HEALTH:
+            case E_ENEMY_SPELL_TARGETING.LOWEST_HEALTH:
                 return friendlyCharacters[lowestHealthIndex];
-            case E_SPELL_TARGETING.HIGHEST_MORALE:
+            case E_ENEMY_SPELL_TARGETING.HIGHEST_MORALE:
                 return friendlyCharacters[highestMoraleIndex];
-            case E_SPELL_TARGETING.LOWEST_MORALE:
+            case E_ENEMY_SPELL_TARGETING.LOWEST_MORALE:
                 return friendlyCharacters[lowestMoraleIndex];
             default:
                 Debug.Log("invalid spell targeting type");
@@ -121,5 +121,10 @@ public class EnemyBehavior : CharacterBehavior
         {
             spell.setUpStringStats();
         }
+    }
+
+    public void stun()
+    {
+        castThisTurn = true;
     }
 }
