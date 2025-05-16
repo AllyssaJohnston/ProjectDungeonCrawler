@@ -127,6 +127,11 @@ public class CombatManagerBehavior : MonoBehaviour
                             {
                                 // good
                             }
+                            else if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+                            {
+                                // allow spell reselection
+
+                            }
                             else if (curState == E_State.PLAYER_BETWEEN_SPELLS_BUFFFER || curState == E_State.ENEMY_END_TURN_BUFFER)
                             {
                                 // interupt state
@@ -315,7 +320,7 @@ public class CombatManagerBehavior : MonoBehaviour
             else
             {
                 // go to enemy selection state
-                StateManagerBehavior.NextState();
+                StateManagerBehavior.NextState(E_State.PLAYER_ENEMY_TARGET_SELECTION);
             }
         }
         else
