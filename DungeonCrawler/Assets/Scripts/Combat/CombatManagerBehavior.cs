@@ -347,6 +347,8 @@ public class CombatManagerBehavior : MonoBehaviour
                 character.updateMorale(curSpellToCast.moraleRegen); // regen morale
             }
         }
+        TeamManaBehavior.updateMana(curSpellToCast.manaRegen); // regen mana
+
         PartySpellManagerBehavior.UpdateSpellOrder();
         StateManagerBehavior.NextState(E_State.PLAYER_BETWEEN_SPELLS_BUFFFER);
     }

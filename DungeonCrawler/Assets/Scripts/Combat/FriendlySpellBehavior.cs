@@ -9,6 +9,7 @@ public class FriendlySpellBehavior : SpellBehavior
     public List<FriendlyBehavior> castingCharacterBehaviors = new List<FriendlyBehavior>();
     public int moraleDamageToSelf = 0; // to the casting character
     public int moraleRegen = 0; // for party
+    public int manaRegen = 0; // for the party
     public int manaCost = 0;
 
     [Header("UI Elements")]
@@ -21,6 +22,8 @@ public class FriendlySpellBehavior : SpellBehavior
     public TMP_Text moraleDamageText;
     public Image moraleRegenIcon;
     public TMP_Text moraleRegenText;
+    public Image manaRegenIcon;
+    public TMP_Text manaRegenText;
     public GameObject targetIconSlot;
     public Sprite targetSingleIcon;
     public Sprite targetAllIcon;
@@ -69,10 +72,9 @@ public class FriendlySpellBehavior : SpellBehavior
         if (damage == 0f)
         {
             // remove morale from the list of attributes
-            Destroy(damageText.gameObject);
-            Destroy(damageIcon.gameObject);
-            damageText = null;
-            damageIcon = null;
+            Destroy(damageText.gameObject); damageText = null;
+            Destroy(damageIcon.gameObject); damageIcon = null;
+
         }
         else
         {
@@ -83,10 +85,8 @@ public class FriendlySpellBehavior : SpellBehavior
         if (heal == 0f)
         {
             // remove heal from the list of attributes
-            Destroy(healText.gameObject);
-            Destroy(healIcon.gameObject);
-            healText = null;
-            healIcon = null;
+            Destroy(healText.gameObject); healText = null;
+            Destroy(healIcon.gameObject); healIcon = null;
         }
         else
         {
@@ -97,10 +97,8 @@ public class FriendlySpellBehavior : SpellBehavior
         if (moraleDamageToSelf == 0f)
         {
             // remove morale from the list of attributes
-            Destroy(moraleDamageText.gameObject);
-            Destroy(moraleDamageIcon.gameObject);
-            moraleDamageText = null;
-            moraleDamageIcon = null;
+            Destroy(moraleDamageText.gameObject); moraleDamageText = null;
+            Destroy(moraleDamageIcon.gameObject); moraleDamageIcon = null;
         }
         else
         {
@@ -111,15 +109,26 @@ public class FriendlySpellBehavior : SpellBehavior
         if (moraleRegen == 0f)
         {
             // remove morale from the list of attributes
-            Destroy(moraleRegenText.gameObject);
-            Destroy(moraleRegenIcon.gameObject);
-            moraleRegenText = null;
-            moraleRegenIcon = null;
+            Destroy(moraleRegenText.gameObject); moraleRegenText = null;
+            Destroy(moraleRegenIcon.gameObject); moraleRegenIcon = null;
+
         }
         else
         {
             moraleRegenText.text = moraleRegen + " PARTY MORALE REGEN";
             iconImages.Add(moraleRegenIcon);
+        }
+
+        if (manaRegen == 0f)
+        {
+            // remove mana regen from the list of attributes
+            Destroy(manaRegenText.gameObject); manaRegenText = null;
+            Destroy(manaRegenIcon.gameObject); manaRegenIcon = null;
+        }
+        else
+        {
+            manaRegenText.text = manaRegen + " PARTY MANA REGEN";
+            iconImages.Add(manaRegenIcon);
         }
 
         if (manaCost == 0)
@@ -166,6 +175,11 @@ public class FriendlySpellBehavior : SpellBehavior
         if (moraleRegen != 0f)
         {
             spellDescriptionText += " for " + moraleRegen + " party morale regen,";
+        }
+
+        if (manaRegen != 0f)
+        {
+            spellDescriptionText += " for " + manaRegen + " party mana regen,";
         }
 
         if (manaCost != 0)
