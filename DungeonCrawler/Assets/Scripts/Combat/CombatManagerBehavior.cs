@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -456,5 +455,10 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             character.startTurn();
         }
+    }
+
+    public static int getManaRegen()
+    {
+        return instance.manaRegen;
     }
 }
