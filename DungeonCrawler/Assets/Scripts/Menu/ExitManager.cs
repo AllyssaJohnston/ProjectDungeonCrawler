@@ -7,7 +7,7 @@ public class ExitManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(waitToExit());
+        //StartCoroutine(waitToExit());
     }
 
     // Update is called once per frame
@@ -16,9 +16,9 @@ public class ExitManager : MonoBehaviour
         
     }
 
-    public IEnumerator waitToExit()
-    {
-        yield return new WaitForSeconds(3f);
-        Application.Quit();
-    }
+    //public IEnumerator waitToExit()
+    //{
+    //    yield return new WaitForSeconds(3f);
+    //    Application.Quit();
+    //}
 }

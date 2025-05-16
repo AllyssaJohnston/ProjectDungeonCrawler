@@ -13,17 +13,23 @@ public class FriendlySpellBehavior : SpellBehavior
 
     [Header("UI Elements")]
     public TMP_Text spellNameText;
+    public Image damageIcon;
     public TMP_Text damageText;
+    public Image healIcon;
     public TMP_Text healText;
+    public Image moraleDamageIcon;
     public TMP_Text moraleDamageText;
+    public Image moraleRegenIcon;
     public TMP_Text moraleRegenText;
+    public GameObject targetIconSlot;
+    public Sprite targetSingleIcon;
+    public Sprite targetAllIcon;
+    public TMP_Text targetingText;
 
     public GameObject manaGroup;
     public Image manaImage;
     private static Color regManaColor;
     public TMP_Text manaText;
-
-    public TMP_Text targetingText;
 
     public GameObject characterIconTemplate;
 
@@ -53,7 +59,9 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             // remove morale from the list of attributes
             Destroy(damageText.gameObject);
+            Destroy(damageIcon.gameObject);
             damageText = null;
+            damageIcon = null;
         }
         else
         {
@@ -64,7 +72,9 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             // remove heal from the list of attributes
             Destroy(healText.gameObject);
+            Destroy(healIcon.gameObject);
             healText = null;
+            healIcon = null;
         }
         else
         {
@@ -75,7 +85,9 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             // remove morale from the list of attributes
             Destroy(moraleDamageText.gameObject);
+            Destroy(moraleDamageIcon.gameObject);
             moraleDamageText = null;
+            moraleDamageIcon = null;
         }
         else
         {
@@ -86,7 +98,9 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             // remove morale from the list of attributes
             Destroy(moraleRegenText.gameObject);
+            Destroy(moraleRegenIcon.gameObject);
             moraleRegenText = null;
+            moraleRegenIcon = null;
         }
         else
         {
@@ -100,6 +114,8 @@ public class FriendlySpellBehavior : SpellBehavior
         }
       
         targetingText.text = (damageAllEnemies? "TARGET ALL" : "SINGLE TARGET");
+        targetIconSlot.GetComponent<Image>().sprite = (damageAllEnemies ? targetAllIcon : targetSingleIcon);
+        
 
         if (castingCharacterBehaviors.Count == 0 )
         {
