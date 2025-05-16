@@ -169,6 +169,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -191,6 +195,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 174.5201
       objectReference: {fileID: 0}
+    - target: {fileID: 3987459230069244641, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: 1937692175792351528, guid: 20de0011c483ec5419f551ff582c45df, type: 3}
     - target: {fileID: 3987459230069244641, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: iconSprite
       value: 
@@ -434,6 +442,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: 2499409971082900347, guid: 241e94b81072c2a4ea2aff79bc43ed58, type: 3}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
       propertyPath: usedSprite
       value: 
       objectReference: {fileID: 7980891568568816697, guid: bbacee7044622ed458171b0d065836c3, type: 3}
@@ -567,6 +579,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -1.53
       objectReference: {fileID: 0}
+    - target: {fileID: 3987459230069244641, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: 2253914760818859511, guid: ee49089c541e8354cb49622770bc4403, type: 3}
     - target: {fileID: 3987459230069244641, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: iconSprite
       value: 
@@ -709,6 +725,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2712307895628595851}
     m_Modifications:
+    - target: {fileID: 3987459230069244641, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: -3153210367985108177, guid: d2cb4c3019a8de04db483b58fafb6704, type: 3}
     - target: {fileID: 6309624000855052248, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_Name
       value: WizContainer
@@ -839,6 +859,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -124.06
       objectReference: {fileID: 0}
+    - target: {fileID: 3987459230069244641, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: deadSprite
+      value: 
+      objectReference: {fileID: 8170423380708315124, guid: b54d175cbbab5a14398551d110611832, type: 3}
     - target: {fileID: 3987459230069244641, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: iconSprite
       value: 

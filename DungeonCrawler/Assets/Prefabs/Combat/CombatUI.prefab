@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 2
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -581,8 +581,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3808915033862031911}
   m_HandleRect: {fileID: 637840870516053600}
   m_Direction: 3
-  m_Value: 1
-  m_Size: 0.26922682
+  m_Value: 1.0000007
+  m_Size: 0.26922518
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:

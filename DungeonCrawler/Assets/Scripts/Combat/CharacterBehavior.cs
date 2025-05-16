@@ -10,6 +10,7 @@ public class CharacterBehavior : MonoBehaviour
     protected Sprite regSprite;
     public Sprite damagedSprite;
     public Sprite usedSprite;
+    public Sprite deadSprite;
 
     protected Image characterImageManager;
 
@@ -61,7 +62,7 @@ public class CharacterBehavior : MonoBehaviour
         characterImageManager.sprite = damagedSprite;
         yield return new WaitForSeconds(.2f);
         characterImageManager.color = Color.white;
-        characterImageManager.sprite = canCast() ? regSprite : usedSprite;
+        setSprite();
     }
 
     // called after failed combat
@@ -97,7 +98,23 @@ public class CharacterBehavior : MonoBehaviour
     {
         // set availability
         castThisTurn = false;
-        characterImageManager.sprite = canCast() ? regSprite : usedSprite;
+        setSprite();
+    }
+
+    private void setSprite()
+    {
+        if (isAlive() == false)
+        {
+            characterImageManager.sprite = deadSprite;
+        }
+        else if (canCast() == false)
+        {
+            characterImageManager.sprite = usedSprite;
+        }
+        else //normal
+        {
+            characterImageManager.sprite = regSprite;
+        }
     }
 
     // returns whether character can cast spells

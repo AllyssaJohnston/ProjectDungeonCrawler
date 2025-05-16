@@ -218,7 +218,7 @@ public class CombatManagerBehavior : MonoBehaviour
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
         Debug.Log("create enemeies");
-        float screenX = instance.characterHolder.GetComponent<RectTransform>().offsetMax.x - 40;
+        float screenX = instance.characterHolder.GetComponent<RectTransform>().offsetMax.x - 295;
         float yPos = friendlyCharacterBehaviors[0].gameObject.transform.parent.localPosition.y;
         float spacing = 70f;
 

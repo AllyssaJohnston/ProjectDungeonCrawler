@@ -106,6 +106,7 @@ public class EnemyBehavior : CharacterBehavior
         regSprite = stats.characterSprite;
         damagedSprite = stats.characterDamagedSprite;
         usedSprite = stats.characterUsedSprite;
+        deadSprite = stats.characterDeadSprite;
 
         RectTransform rect = GetComponent<RectTransform>();
         float anchorX = rect.anchoredPosition.x;

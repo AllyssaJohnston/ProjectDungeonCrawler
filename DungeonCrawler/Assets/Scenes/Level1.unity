@@ -458,6 +458,7 @@ MonoBehaviour:
     characterSprite: {fileID: 8749302817991680212, guid: ad62c764c230a9342b9938e5d7fddcc2, type: 3}
     characterDamagedSprite: {fileID: -8431113766686589518, guid: 0e811aa15f79d884da983167048f2ed9, type: 3}
     characterUsedSprite: {fileID: 7980891568568816697, guid: bbacee7044622ed458171b0d065836c3, type: 3}
+    characterDeadSprite: {fileID: 2499409971082900347, guid: 241e94b81072c2a4ea2aff79bc43ed58, type: 3}
     imageWidth: 86.8
     imageHeight: 117.17
     maxHealth: 60
@@ -487,6 +488,7 @@ MonoBehaviour:
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
     characterUsedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
+    characterDeadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     imageWidth: 136
     imageHeight: 258
     maxHealth: 60
@@ -940,6 +942,7 @@ MonoBehaviour:
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
     characterUsedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
+    characterDeadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     imageWidth: 136
     imageHeight: 258
     maxHealth: 60
@@ -962,6 +965,7 @@ MonoBehaviour:
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
     characterUsedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
+    characterDeadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     imageWidth: 136
     imageHeight: 258
     maxHealth: 60
