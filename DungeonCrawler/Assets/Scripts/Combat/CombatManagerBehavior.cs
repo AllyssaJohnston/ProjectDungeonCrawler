@@ -126,7 +126,7 @@ public class CombatManagerBehavior : MonoBehaviour
                             {
                                 // good
                             }
-                            else if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
+                            else if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION || curState == E_State.PLAYER_FRIENDLY_TARGET_SELECTION)
                             {
                                 // allow spell reselection
 
@@ -153,8 +153,14 @@ public class CombatManagerBehavior : MonoBehaviour
                         {
                             if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
                             {
-                                Debug.Log("hit enemy");
-                                friendlyCastSpellOnTarget(result.gameObject.GetComponent<EnemyBehavior>());
+                                friendlyCastSpellOnTargetEnemy(result.gameObject.GetComponent<EnemyBehavior>());
+                            }
+                        }
+                        else if (result.gameObject.tag == "Friendly")
+                        {
+                            if (curState == E_State.PLAYER_FRIENDLY_TARGET_SELECTION)
+                            {
+                                friendlyCastSpellOnTargetFriendly(result.gameObject.GetComponent<FriendlyBehavior>());
                             }
                         }
                     }
@@ -246,7 +252,6 @@ public class CombatManagerBehavior : MonoBehaviour
             Vector3 pos = enemyContainerRect.position;
             Debug.Log(pos);
             enemyContainer.transform.SetParent(instance.characterHolder.transform);
-            //enemyContainer.transform.localPosition = pos;
             enemyContainer.transform.localScale = scale;
             enemyContainerRect.anchoredPosition = new Vector3(screenX - i * (spacing), yPos, 0);
             foreach (Behaviour component in enemy.GetComponents<Behaviour>())
@@ -307,19 +312,23 @@ public class CombatManagerBehavior : MonoBehaviour
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
             curSpellToCast = spellBehavior;
-            if (spellBehavior.damage == 0)
+            switch(curSpellToCast.targeting)
             {
-                friendlyCastSpellOnNone();
-            }
-            else if (spellBehavior.damageAllEnemies)
-            {
-                // cast spell on all enemies
-                friendlyCastSpellOnAll();
-            }
-            else
-            {
-                // go to enemy selection state
-                StateManagerBehavior.NextState(E_State.PLAYER_ENEMY_TARGET_SELECTION);
+                case (E_SPELL_TARGETING.ALL_ENEMIES):
+                    friendlyCastSpellOnAllEnemies();
+                    break;
+                case (E_SPELL_TARGETING.SINGLE_ENEMY):
+                    StateManagerBehavior.NextState(E_State.PLAYER_ENEMY_TARGET_SELECTION);
+                    break;
+                case (E_SPELL_TARGETING.ALL_FRIENDLIES):
+                    friendlyCastSpellAllFriendlies();
+                    break;
+                case (E_SPELL_TARGETING.SINGLE_FRIENDLY):
+                    StateManagerBehavior.NextState(E_State.PLAYER_FRIENDLY_TARGET_SELECTION);
+                    break;
+                default:
+                    Debug.Log("Unrecognzied spell targeting");
+                    break;
             }
         }
         else
@@ -355,7 +364,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     // for player casted spells
     // casts the stored spell selected by the player on all enemies
-    private static void friendlyCastSpellOnAll()
+    private static void friendlyCastSpellOnAllEnemies()
     {
         DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on all enemies");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
@@ -367,23 +376,46 @@ public class CombatManagerBehavior : MonoBehaviour
 
     // for player casted spells
     // casts the stored spell selected by the player on the enemy selected by the player
-    private static void friendlyCastSpellOnTarget(EnemyBehavior selectedEnemy)
+    private static void friendlyCastSpellOnTargetEnemy(EnemyBehavior target)
     {
-        if (selectedEnemy.canCast())
+        if (target.isAlive()) //dont cast on dead targets
         {
-            DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on " + selectedEnemy.characterName);
-            selectedEnemy.updateHealth(-(int)(curSpellToCast.damage * damageModifier));
+            DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on " + target.characterName);
+            target.updateHealth(-(int)(curSpellToCast.damage * damageModifier));
             if (curSpellToCast.stun)
             {
-                selectedEnemy.stun();
+                target.stun();
             }
             friendlyCast();
+        }
+        else
+        {
+            DebugBehavior.updateLog("Failed to cast spell.");
+        }
+    }
+
+    // for player casted spells
+    // casts the stored spell selected by the player on the friendly selected by the player
+    private static void friendlyCastSpellOnTargetFriendly(FriendlyBehavior target)
+    {
+        if (curSpellToCast.revive && !target.isAlive()) // only cast revive on dead targets
+        {
+            DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on " + target.characterName);
+            if (curSpellToCast.revive)
+            {
+                target.revive();
+            }
+            friendlyCast();
+        }
+        else
+        {
+            DebugBehavior.updateLog("Failed to cast spell.");
         }
     }
 
     // for player casted spells
     // casts the stored spell selected by the player on the enemy selected by the player
-    private static void friendlyCastSpellOnNone()
+    private static void friendlyCastSpellAllFriendlies()
     {
         DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText);
         friendlyCast();
@@ -411,7 +443,7 @@ public class CombatManagerBehavior : MonoBehaviour
             else
             {
                 //select character to target based on spell targeting data, and attack them
-                FriendlyBehavior characterBehavior = curEnemy.getCharacterTarget(spell.targeting, friendlyCharacterBehaviors);
+                FriendlyBehavior characterBehavior = curEnemy.getCharacterTarget(spell.characterTargeting, friendlyCharacterBehaviors);
                 characterBehavior.updateHealth(-spell.damage);
                 characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
                 target = characterBehavior.characterName;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public enum E_SPELL_TARGETING
+public enum E_ENEMY_SPELL_TARGETING
 {
     HIGHEST_HEALTH,
     LOWEST_HEALTH,
@@ -16,7 +16,7 @@ public class EnemySpellStats
     public int heal = 0;
     public int moraleDamageToEnemies = 0; // to the opposing side
     public bool damageAllEnemies = false;
-    public E_SPELL_TARGETING targeting;
+    public E_ENEMY_SPELL_TARGETING characterTargeting;
 
     public string spellDescriptionText;
 

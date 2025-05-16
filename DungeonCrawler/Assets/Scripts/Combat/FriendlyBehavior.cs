@@ -57,6 +57,15 @@ public class FriendlyBehavior : CharacterBehavior
     // returns whether character is still alive in the fight
     override public bool isAlive() { return health > 0 && morale > 0; }
 
+    // revive with 50% health and 2 morale
+    public void revive()
+    {
+        setHealth(maxHealth / 2);
+        setMorale(Mathf.Max(morale, 2));
+        setSprite();
+    }
+
+    // overloaded method from character behavior
     // Sets the character unable to cast more spells
     public void cast(int moraleChange)
     {

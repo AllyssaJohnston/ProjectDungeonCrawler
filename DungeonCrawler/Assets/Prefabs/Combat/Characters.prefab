@@ -173,6 +173,10 @@ PrefabInstance:
       propertyPath: deadSprite
       value: 
       objectReference: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
+    - target: {fileID: 7813056452095013304, guid: 119134c0e13dc5946990f5828999e984, type: 3}
+      propertyPath: spellsToChooseFrom.Array.data[0].damage
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -226,6 +230,10 @@ PrefabInstance:
     - target: {fileID: 5572518061037355206, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_Name
       value: Druid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5572518061037355206, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: m_TagString
+      value: Friendly
       objectReference: {fileID: 0}
     - target: {fileID: 6309624000855052248, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_Name
@@ -615,6 +623,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Necromancer
       objectReference: {fileID: 0}
+    - target: {fileID: 5572518061037355206, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: m_TagString
+      value: Friendly
+      objectReference: {fileID: 0}
     - target: {fileID: 6309624000855052248, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_Name
       value: NecContainer
@@ -741,6 +753,10 @@ PrefabInstance:
       propertyPath: iconDeadSprite
       value: 
       objectReference: {fileID: 6748148591201270584, guid: 42732e1bbb14c064583e82b5b9886023, type: 3}
+    - target: {fileID: 5572518061037355206, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: m_TagString
+      value: Friendly
+      objectReference: {fileID: 0}
     - target: {fileID: 6309624000855052248, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_Name
       value: WizContainer
@@ -902,6 +918,10 @@ PrefabInstance:
     - target: {fileID: 5572518061037355206, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_Name
       value: Pyromancer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5572518061037355206, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
+      propertyPath: m_TagString
+      value: Friendly
       objectReference: {fileID: 0}
     - target: {fileID: 6309624000855052248, guid: 6c34961c56b86bb49998506936e968c6, type: 3}
       propertyPath: m_Name

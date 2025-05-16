@@ -16,6 +16,7 @@ public class FriendlySpellBehavior : SpellBehavior
 
     [Header("UI Elements")]
     public TMP_Text spellNameText;
+    public Image spellTitlePanel;
     public Image damageIcon;
     public TMP_Text damageText;
     public Image stunIcon;
@@ -45,6 +46,8 @@ public class FriendlySpellBehavior : SpellBehavior
     public GameObject characterIconTemplate;
 
     private Color regPanelColor;
+    private Color regTitlePanelColor;
+    private Color grayTitlePanelColor;
     private Image panelImage;
 
     [Header("UI Spacing")]
@@ -65,6 +68,8 @@ public class FriendlySpellBehavior : SpellBehavior
     {
         panelImage = gameObject.GetComponent<Image>();
         regPanelColor = panelImage.color;
+        regTitlePanelColor = new Color(regPanelColor.r, regPanelColor.g, regPanelColor.b, .75f);
+        grayTitlePanelColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, .75f);
         regManaColor = manaImage.color;
         setUpTextIcons();
         setUpStringStats();
@@ -169,8 +174,28 @@ public class FriendlySpellBehavior : SpellBehavior
             manaGroup.SetActive(false);
         }
 
-        targetingText.text = (damageAllEnemies ? "TARGET ALL" : "SINGLE TARGET");
-        targetIconSlot.GetComponent<Image>().sprite = (damageAllEnemies ? targetAllIcon : targetSingleIcon);
+        switch(targeting)
+        {
+            case E_SPELL_TARGETING.SINGLE_ENEMY:
+                targetingText.text = "SINGLE ENEMY";
+                targetIconSlot.GetComponent<Image>().sprite = targetSingleIcon;
+                break;
+            case E_SPELL_TARGETING.ALL_ENEMIES:
+                targetingText.text = "ALL ENEMIES";
+                targetIconSlot.GetComponent<Image>().sprite = targetAllIcon;
+                break;
+            case E_SPELL_TARGETING.SINGLE_FRIENDLY:
+                targetingText.text = "SINGLE PARTY MEMBER";
+                targetIconSlot.GetComponent<Image>().sprite = targetSingleIcon;
+                break;
+            case E_SPELL_TARGETING.ALL_FRIENDLIES:
+                targetingText.text = "ALL PARTY MEMBERS";
+                targetIconSlot.GetComponent<Image>().sprite = targetAllIcon;
+                break;
+            default:
+                Debug.Log("Unrecognized spell targeting");
+                break;
+        }
         iconImages.Add(targetIconSlot.GetComponent<Image>());
 
 
@@ -302,6 +327,7 @@ public class FriendlySpellBehavior : SpellBehavior
 
         // update panel color
         panelImage.color = canCastSpell ? regPanelColor : Color.gray;
+        spellTitlePanel.color = canCastSpell ? regTitlePanelColor : grayTitlePanelColor;
         canCast = canCastSpell;
     }
 

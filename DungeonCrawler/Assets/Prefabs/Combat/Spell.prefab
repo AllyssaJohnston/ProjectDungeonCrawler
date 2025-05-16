@@ -863,6 +863,7 @@ MonoBehaviour:
   manaRegen: 0
   manaCost: 0
   spellNameText: {fileID: 2804035500408673637}
+  spellTitlePanel: {fileID: 4127530317794458364}
   damageIcon: {fileID: 5290261855391910644}
   damageText: {fileID: 7381832984964397368}
   stunIcon: {fileID: 1043539388586167106}

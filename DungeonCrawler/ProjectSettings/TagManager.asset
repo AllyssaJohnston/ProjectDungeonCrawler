@@ -12,6 +12,7 @@ TagManager:
   - LevelData
   - RetainThroughBattle
   - MenuData
+  - Friendly
   layers:
   - Default
   - TransparentFX
