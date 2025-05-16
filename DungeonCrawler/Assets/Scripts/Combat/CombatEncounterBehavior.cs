@@ -10,6 +10,7 @@ public class EnemyStats
     public Sprite characterSprite;
     public Sprite characterDamagedSprite;
     public Sprite characterUsedSprite;
+    public Sprite characterDeadSprite;
     public float imageWidth;
     public float imageHeight;
 
@@ -21,16 +22,4 @@ public class EnemyStats
 public class CombatEncounterBehavior : MonoBehaviour
 {
     public List<EnemyStats> enemies = new List<EnemyStats>();
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
