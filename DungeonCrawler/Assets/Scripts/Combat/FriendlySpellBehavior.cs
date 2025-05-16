@@ -26,6 +26,8 @@ public class FriendlySpellBehavior : SpellBehavior
     public Sprite targetAllIcon;
     public TMP_Text targetingText;
 
+    private List<Image> iconImages = new List<Image>();
+
     public GameObject manaGroup;
     public Image manaImage;
     private static Color regManaColor;
@@ -52,8 +54,17 @@ public class FriendlySpellBehavior : SpellBehavior
 
     private void Start()
     {
-        spellNameText.text = spellName;
+        panelImage = gameObject.GetComponent<Image>();
+        regPanelColor = panelImage.color;
+        regManaColor = manaImage.color;
+        setUpTextIcons();
+        setUpStringStats();
+    }
 
+    private void setUpTextIcons()
+    {
+        iconImages.Clear();
+        spellNameText.text = spellName;
 
         if (damage == 0f)
         {
@@ -66,6 +77,7 @@ public class FriendlySpellBehavior : SpellBehavior
         else
         {
             damageText.text = damage + " DAMAGE";
+            iconImages.Add(damageIcon);
         }
 
         if (heal == 0f)
@@ -79,6 +91,7 @@ public class FriendlySpellBehavior : SpellBehavior
         else
         {
             healText.text = heal + " PARTY HEALTH REGEN";
+            iconImages.Add(healIcon);
         }
 
         if (moraleDamageToSelf == 0f)
@@ -92,6 +105,7 @@ public class FriendlySpellBehavior : SpellBehavior
         else
         {
             moraleDamageText.text = moraleDamageToSelf + " SELF MORALE DAMAGE";
+            iconImages.Add(moraleDamageIcon);
         }
 
         if (moraleRegen == 0f)
@@ -105,6 +119,7 @@ public class FriendlySpellBehavior : SpellBehavior
         else
         {
             moraleRegenText.text = moraleRegen + " PARTY MORALE REGEN";
+            iconImages.Add(moraleRegenIcon);
         }
 
         if (manaCost == 0)
@@ -112,36 +127,31 @@ public class FriendlySpellBehavior : SpellBehavior
             //hide the mana group
             manaGroup.SetActive(false);
         }
-      
-        targetingText.text = (damageAllEnemies? "TARGET ALL" : "SINGLE TARGET");
-        targetIconSlot.GetComponent<Image>().sprite = (damageAllEnemies ? targetAllIcon : targetSingleIcon);
-        
 
-        if (castingCharacterBehaviors.Count == 0 )
+        targetingText.text = (damageAllEnemies ? "TARGET ALL" : "SINGLE TARGET");
+        targetIconSlot.GetComponent<Image>().sprite = (damageAllEnemies ? targetAllIcon : targetSingleIcon);
+        iconImages.Add(targetIconSlot.GetComponent<Image>());
+
+
+        if (castingCharacterBehaviors.Count == 0)
         {
             Debug.Log("Invalid spell");
         }
         else if (castingCharacterBehaviors.Count == 1)
         {
             //single character
-            setUpIcon(singleCharacterX, singleCharacterY, singleCharacterScale, castingCharacterBehaviors[0]);
+            setUpCharacterIcon(singleCharacterX, singleCharacterY, singleCharacterScale, castingCharacterBehaviors[0]);
         }
         else if (castingCharacterBehaviors.Count == 2)
         {
             //double characters
-            setUpIcon(firstCharacterX, firstCharacterY, doubleCharacterScale, castingCharacterBehaviors[0]);
-            setUpIcon(secondCharacterX, secondCharacterY, doubleCharacterScale, castingCharacterBehaviors[1]);
+            setUpCharacterIcon(firstCharacterX, firstCharacterY, doubleCharacterScale, castingCharacterBehaviors[0]);
+            setUpCharacterIcon(secondCharacterX, secondCharacterY, doubleCharacterScale, castingCharacterBehaviors[1]);
         }
         else
         {
             Debug.Log("Too many casting characters");
         }
-
-        panelImage = gameObject.GetComponent<Image>();
-        regPanelColor = panelImage.color;
-        regManaColor = manaImage.color;
-
-        setUpStringStats();
     }
 
     override protected void setUpStringStats()
@@ -174,7 +184,7 @@ public class FriendlySpellBehavior : SpellBehavior
         }
     }
 
-    private void setUpIcon(float x, float y, float scale, FriendlyBehavior character)
+    private void setUpCharacterIcon(float x, float y, float scale, FriendlyBehavior character)
     {
         GameObject curCharacterIcon = Instantiate(characterIconTemplate);
         curCharacterIcon.transform.SetParent(gameObject.transform);
@@ -182,7 +192,7 @@ public class FriendlySpellBehavior : SpellBehavior
         curCharacterIcon.transform.localPosition = new Vector3(x, y, 0);
 
         CharacterIconBehavior curCharacterIconBehavior = curCharacterIcon.GetComponent<CharacterIconBehavior>();
-        curCharacterIconBehavior.SetUp(character.iconSprite, character.iconUsedSprite);
+        curCharacterIconBehavior.SetUp(character.iconSprite, character.iconUsedSprite, character.iconDeadSprite);
         characterIcons.Add(curCharacterIconBehavior);
     }
 
@@ -190,18 +200,26 @@ public class FriendlySpellBehavior : SpellBehavior
     {
         bool canCastSpell = true;
         // calculate if spell is castable
+        bool[] canCharactersCast = new bool[characterIcons.Count];
         for (int i = 0; i < characterIcons.Count; i++)
         {
             bool canCharacterCast = castingCharacterBehaviors[i].canCast();
+            canCharactersCast[i] = canCharacterCast;
             canCastSpell = canCastSpell && canCharacterCast;
         }
         int curMana = TeamManaBehavior.getMana();
         canCastSpell = canCastSpell && curMana >= manaCost;
 
-        // update icons
-        foreach (CharacterIconBehavior icon in characterIcons)
+        // update character icons
+        for (int i = 0; i < characterIcons.Count; i++)
         {
-            icon.updateImage(canCastSpell);
+            characterIcons[i].updateImage(canCastSpell, canCharactersCast[i]);
+        }
+
+        //update spell attribute icons
+        foreach(Image icon in iconImages)
+        {
+            icon.color = canCastSpell ? Color.white : new Color(.43f, .43f, .43f);
         }
 
         // update mana icon
@@ -212,7 +230,7 @@ public class FriendlySpellBehavior : SpellBehavior
             if (curMana < manaCost)
             {
                 manaText.color = Color.red;
-                manaImage.color = new Color(.43f, .43f, .43f);
+                manaImage.color = Color.red;
             }
             else if (!canCastSpell)
             {

@@ -6,6 +6,7 @@ public class FriendlyBehavior : CharacterBehavior
     // icon images
     public Sprite iconSprite;
     public Sprite iconUsedSprite;
+    public Sprite iconDeadSprite;
 
     [SerializeField] int maxMorale = 10;
     protected int morale;

@@ -6,20 +6,30 @@ public class CharacterIconBehavior : MonoBehaviour
     private Image iconImage;
     private Sprite regSprite;
     private Sprite usedSprite;
+    private Sprite deadSprite;
 
-    //[SerializeField] Color unavailableColor = Color.black;
-
-    public void SetUp(Sprite characterSprite, Sprite usedSprite)
+    public void SetUp(Sprite characterSprite, Sprite usedSprite, Sprite deadSprite)
     {
         iconImage = GetComponentInChildren<Image>();
         iconImage.sprite = characterSprite;
         regSprite = characterSprite;
         this.usedSprite = usedSprite;
+        this.deadSprite = deadSprite;
     }
 
-    public void updateImage(bool canCast)
+    public void updateImage(bool canCastSpell, bool canCharacterCast)
     {
-        iconImage.sprite = canCast ? regSprite : usedSprite;
-        //iconImage.color = canCast ? Color.white : unavailableColor;
+        if (canCharacterCast == false)
+        {
+            iconImage.sprite = deadSprite;
+        }
+        else if (canCastSpell == false)
+        {
+            iconImage.sprite = usedSprite;
+        }
+        else //normal
+        {
+            iconImage.sprite = regSprite;
+        }
     }
 }
