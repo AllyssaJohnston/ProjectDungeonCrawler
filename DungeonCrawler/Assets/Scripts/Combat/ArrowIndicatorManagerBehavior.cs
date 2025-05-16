@@ -247,5 +247,6 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
             Destroy(pair.Value);
         }
         enemyTurnArrows.Clear();
+        friendlyTurnArrows.Clear();
     }
 }
