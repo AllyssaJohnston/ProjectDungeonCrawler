@@ -122,4 +122,9 @@ public class EnemyBehavior : CharacterBehavior
             spell.setUpStringStats();
         }
     }
+
+    public void stun()
+    {
+        castThisTurn = true;
+    }
 }

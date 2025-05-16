@@ -7,8 +7,10 @@ public class FriendlySpellBehavior : SpellBehavior
 {
     [Header("Spell details")]
     public List<FriendlyBehavior> castingCharacterBehaviors = new List<FriendlyBehavior>();
+    public bool stun = false;
     public int moraleDamageToSelf = 0; // to the casting character
     public int moraleRegen = 0; // for party
+    public bool revive = false;
     public int manaRegen = 0; // for the party
     public int manaCost = 0;
 
@@ -16,6 +18,10 @@ public class FriendlySpellBehavior : SpellBehavior
     public TMP_Text spellNameText;
     public Image damageIcon;
     public TMP_Text damageText;
+    public Image stunIcon;
+    public TMP_Text stunText;
+    public Image reviveIcon;
+    public TMP_Text reviveText;
     public Image healIcon;
     public TMP_Text healText;
     public Image moraleDamageIcon;
@@ -80,6 +86,32 @@ public class FriendlySpellBehavior : SpellBehavior
         {
             damageText.text = damage + " DAMAGE";
             iconImages.Add(damageIcon);
+        }
+
+        if (!stun)
+        {
+            // remove morale from the list of attributes
+            Destroy(stunText.gameObject); stunText = null;
+            Destroy(stunIcon.gameObject); stunIcon = null;
+
+        }
+        else
+        {
+            stunText.text = "STUN ENEMY";
+            iconImages.Add(stunIcon);
+        }
+
+        if (!revive)
+        {
+            // remove morale from the list of attributes
+            Destroy(reviveText.gameObject); reviveText = null;
+            Destroy(reviveIcon.gameObject); reviveIcon = null;
+
+        }
+        else
+        {
+            reviveText.text = "REVIVE 1 PARTY MEMBER";
+            iconImages.Add(reviveIcon);
         }
 
         if (heal == 0f)
@@ -170,6 +202,16 @@ public class FriendlySpellBehavior : SpellBehavior
         if (moraleDamageToSelf != 0f)
         {
             spellDescriptionText += " costing " + moraleDamageToSelf + " morale,";
+        }
+
+        if (stun)
+        {
+            spellDescriptionText += " stunning,";
+        }
+
+        if (revive)
+        {
+            spellDescriptionText += " reviving,";
         }
 
         if (moraleRegen != 0f)

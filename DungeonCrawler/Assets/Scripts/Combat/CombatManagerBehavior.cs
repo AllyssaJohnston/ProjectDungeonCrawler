@@ -373,6 +373,10 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on " + selectedEnemy.characterName);
             selectedEnemy.updateHealth(-(int)(curSpellToCast.damage * damageModifier));
+            if (curSpellToCast.stun)
+            {
+                selectedEnemy.stun();
+            }
             friendlyCast();
         }
     }
