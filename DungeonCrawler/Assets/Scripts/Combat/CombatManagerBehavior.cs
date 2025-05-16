@@ -24,6 +24,9 @@ public class CombatManagerBehavior : MonoBehaviour
     private static FriendlySpellBehavior curSpellToCast = null;
     public static bool combatStarted { get; private set; }
 
+    private static float clickBufferWait = .2f;
+    private static float clickBufferTimer = 0f;
+
     public void Start()
     {
         if (instance != null && instance != this)
@@ -69,6 +72,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        clickBufferTimer += Time.deltaTime;
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             checkCombatStatus();
@@ -101,12 +105,12 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // gets input and uses it
-    // TODO separate get and use input
     private static void getInput()
     {
         E_State curState = StateManagerBehavior.getState();
-        if (Input.GetMouseButtonDown(0)) //left click
+        if (Input.GetMouseButtonDown(0) && clickBufferTimer >= clickBufferWait) //left click
         {
+            clickBufferTimer = 0f;
             // find UI elements
             if (EventSystem.current.IsPointerOverGameObject())
             {
