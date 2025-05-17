@@ -8,6 +8,11 @@ public class ChestUI : MonoBehaviour
     public GameObject itemSlotPrefab;
     public PlayerInventory inventory;
 
+    void Start()
+    {
+        if (inventory == null) inventory = FindFirstObjectByType<PlayerInventory>();
+    }
+
     public void OpenChest(List<Item> contents)
     {
         chestPanel.SetActive(true);

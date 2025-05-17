@@ -170,7 +170,7 @@ PrefabInstance:
     - target: {fileID: 4652987322370568301, guid: 087e759bc25c2004c8c38df4a5794bb8, type: 3}
       propertyPath: inventory
       value: 
-      objectReference: {fileID: 2063825761}
+      objectReference: {fileID: 0}
     - target: {fileID: 7728098150185048439, guid: 087e759bc25c2004c8c38df4a5794bb8, type: 3}
       propertyPath: m_Name
       value: LootUI
@@ -19107,17 +19107,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f74a8aa5c373b874fa6846e0c662b6f6, type: 3}
---- !u!114 &2063825761 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7277633452423380209, guid: f74a8aa5c373b874fa6846e0c662b6f6, type: 3}
-  m_PrefabInstance: {fileID: 2063825760}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 135679621}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 794faead27bc3d846af306b70a035d4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2553997430160311286
 PrefabInstance:
   m_ObjectHideFlags: 0
