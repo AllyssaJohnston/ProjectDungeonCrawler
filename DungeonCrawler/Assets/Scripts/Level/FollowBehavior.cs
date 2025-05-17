@@ -7,7 +7,7 @@ public class FollowBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (followObject == null) followObject = FindFirstObjectByType<PlayerMovement>().gameObject;        
     }
 
     // Update is called once per frame
