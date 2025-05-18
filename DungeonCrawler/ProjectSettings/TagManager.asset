@@ -13,6 +13,8 @@ TagManager:
   - RetainThroughBattle
   - MenuData
   - Friendly
+  - ControlSetting
+  - YouDead
   layers:
   - Default
   - TransparentFX

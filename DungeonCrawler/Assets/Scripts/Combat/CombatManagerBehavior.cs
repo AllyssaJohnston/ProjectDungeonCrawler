@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,6 +28,8 @@ public class CombatManagerBehavior : MonoBehaviour
     private static float clickBufferWait = .2f;
     private static float clickBufferTimer = 0f;
 
+    private static GameObject youDiedScreen;
+
     public void Start()
     {
         if (instance != null && instance != this)
@@ -45,6 +48,8 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
         }
+        youDiedScreen = GameObject.FindWithTag("YouDead");
+        youDiedScreen.SetActive(false);
     }
 
     private void Awake()
@@ -278,12 +283,24 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             if (died)
             {
-                // go to main menu
-                reset();
-                SceneManager.LoadScene("Menu");
+                instance.StartCoroutine(exitToMainMenu());
             }
-            GameManagerBehavior.enterLevel();
+            else
+            {
+                GameManagerBehavior.enterLevel();
+            }
         }
+    }
+
+    private static IEnumerator exitToMainMenu()
+    {
+        youDiedScreen.SetActive(true);
+        yield return new WaitForSeconds(2);
+        youDiedScreen.SetActive(false);
+        // go to main menu
+        reset();
+        SceneManager.LoadScene("Menu");
+        GameManagerBehavior.enterLevel();
     }
 
     public static void OnNextState(E_State oldState, E_State nextState)
@@ -421,7 +438,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // casts the stored spell selected by the player on the enemy selected by the player
     private static void friendlyCastSpellAllFriendlies()
     {
-        DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText);
+        DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on all party members.");
         friendlyCast();
     }
 
