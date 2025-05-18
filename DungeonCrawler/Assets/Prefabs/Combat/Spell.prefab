@@ -741,14 +741,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.6285885, b: 0.2216981, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8882467896193350555, guid: 50efe8b6b76a5c04fb2a1cdf37d23042, type: 3}
+  m_Sprite: {fileID: -335784325853625116, guid: de5e932656b117a40954197585f78798, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -852,7 +852,7 @@ MonoBehaviour:
   spellName: Individual Spell
   damage: 5
   heal: 0
-  damageAllEnemies: 0
+  targeting: 0
   spellDescriptionText: 
   castingCharactersText: 
   castingCharacterBehaviors: []
@@ -997,7 +997,7 @@ RectTransform:
   m_GameObject: {fileID: 3480889243765736268}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.21068686, y: 0.28327647, z: 0.28327647}
+  m_LocalScale: {x: 0.16288681, y: 0.28327647, z: 0.28327647}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9167660314130152777}
@@ -1035,7 +1035,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 5404633747034473702, guid: 827301d23a12c88439e7f01800df3f96, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2018,7 +2018,7 @@ RectTransform:
   m_GameObject: {fileID: 7404441379500713461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.30612, y: 0.30612, z: 0.30612}
+  m_LocalScale: {x: 0.3405585, y: 0.30612, z: 0.30612}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9167660314130152777}
@@ -2056,7 +2056,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 3775741549852556561, guid: c08fa598db9ec8f4a9859293a8bf0375, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2403,7 +2403,7 @@ PrefabInstance:
       objectReference: {fileID: -8293474577991263452, guid: cbe17a7cdfae9aa48a755cb5b1f64ce2, type: 3}
     - target: {fileID: 6906579527285183728, guid: b70ac02483f871f45a841169f640ddda, type: 3}
       propertyPath: m_Color.b
-      value: 0.9307692
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6906579527285183728, guid: b70ac02483f871f45a841169f640ddda, type: 3}
       propertyPath: m_Color.g
@@ -2411,7 +2411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6906579527285183728, guid: b70ac02483f871f45a841169f640ddda, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7200263394338830846, guid: b70ac02483f871f45a841169f640ddda, type: 3}
       propertyPath: m_LocalScale.x
