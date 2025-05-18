@@ -3823,11 +3823,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 986914461580549629, guid: 17b4e5ecce3fa520f88df3b521b729bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.8653108
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 986914461580549629, guid: 17b4e5ecce3fa520f88df3b521b729bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0068266094
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 986914461580549629, guid: 17b4e5ecce3fa520f88df3b521b729bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23964,11 +23964,11 @@ PrefabInstance:
       objectReference: {fileID: 8185184194782789881}
     - target: {fileID: 6515522074850941062, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.8653107
+      value: -0.69
       objectReference: {fileID: 0}
     - target: {fileID: 6515522074850941062, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.852
+      value: 16.45
       objectReference: {fileID: 0}
     - target: {fileID: 6515522074850941062, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: m_LocalPosition.z
@@ -24006,15 +24006,6 @@ PrefabInstance:
       propertyPath: chestUI
       value: 
       objectReference: {fileID: 487783032}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
-      propertyPath: LootContents.Array.data[0].description
-      value: +20 Party Health \n *Everyone gathers around the sweet smell arising
-        from the potion*
-      objectReference: {fileID: 0}
     - target: {fileID: 9144235709468297681, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: m_Name
       value: Chest
@@ -24094,6 +24085,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 813819801}
     m_Modifications:
+    - target: {fileID: 366008658659772282, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 822004139720202655, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

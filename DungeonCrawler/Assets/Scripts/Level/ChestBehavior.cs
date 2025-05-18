@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class ChestBehavior : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator ResetChest()
+    IEnumerator ResetChest()
     {
         yield return new WaitForSeconds(ChestResetTime);
         isOpen = false;
@@ -46,7 +47,14 @@ public class ChestBehavior : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
+        StartCoroutine(closeChest());
         playerInRange = false;
         chestUI.CloseChest();
+    }
+
+    IEnumerator closeChest()
+    {
+        yield return new WaitForSeconds(.75f);
+        animator.SetTrigger("Close");
     }
 }

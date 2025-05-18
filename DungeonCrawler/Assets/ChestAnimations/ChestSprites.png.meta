@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9c3a1067f76263e48bc280683c884c72
+guid: 7805e435854624841afb3423e67d42ab
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -147,11 +147,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 6
-        width: 384
-        height: 341
+        y: 11
+        width: 362
+        height: 336
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: chests_1
       rect:
         serializedVersion: 2
-        x: 387
-        y: 5
-        width: 410
-        height: 375
+        x: 396
+        y: 9
+        width: 371
+        height: 368
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -192,10 +192,10 @@ TextureImporter:
         serializedVersion: 2
         x: 798
         y: 7
-        width: 392
-        height: 402
+        width: 367
+        height: 399
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -209,37 +209,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: chests_3
-      rect:
-        serializedVersion: 2
-        x: 1180
-        y: 243
-        width: 6
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9a13f9e99788e0d70800000000000000
-      internalID: 9011289960348594601
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: chests_4
       rect:
         serializedVersion: 2
-        x: 1197
-        y: 2
-        width: 378
-        height: 405
+        x: 1204
+        y: 5
+        width: 365
+        height: 396
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -256,12 +234,12 @@ TextureImporter:
       name: chests_5
       rect:
         serializedVersion: 2
-        x: 1577
-        y: 1
-        width: 393
-        height: 421
+        x: 1605
+        y: 7
+        width: 365
+        height: 415
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -274,121 +252,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: chests_6
-      rect:
-        serializedVersion: 2
-        x: 375
-        y: 194
-        width: 6
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6bad989390647a120800000000000000
-      internalID: 2424983929796287158
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chests_7
-      rect:
-        serializedVersion: 2
-        x: 784
-        y: 198
-        width: 7
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fca642eaa9621c690800000000000000
-      internalID: -7583737851726763313
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chests_8
-      rect:
-        serializedVersion: 2
-        x: 1575
-        y: 207
-        width: 7
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 16b512b87115cdad0800000000000000
-      internalID: -2676174917004600479
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chests_9
-      rect:
-        serializedVersion: 2
-        x: 1182
-        y: 148
-        width: 7
-        height: 31
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 841b19b32c3818f20800000000000000
-      internalID: 3423162062024585544
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chests_10
-      rect:
-        serializedVersion: 2
-        x: 774
-        y: 77
-        width: 9
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a5521f6404e179440800000000000000
-      internalID: 4942452377479357786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 704cca1d5c56d2d4f95e4ba906467686
     internalID: 0
     vertices: []
     indices: 
@@ -397,7 +265,18 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      chests_0: -4128261327662975977
+      chests_1: 7098417591714748056
+      chests_10: 4942452377479357786
+      chests_2: 4032033871735927925
+      chests_3: 9011289960348594601
+      chests_4: 6983191744819231628
+      chests_5: 3360777976935596823
+      chests_6: 2424983929796287158
+      chests_7: -7583737851726763313
+      chests_8: -2676174917004600479
+      chests_9: 3423162062024585544
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
