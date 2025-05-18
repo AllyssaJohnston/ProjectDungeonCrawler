@@ -416,6 +416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: level2
+  levelTransition: {fileID: 7831863163920793560}
 --- !u!212 &549297019
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24017,11 +24018,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2066828952843011808, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: -1.32
       objectReference: {fileID: 0}
     - target: {fileID: 2066828952843011808, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15
+      value: -17.48
       objectReference: {fileID: 0}
     - target: {fileID: 2243292444403985859, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -24171,6 +24172,11 @@ PrefabInstance:
 --- !u!4 &7831863163920793559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8126585704324134629, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+  m_PrefabInstance: {fileID: 7831863163920793558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7831863163920793560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8238418189505899177, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
   m_PrefabInstance: {fileID: 7831863163920793558}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8185184194782789881 stripped
