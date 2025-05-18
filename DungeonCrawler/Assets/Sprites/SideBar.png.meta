@@ -116,28 +116,6 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SideBar_0
-      rect:
-        serializedVersion: 2
-        x: 27
-        y: 1647
-        width: 6
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6ae095c377a3a8bd0800000000000000
-      internalID: -2627223148829274458
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: SideBar_1
       rect:
         serializedVersion: 2
@@ -146,7 +124,7 @@ TextureImporter:
         width: 1485
         height: 2288
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -163,7 +141,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8705f7408b8b9ee4793425eae0ab286d
     internalID: 0
     vertices: []
     indices: 
