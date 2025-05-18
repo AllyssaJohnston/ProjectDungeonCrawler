@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: tree_0
+  m_Name: trapdoor_0
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -4832618155596115187, guid: a8c0e19ef7428b346a9cd8603adc665a, type: 3}
+  m_Sprite: {fileID: 1775187175044650136, guid: 944c4ca11f8883d419e8767fb2a46b6e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

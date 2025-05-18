@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cd73321900d3968dbb8c880eb1b53ef9
+guid: 944c4ca11f8883d419e8767fb2a46b6e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8222420645925065664
-    second: Brick_0
+      213: 1775187175044650136
+    second: trapdoor_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 256
+  spritePixelsToUnits: 3000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Brick_0
+      name: trapdoor_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 256
-        height: 256
+        width: 3022
+        height: 3024
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0c393326308eb1270800000000000000
-      internalID: 8222420645925065664
+      spriteID: 8949d52945bb2a810800000000000000
+      internalID: 1775187175044650136
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Brick_0: 8222420645925065664
+      trapdoor_0: 1775187175044650136
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
