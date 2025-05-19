@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -9,9 +10,15 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Image iconImage;
     private Item storedItem;
 
-    public void Setup(Item item, PlayerInventory inventory)
+    private List<Item> chestContents;
+
+    private int itemIndex;
+
+    public void Setup(Item item, PlayerInventory inventory, List<Item> contents, int index)
     {
         this.inventory = inventory;
+        this.chestContents = contents;
+        itemIndex = index;
         storedItem = item;
         iconImage.sprite = item.icon;
         iconImage.enabled = true;
@@ -38,10 +45,13 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClick()
     {
-        
+
         inventory.AddItem(storedItem);
         TooltipManager.HideTooltip();
         // remove this UI element after picking it up
         Destroy(gameObject);
+        // and remove the item from the chests list
+        chestContents.RemoveAt(itemIndex);
+        
     }
 }
