@@ -24,10 +24,11 @@ public class ChestUI : MonoBehaviour
         }
 
         // Create new slots
-        foreach (var item in contents)
+        for (int i = 0; i < contents.Count; i++)
         {
+            var item = contents[i];
             GameObject slot = Instantiate(itemSlotPrefab, itemSlotParent);
-            slot.GetComponent<ItemSlot>().Setup(item, inventory);
+            slot.GetComponent<ItemSlot>().Setup(item, inventory, contents, i);
         }
     }
 
