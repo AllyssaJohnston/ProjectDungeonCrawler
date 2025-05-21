@@ -15,6 +15,7 @@ public class GameManagerBehavior : MonoBehaviour
 {
     private static GameManagerBehavior instance;
     public static E_GameMode gameMode = E_GameMode.LEVEL;
+    public static bool inMenu = false;
     static bool loading = false;
     static List<string> scenesToLoad;
     static int curSceneToLoad;
@@ -115,6 +116,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
         else if (curScene == "Menu")
         {
+            inMenu = true;
             ambience.Pause();
 			menuMusic.Play();
 			levelTheme.Pause();
@@ -219,6 +221,7 @@ public class GameManagerBehavior : MonoBehaviour
     
     private static void enterMenu()
     {
+        inMenu = true;
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 		Debug.Log("Enter pause menu");
@@ -235,7 +238,8 @@ public class GameManagerBehavior : MonoBehaviour
     // what to do when leaving menu
     public static void leaveMenu()
     {
-		Cursor.lockState = CursorLockMode.Locked;
+        inMenu = false;
+        Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
 		if (gameMode == E_GameMode.LEVEL)
         {
@@ -353,7 +357,7 @@ public class GameManagerBehavior : MonoBehaviour
             if (levelData != null)
             {
                 Debug.Log("updated level data");
-                levelData.SetActive(gameMode == E_GameMode.LEVEL);
+                levelData.SetActive(gameMode == E_GameMode.LEVEL && !inMenu);
             }
         }
         if (menuData == null)
