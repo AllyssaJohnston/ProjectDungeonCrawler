@@ -265,12 +265,10 @@ public class GameManagerBehavior : MonoBehaviour
 
     public static void changeLevels(string levelName)
     {
-        //GameObject gameManager = instance.gameObject;
         Scene curScene = levelData.scene;
         levelData = null;
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync(curScene);
-        //Instantiate(gameManager);
     }        
 
     private static void getAudio()
