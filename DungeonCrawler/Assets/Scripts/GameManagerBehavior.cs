@@ -338,6 +338,13 @@ public class GameManagerBehavior : MonoBehaviour
             {
                 Debug.Log("updated combat data");
                 combatData.SetActive(false);
+                //temp hack
+                CharstatusPortrait[] portraits = GameObject.FindWithTag("levelCharPanel").GetComponentsInChildren<CharstatusPortrait>(); // temp
+                foreach (CharstatusPortrait portrait in portraits)
+                {
+                    //Debug.Log("reset");
+                    portrait.setUpCharacterUI();
+                }
             }
         }
         if (levelData == null)

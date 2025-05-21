@@ -16,6 +16,7 @@ TagManager:
   - ControlSetting
   - YouDead
   - TutorialPanel
+  - levelCharPanel
   layers:
   - Default
   - TransparentFX
