@@ -210,6 +210,7 @@ public class GameManagerBehavior : MonoBehaviour
         }
         if (inTutorialLevel)
         {
+            combatData.SetActive(false);
             combatData = null;
             SceneManager.UnloadSceneAsync("CombatTutorial"); //unload tutorial, load in reg combat
             curSceneToLoad = 0;
@@ -270,6 +271,7 @@ public class GameManagerBehavior : MonoBehaviour
     public static void changeLevels(string levelName)
     {
         Scene curScene = levelData.scene;
+        levelData.SetActive(false);
         levelData = null;
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync(curScene);
