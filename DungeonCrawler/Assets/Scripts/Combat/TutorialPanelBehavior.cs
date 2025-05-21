@@ -3,8 +3,8 @@ using UnityEngine;
 public class TutorialPanelBehavior : MonoBehaviour
 {
     public E_Tutorial_Action action;
-    public bool haveStartConditions;
     public float timeDelay;
+    public bool waitForState;
     public E_State startState;
 
     private float bufferTimer = 0f;
@@ -17,6 +17,10 @@ public class TutorialPanelBehavior : MonoBehaviour
 
     public void buffer()
     {
+        if (waitForState && StateManagerBehavior.getState() != startState)
+        {
+            return;
+        }
         bufferTimer += Time.deltaTime;
         if (bufferTimer > timeDelay)
         {
