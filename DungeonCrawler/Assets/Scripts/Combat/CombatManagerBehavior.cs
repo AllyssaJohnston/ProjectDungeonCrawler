@@ -30,7 +30,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static GameObject youDiedScreen;
 
-    public void Start()
+	public void Start()
     {
         if (instance != null && instance != this)
         {
@@ -41,9 +41,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
         instance = this;
         Debug.Log("combat manager initialized");
-
-        // will get called each reload from the main menu
-        friendlyCharacterBehaviors.Clear();
+		// will get called each reload from the main menu
+		friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
             friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
@@ -129,7 +128,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
                 if (raycastResults.Count > 0)
                 {
-                    foreach (RaycastResult result in raycastResults)
+                    GameManagerBehavior.pop();
+					foreach (RaycastResult result in raycastResults)
                     {
                         if (result.gameObject.tag == "Spell")
                         {
@@ -209,7 +209,7 @@ public class CombatManagerBehavior : MonoBehaviour
                 createEnemies(inputCombatData);
             }
             battleSetUp();
-            combatStarted = true;
+			combatStarted = true;
         }
     }
 
@@ -280,7 +280,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // called to end combat
     private static void endCombat(bool died)
     {
-        Debug.Log("end combat");
+		Debug.Log("end combat");
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             if (died)
@@ -296,7 +296,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static IEnumerator exitToMainMenu()
     {
-        youDiedScreen.SetActive(true);
+		youDiedScreen.SetActive(true);
         yield return new WaitForSeconds(2);
         youDiedScreen.SetActive(false);
         // go to main menu
@@ -522,4 +522,6 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         return instance.manaRegen;
     }
+
 }
+

@@ -54,7 +54,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClick()
     {
-
         TooltipManager.HideTooltip();
 
         // If the item is used while in a chest.
