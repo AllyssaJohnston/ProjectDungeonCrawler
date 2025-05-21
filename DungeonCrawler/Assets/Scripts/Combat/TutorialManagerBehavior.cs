@@ -71,6 +71,7 @@ public class TutorialManagerBehavior : MonoBehaviour
             CombatManagerBehavior.inTutorial = false;
             ArrowIndicatorManagerBehavior.createArrows();
             ArrowIndicatorManagerBehavior.OnNextState(StateManagerBehavior.getState());
+            DebugBehavior.OnNextState(StateManagerBehavior.getState());
         }
         if (curPanel < tutorialPanels.Length - 1)
         {

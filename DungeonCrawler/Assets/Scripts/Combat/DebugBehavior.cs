@@ -69,10 +69,10 @@ public class DebugBehavior : MonoBehaviour
         switch (nextState)
         {
             case E_State.PLAYER_SPELL_SELECTION:
-                updateLog("Choose a spell to cast or select end turn.");
+                updateLog(CombatManagerBehavior.inTutorial ? "" : "Choose a spell to cast or select end turn.");
                 break;
             case E_State.PLAYER_ENEMY_TARGET_SELECTION:
-                updateLog("Pick who to attack.");
+                updateLog(CombatManagerBehavior.inTutorial ? "" : "Pick who to attack.");
                 break;
             case E_State.PLAYER_END_TURN_BUFFER:
                 updateLog("");
