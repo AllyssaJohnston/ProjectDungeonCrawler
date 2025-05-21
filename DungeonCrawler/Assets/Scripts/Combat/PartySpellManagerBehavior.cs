@@ -30,6 +30,13 @@ public class PartySpellManagerBehavior : MonoBehaviour
         spells = viewport.GetComponentsInChildren<FriendlySpellBehavior>();
     }
 
+
+    public static void updateSpells()
+    {
+        spells = instance.viewport.GetComponentsInChildren<FriendlySpellBehavior>();
+    }
+
+
     public static void UpdateSpellOrder()
     {
         int numCastable = 0;

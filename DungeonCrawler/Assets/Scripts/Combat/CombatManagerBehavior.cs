@@ -229,6 +229,7 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             character.startBattle();
         }
+        PartySpellManagerBehavior.updateSpells();
         PartySpellManagerBehavior.UpdateSpellOrder();
         if (!inTutorial)
         {
