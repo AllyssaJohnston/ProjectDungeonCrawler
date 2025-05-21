@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -24,6 +25,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static FriendlySpellBehavior curSpellToCast = null;
     public static bool combatStarted { get; private set; }
+    public static bool inTutorial = false;
+    public static bool inTutorialLevel = false;
 
     private static float clickBufferWait = .2f;
     private static float clickBufferTimer = 0f;
@@ -155,16 +158,21 @@ public class CombatManagerBehavior : MonoBehaviour
                             }
 
                             FriendlySpellBehavior spellBehavior = result.gameObject.GetComponent<FriendlySpellBehavior>();
-                            if (spellBehavior != null)
+                            if (spellBehavior != null && (!inTutorial || (inTutorial && TutorialManagerBehavior.isValidSpell(spellBehavior))))
                             {
                                 resolveSpell(spellBehavior);
+                                return;
                             }
                         }
                         else if (result.gameObject.tag == "Enemy")
                         {
                             if (curState == E_State.PLAYER_ENEMY_TARGET_SELECTION)
                             {
-                                friendlyCastSpellOnTargetEnemy(result.gameObject.GetComponent<EnemyBehavior>());
+                                if (!inTutorial || (inTutorial && TutorialManagerBehavior.canSelectEnemy()))
+                                {
+                                    friendlyCastSpellOnTargetEnemy(result.gameObject.GetComponent<EnemyBehavior>());
+                                    return;
+                                }
                             }
                         }
                         else if (result.gameObject.tag == "Friendly")
@@ -172,7 +180,13 @@ public class CombatManagerBehavior : MonoBehaviour
                             if (curState == E_State.PLAYER_FRIENDLY_TARGET_SELECTION)
                             {
                                 friendlyCastSpellOnTargetFriendly(result.gameObject.GetComponent<FriendlyBehavior>());
+                                return;
                             }
+                        }
+                        else if (result.gameObject.tag == "TutorialPanel")
+                        {
+                            TutorialManagerBehavior.panelClicked();
+                            return;
                         }
                     }
                 }
@@ -195,7 +209,7 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // called at the start of each combat
-    public static void startBattle(CombatEncounterBehavior inputCombatData)
+    public static void startBattle(CombatEncounterBehavior inputCombatData, bool givenInTutorialLevel = false)
     {
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
@@ -208,19 +222,31 @@ public class CombatManagerBehavior : MonoBehaviour
             {
                 createEnemies(inputCombatData);
             }
-            battleSetUp();
+            battleSetUp(givenInTutorialLevel);
 			combatStarted = true;
         }
     }
 
-    private static void battleSetUp()
+    private static void battleSetUp(bool givenInTutorialLevel)
     {
+        GameObject curYouDiedScreen = GameObject.FindWithTag("YouDead");
+        if (curYouDiedScreen != null) // reset the youDied screen on the transition from tutorial to reg combat. TODO do this properly
+        {
+            youDiedScreen = curYouDiedScreen;
+            youDiedScreen.SetActive(false);
+        }
+        inTutorialLevel = givenInTutorialLevel;
+       
         foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
             character.startBattle();
         }
+        PartySpellManagerBehavior.updateSpells();
         PartySpellManagerBehavior.UpdateSpellOrder();
-        ArrowIndicatorManagerBehavior.createArrows();
+        if (!inTutorial)
+        {
+            ArrowIndicatorManagerBehavior.createArrows();
+        }
         StateManagerBehavior.StartBattle();
     }
 
@@ -289,7 +315,7 @@ public class CombatManagerBehavior : MonoBehaviour
             }
             else
             {
-                GameManagerBehavior.enterLevel();
+                GameManagerBehavior.enterLevel(inTutorialLevel);
             }
         }
     }
@@ -459,8 +485,11 @@ public class CombatManagerBehavior : MonoBehaviour
             {
                 foreach (FriendlyBehavior characterBehavior in friendlyCharacterBehaviors)
                 {
-                    characterBehavior.updateHealth(-spell.damage);
-                    characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
+                    if (characterBehavior.gameObject.transform.parent.gameObject.activeSelf) // check if parent container is active (for tutorial level)
+                    {
+                        characterBehavior.updateHealth(-spell.damage);
+                        characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
+                    }
                 }
             }
             else
@@ -498,14 +527,17 @@ public class CombatManagerBehavior : MonoBehaviour
     // called at the end of the player turn (button click)
     public static void playerEndTurn()
     {
-        if (StateManagerBehavior.getState() == E_State.PLAYER_BETWEEN_SPELLS_BUFFFER || StateManagerBehavior.getState() == E_State.ENEMY_END_TURN_BUFFER)
+        if (!inTutorial || (inTutorial && TutorialManagerBehavior.canEndTurn()))
         {
-            StateManagerBehavior.InteruptState();
-            StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
-        }
-        if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
-        {
-            StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);
+            if (StateManagerBehavior.getState() == E_State.PLAYER_BETWEEN_SPELLS_BUFFFER || StateManagerBehavior.getState() == E_State.ENEMY_END_TURN_BUFFER)
+            {
+                StateManagerBehavior.InteruptState();
+                StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
+            }
+            if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
+            {
+                StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);
+            }
         }
     }
 

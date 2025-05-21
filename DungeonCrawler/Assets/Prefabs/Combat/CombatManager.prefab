@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2786981939726983086}
   - component: {fileID: 1109715392010407700}
+  - component: {fileID: 8731133951252832855}
+  - component: {fileID: 2835956683141398022}
+  - component: {fileID: 5315083765777477235}
   m_Layer: 0
   m_Name: CombatManager
   m_TagString: Untagged
@@ -48,9 +51,67 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   inputEnemyCharacters:
   - {fileID: 0}
-  enemyContainerTemplate: {fileID: 0}
+  - {fileID: 0}
+  enemyContainerTemplate: {fileID: 1753411342693668174, guid: 119134c0e13dc5946990f5828999e984, type: 3}
   characterHolder: {fileID: 0}
   startingMana: 3
   manaRegen: 2
+--- !u!114 &8731133951252832855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540039346060030437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6028753aa73f35438d1171b182be1ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBetweenSpellsWaitTime: 2
+  enemyActionWaitTime: 1.5
+  enemyBetweenTurnsWaitTime: 2
+  playerEndTurnBuffer: 0.75
+--- !u!114 &2835956683141398022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540039346060030437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 525c3475348b7b1478194b88b195ea62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewport: {fileID: 0}
+--- !u!114 &5315083765777477235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540039346060030437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef79eab3ae7c18418d1e4ecef0cc879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrow: {fileID: 8506294000642117441, guid: 695a281c98676c544bb06eb10042295f, type: 3}
+  button: {fileID: 0}
+  charSelectionXOffset: 0
+  charSelectionYOffset: 100
+  charRotation: -90
+  charMoveDist: 30
+  charScale: 0.5
+  spellXOffset: -440
+  spellYOffset: 0
+  spellRotation: 0
+  spellMoveDist: 60
+  spellScale: 1
+  buttonXOffset: -240
+  buttonYOffset: 0
+  buttonRotation: 0

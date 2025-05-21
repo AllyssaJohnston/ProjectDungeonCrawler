@@ -36,10 +36,14 @@ public class EndTurnButtonBehavior : MonoBehaviour
             switch (nextState)
             {
                 case E_State.PLAYER_SPELL_SELECTION:
+                    // show if not in tutorial
+                    // show if in tutorial
+                    button.gameObject.SetActive(!CombatManagerBehavior.inTutorial || (CombatManagerBehavior.inTutorial && TutorialManagerBehavior.showButton()));
+                    break;
                 case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
                 case E_State.ENEMY_END_TURN_BUFFER:
-                    // show
-                    button.gameObject.SetActive(true);
+                    //show if not in tutorial
+                    button.gameObject.SetActive(!CombatManagerBehavior.inTutorial);
                     break;
                 default:
                     // hide

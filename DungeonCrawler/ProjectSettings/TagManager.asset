@@ -15,6 +15,7 @@ TagManager:
   - Friendly
   - ControlSetting
   - YouDead
+  - TutorialPanel
   layers:
   - Default
   - TransparentFX
