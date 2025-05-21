@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 // Singleton
 public class CombatManagerBehavior : MonoBehaviour
 {
-    private static CombatManagerBehavior instance = null;
+    [HideInInspector] public static CombatManagerBehavior instance = null;
 
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
@@ -16,7 +16,7 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] GameObject characterHolder;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
-    
+
 
     [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
@@ -64,15 +64,17 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private CombatManagerBehavior() { }
 
-    public static bool loaded() {
+    public static bool loaded()
+    {
         return instance != null;
     }
 
-    public static List<GameObject> getParty() {
+    public static List<GameObject> getParty()
+    {
         if (instance == null) return null;
         else return instance.inputFriendlyCharacters;
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -333,7 +335,7 @@ public class CombatManagerBehavior : MonoBehaviour
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
             curSpellToCast = spellBehavior;
-            switch(curSpellToCast.targeting)
+            switch (curSpellToCast.targeting)
             {
                 case (E_SPELL_TARGETING.ALL_ENEMIES):
                     friendlyCastSpellOnAllEnemies();
@@ -371,7 +373,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         if (curSpellToCast.moraleRegen > 0 || curSpellToCast.heal > 0)
         {
-            foreach(FriendlyBehavior character in friendlyCharacterBehaviors)
+            foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
             {
                 character.updateHealth(curSpellToCast.heal); // regen health
                 character.updateMorale(curSpellToCast.moraleRegen); // regen morale
