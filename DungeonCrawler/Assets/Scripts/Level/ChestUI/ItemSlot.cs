@@ -14,10 +14,18 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private int itemIndex;
 
-    public void Setup(Item item, PlayerInventory inventory, List<Item> contents, int index)
+    public enum SlotMode
+    {
+        Chest,
+        Inventory
+    }
+    private SlotMode slotMode;
+
+    public void Setup(Item item, PlayerInventory inventory, List<Item> contents, int index, SlotMode slotMode)
     {
         this.inventory = inventory;
         this.chestContents = contents;
+        this.slotMode = slotMode;
         itemIndex = index;
         storedItem = item;
         iconImage.sprite = item.icon;
@@ -33,6 +41,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             Vector3 offset = new Vector3(120f, -15f); // Adjust as needed
             TooltipManager.ShowTooltip(
                 storedItem.description,
+                storedItem.flavor,
                 Input.mousePosition + offset
             );
         }
@@ -46,12 +55,22 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnClick()
     {
 
-        inventory.AddItem(storedItem);
         TooltipManager.HideTooltip();
-        // remove this UI element after picking it up
-        Destroy(gameObject);
-        // and remove the item from the chests list
-        chestContents.RemoveAt(itemIndex);
+
+        // If the item is used while in a chest.
+        if (slotMode == SlotMode.Chest)
+        {
+            inventory.AddItem(storedItem);
+            chestContents.RemoveAt(itemIndex);
+            Destroy(gameObject);
+        }
+        // If the item is used while in your inventory.
+        else if (slotMode == SlotMode.Inventory)
+        {
+            storedItem.Use();
+            inventory.RemoveItem(storedItem);
+            Destroy(gameObject);
+        }
         
     }
 }

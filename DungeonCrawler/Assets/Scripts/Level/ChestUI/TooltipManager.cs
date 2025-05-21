@@ -4,7 +4,8 @@ using UnityEngine;
 public class TooltipManager : MonoBehaviour
 {
     public GameObject tooltipPanel;
-    public TMP_Text tooltipText;
+    public TMP_Text tooltipDescription;
+    public TMP_Text tooltipFlavor;
     [SerializeField] int xOffset;
     [SerializeField] int yOffset;
 
@@ -21,6 +22,13 @@ public class TooltipManager : MonoBehaviour
         instance = this;
         Debug.Log("tooltip manager initialized");
         tooltipPanel.SetActive(false);
+    }
+
+    public void Setup(GameObject tooltipPanel, TMP_Text tooltipText)
+    {
+        
+        
+
     }
 
     public void Start()
@@ -43,9 +51,10 @@ public class TooltipManager : MonoBehaviour
         }
     }
 
-    public static void ShowTooltip(string message, Vector3 position)
+    public static void ShowTooltip(string description, string flavor, Vector3 position)
     {
-        instance.tooltipText.text = message;
+        instance.tooltipDescription.text = description;
+        instance.tooltipFlavor.text = "*" + flavor + "*";
         instance.tooltipPanel.transform.position = position;
         instance.tooltipPanel.SetActive(true);
     }

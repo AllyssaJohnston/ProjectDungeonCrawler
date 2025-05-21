@@ -6,8 +6,8 @@ public class CharstatusPortrait : MonoBehaviour
 {
     [SerializeField] int index = 0;
     [SerializeField] Image characterIcon;
-    [SerializeField] HealthBarManager healthBarManager;
-    [SerializeField] HealthBarManager moraleBarManager;
+    [SerializeField] public HealthBarManager healthBarManager;
+    [SerializeField] public HealthBarManager moraleBarManager;
 
     private FriendlyBehavior character;
     private bool setUp = false;
