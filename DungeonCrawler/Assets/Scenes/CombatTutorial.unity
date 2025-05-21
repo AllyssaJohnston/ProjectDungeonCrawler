@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 632763485}
   m_Layer: 0
   m_Name: CombatTutorialData
-  m_TagString: CombatTutorialData
+  m_TagString: CombatData
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

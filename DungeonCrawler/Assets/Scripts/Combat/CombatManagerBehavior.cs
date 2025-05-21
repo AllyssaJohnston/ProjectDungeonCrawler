@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -25,6 +26,7 @@ public class CombatManagerBehavior : MonoBehaviour
     private static FriendlySpellBehavior curSpellToCast = null;
     public static bool combatStarted { get; private set; }
     public static bool inTutorial = false;
+    public static bool inTutorialLevel = false;
 
     private static float clickBufferWait = .2f;
     private static float clickBufferTimer = 0f;
@@ -207,7 +209,7 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // called at the start of each combat
-    public static void startBattle(CombatEncounterBehavior inputCombatData)
+    public static void startBattle(CombatEncounterBehavior inputCombatData, bool givenInTutorialLevel = false)
     {
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
@@ -220,13 +222,21 @@ public class CombatManagerBehavior : MonoBehaviour
             {
                 createEnemies(inputCombatData);
             }
-            battleSetUp();
+            battleSetUp(givenInTutorialLevel);
 			combatStarted = true;
         }
     }
 
-    private static void battleSetUp()
+    private static void battleSetUp(bool givenInTutorialLevel)
     {
+        GameObject curYouDiedScreen = GameObject.FindWithTag("YouDead");
+        if (curYouDiedScreen != null) // reset the youDied screen on the transition from tutorial to reg combat. TODO do this properly
+        {
+            youDiedScreen = curYouDiedScreen;
+            youDiedScreen.SetActive(false);
+        }
+        inTutorialLevel = givenInTutorialLevel;
+       
         foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
             character.startBattle();
@@ -305,7 +315,7 @@ public class CombatManagerBehavior : MonoBehaviour
             }
             else
             {
-                GameManagerBehavior.enterLevel();
+                GameManagerBehavior.enterLevel(inTutorialLevel);
             }
         }
     }

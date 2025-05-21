@@ -659,7 +659,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4740316381302131199, guid: 4725cb9e47dbe95468ef6cade6a0eead, type: 3}
       propertyPath: m_Padding.m_Top
-      value: 130
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 5413871748868355444, guid: 4725cb9e47dbe95468ef6cade6a0eead, type: 3}
       propertyPath: m_AnchorMax.y
@@ -812,6 +812,14 @@ PrefabInstance:
     - target: {fileID: 7669554619603541693, guid: 4725cb9e47dbe95468ef6cade6a0eead, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7695638826485011562, guid: 4725cb9e47dbe95468ef6cade6a0eead, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 504.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7695638826485011562, guid: 4725cb9e47dbe95468ef6cade6a0eead, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.0010757
       objectReference: {fileID: 0}
     - target: {fileID: 7725730641095141863, guid: 4725cb9e47dbe95468ef6cade6a0eead, type: 3}
       propertyPath: m_Pivot.x
