@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PyromancerPortrait_0: 8386845849917675104
+      PyromancerPortrait_1: 1486598749581911735
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

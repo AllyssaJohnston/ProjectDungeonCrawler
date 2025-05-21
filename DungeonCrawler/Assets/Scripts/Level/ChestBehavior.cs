@@ -12,8 +12,10 @@ public class ChestBehavior : MonoBehaviour
     private Animator animator;
     private bool isOpen = false;
     private bool playerInRange = false;
+	private static bool rememberControls;
+	private static bool memoryIsSet = false;
 
-    void Start()
+	void Start()
     {
         animator = GetComponent<Animator>();
 
@@ -24,10 +26,19 @@ public class ChestBehavior : MonoBehaviour
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E) && !isOpen)
         {
-            animator.SetTrigger("Open");
+			if (GameManagerBehavior.modernControls) {
+				if (!memoryIsSet) {
+					rememberControls = GameManagerBehavior.modernControls;
+					memoryIsSet = true;
+				}
+				GameManagerBehavior.modernControls = false;
+			}
+
+			animator.SetTrigger("Open");
             isOpen = true;
             chestUI.OpenChest(LootContents);
-            StartCoroutine(ResetChest());
+
+			StartCoroutine(ResetChest());
         }
     }
 
@@ -50,11 +61,19 @@ public class ChestBehavior : MonoBehaviour
         StartCoroutine(closeChest());
         playerInRange = false;
         chestUI.CloseChest();
-    }
+		if (memoryIsSet) {
+			GameManagerBehavior.modernControls = rememberControls;
+		}
+
+	}
 
     IEnumerator closeChest()
     {
-        yield return new WaitForSeconds(.75f);
+		if (memoryIsSet) {
+			GameManagerBehavior.modernControls = rememberControls;
+			memoryIsSet = false;
+		}
+		yield return new WaitForSeconds(.75f);
         animator.SetTrigger("Close");
     }
 }
