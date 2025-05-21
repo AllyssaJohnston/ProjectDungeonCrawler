@@ -19,6 +19,7 @@ public class GameManagerBehavior : MonoBehaviour
     static int curSceneToLoad;
     AsyncOperation asyncLoad;
     static GameObject combatData;
+    static GameObject combatTutorialData;
     static GameObject levelData;
     public static GameObject menuData;
     static string curScene;
@@ -58,13 +59,23 @@ public class GameManagerBehavior : MonoBehaviour
             // combat already loaded, don't have to load it
             enterCombat(null);
         }
+        if (curScene == "CombatTutorial")
+        {
+            ambience.Pause();
+            Debug.Log("starting in combat tutorial");
+            gameMode = E_GameMode.COMBAT;
+            combatTutorialData = GameObject.FindWithTag("CombatTutorialData");
+            combatOnlyMode = true;
+            // combat already loaded, don't have to load it
+            enterCombatTutorial(null);
+        }
         else if (curScene.Contains("Level") || curScene == "DesignPlayground")
         {
             ambience.Play();
             Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
-            scenesToLoad = new List<string> { "Combat", "Menu" };
+            scenesToLoad = new List<string> { "CombatTutorial", "Combat", "Menu" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -74,7 +85,7 @@ public class GameManagerBehavior : MonoBehaviour
             Debug.Log("starting in menu");
             gameMode = E_GameMode.LEVEL;
             menuData = GameObject.FindWithTag("MenuData");
-            scenesToLoad = new List<string> { "Level1", "Combat" };
+            scenesToLoad = new List<string> { "Level1", "CombatTutorial", "Combat" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -112,9 +123,28 @@ public class GameManagerBehavior : MonoBehaviour
         {
             levelData.SetActive(false);
             menuData.SetActive(false);
+            combatTutorialData.SetActive(false);
             combatData.SetActive(true);
         }
         gameMode = E_GameMode.COMBAT;
+        CombatManagerBehavior.inTutorial = false;
+        CombatManagerBehavior.startBattle(encounter);
+    }
+
+    // load combat
+    public static void enterCombatTutorial(CombatEncounterBehavior encounter)
+    {
+        ambience.Pause();
+        Debug.Log("entering combat tutorial ");
+        if (!combatOnlyMode) //combat only mode is used to just test combat, so don't go back to the level
+        {
+            levelData.SetActive(false);
+            menuData.SetActive(false);
+            combatData.SetActive(false);
+            combatTutorialData.SetActive(true);
+        }
+        gameMode = E_GameMode.COMBAT;
+        CombatManagerBehavior.inTutorial = true;
         CombatManagerBehavior.startBattle(encounter);
     }
 
@@ -131,6 +161,7 @@ public class GameManagerBehavior : MonoBehaviour
             ambience.Play();
             combatData.SetActive(false);
             menuData.SetActive(false);
+            combatTutorialData.SetActive(false);
             levelData.SetActive(true);
             gameMode = E_GameMode.LEVEL;
         }
@@ -142,6 +173,7 @@ public class GameManagerBehavior : MonoBehaviour
         ambience.Pause();
         levelData.SetActive(false);
         combatData.SetActive(false);
+        combatTutorialData.SetActive(false);
         menuData.SetActive(true);
 
     }
@@ -163,7 +195,14 @@ public class GameManagerBehavior : MonoBehaviour
             ambience.Pause();
             DebugBehavior.updateLog("RE-ENTER COMBAT");
             menuData.SetActive(false);
-            combatData.SetActive(true);
+            if (CombatManagerBehavior.inTutorial)
+            {
+                combatTutorialData.SetActive(true);
+            }
+            else
+            {
+                combatData.SetActive(true);
+            }
         }
     }
 
@@ -218,6 +257,14 @@ public class GameManagerBehavior : MonoBehaviour
             if (combatData != null)
             {
                 combatData.SetActive(false);
+            }
+        }
+        if (combatTutorialData == null)
+        {
+            combatTutorialData = GameObject.FindWithTag("CombatTutorialData");
+            if (combatTutorialData != null)
+            {
+                combatTutorialData.SetActive(false);
             }
         }
         if (levelData == null)

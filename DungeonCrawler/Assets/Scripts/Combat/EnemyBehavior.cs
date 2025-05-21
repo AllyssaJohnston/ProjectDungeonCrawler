@@ -55,11 +55,11 @@ public class EnemyBehavior : CharacterBehavior
         int lowestHealthIndex = 0;
         int highestMoraleIndex = 0;
         int lowestMoraleIndex = 0;
-        bool firstCharAlive = friendlyCharacters[0].isAlive();
+        bool firstCharAlive = friendlyCharacters[0].gameObject.transform.parent.gameObject.activeSelf && friendlyCharacters[0].isAlive();
 
         for (int i = 1; i < friendlyCharacters.Count; i++)
         {
-            if (friendlyCharacters[i].isAlive())
+            if (friendlyCharacters[i].gameObject.transform.parent.gameObject.activeSelf && friendlyCharacters[i].isAlive())
             {
                 if ((friendlyCharacters[i].getHealth() >= friendlyCharacters[highestHealthIndex].getHealth()) || !firstCharAlive)
                 {

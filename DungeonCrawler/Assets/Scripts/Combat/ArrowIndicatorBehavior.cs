@@ -2,21 +2,26 @@ using UnityEngine;
 
 public class ArrowIndicatorBehavior : MonoBehaviour
 {
-    bool move = true;
-    Vector3 startPos;
-    Vector3 movementVect;
-    float bufferTimer = 0f;
-    [SerializeField] float movementTime;
+    protected bool move = true;
+    protected Vector3 startPos;
+    protected Vector3 movementVect;
+    protected float bufferTimer = 0f;
+    [SerializeField] protected float movementTime;
 
     public void setUp(float rot, float moveDist)
     {
         startPos = transform.localPosition;
         float rad = (rot * Mathf.PI) / 180f;
         movementVect = moveDist * new Vector3(Mathf.Cos(rad), Mathf.Sin(rad));
-        this.move = (moveDist != 0f);
+        move = (moveDist != 0f);
     }
 
     private void Update()
+    {
+        Tick();
+    }
+
+    virtual protected void Tick() 
     {
         if (move)
         {
@@ -35,7 +40,7 @@ public class ArrowIndicatorBehavior : MonoBehaviour
     {
         if (move)
         {
-            transform.localPosition += movementVect * Time.fixedDeltaTime; ;
+            transform.localPosition += movementVect * Time.fixedDeltaTime;
         }
     }
 
