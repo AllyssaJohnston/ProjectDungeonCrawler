@@ -72,10 +72,9 @@ public class CombatManagerBehavior : MonoBehaviour
         return instance != null;
     }
 
-    public static List<GameObject> getParty()
+    public static List<FriendlyBehavior> getParty()
     {
-        if (instance == null) return null;
-        else return instance.inputFriendlyCharacters;
+        return friendlyCharacterBehaviors;
     }
 
     // Update is called once per frame

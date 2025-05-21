@@ -26,12 +26,12 @@ public class CharstatusPortrait : MonoBehaviour
         }
     }
 
-    void setUpCharacterUI() 
+    public void setUpCharacterUI() 
     {
-        List<GameObject> party = new List<GameObject>();
+        List<FriendlyBehavior> party = new List<FriendlyBehavior>();
         party = CombatManagerBehavior.getParty();
-        if (party == null) return;
-        character = party[index].GetComponent<FriendlyBehavior>();
+        if (party.Count == 0) return;
+        character = party[index];
         character.SetUp();
         characterIcon.sprite = character.iconSprite;
         healthBarManager.SetUp(character.getHealth(), Color.red, Color.white);
