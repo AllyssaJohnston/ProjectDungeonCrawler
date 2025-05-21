@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FirstPerson : MonoBehaviour
 {
-    public UnityEngine.Tilemaps.Tilemap blockTilemap;
+    public List<UnityEngine.Tilemaps.Tilemap> blockTilemaps = new List<UnityEngine.Tilemaps.Tilemap>();
+    //public UnityEngine.Tilemaps.Tilemap blockTilemap;
     public UnityEngine.Tilemaps.Tilemap billboardTilemap;
 
     public PlayerMovement playerMovement;
@@ -10,14 +12,13 @@ public class FirstPerson : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if (blockTilemap == null
-        &&  billboardTilemap == null)
+        if (blockTilemaps.Count == 0 && billboardTilemap == null)
         {
             var parent = FindFirstObjectByType<Grid>();
             var children = parent.GetComponentsInChildren<UnityEngine.Tilemaps.Tilemap>();
             foreach (var child in children)
             {
-                if (child.gameObject.name.ToLower() == "block") blockTilemap = child;
+                if (child.gameObject.name.ToLower().Contains("block")) blockTilemaps.Add(child);
                 if (child.gameObject.name.ToLower() == "bilboard") billboardTilemap = child;
                 if (child.gameObject.name.ToLower() == "billboard") billboardTilemap = child;
             }
@@ -28,37 +29,43 @@ public class FirstPerson : MonoBehaviour
         var root = new GameObject();
         root.name = "FirstPersonWorldRoot";
 
-        for (int i = blockTilemap.cellBounds.xMin; i < blockTilemap.cellBounds.xMax; i++) 
+        foreach (UnityEngine.Tilemaps.Tilemap blockTilemap in blockTilemaps) 
         {
-            for (int j = blockTilemap.cellBounds.yMin; j < blockTilemap.cellBounds.yMax; j++) 
+            float zCoord = blockTilemap.gameObject.transform.position.z;
+            Debug.Log(zCoord);
+            for (int i = blockTilemap.cellBounds.xMin; i < blockTilemap.cellBounds.xMax; i++)
             {
-                var pos = new Vector3Int(i, j, 0);
-
-                if (blockTilemap.GetSprite(pos) != null) 
+                for (int j = blockTilemap.cellBounds.yMin; j < blockTilemap.cellBounds.yMax; j++)
                 {
-                    if (blockTilemap.GetSprite(pos + Vector3Int.up) == null) 
+                    var pos = new Vector3Int(i, j, 0);
+
+                    if (blockTilemap.GetSprite(pos) != null)
                     {
-                        var bf = generateBlockface(pos, Vector3Int.up);
-                        bf.transform.parent = root.transform;
-                    }
-                    if (blockTilemap.GetSprite(pos + Vector3Int.down) == null) 
-                    {
-                        var bf = generateBlockface(pos, Vector3Int.down);
-                        bf.transform.parent = root.transform;
-                    }
-                    if (blockTilemap.GetSprite(pos + Vector3Int.left) == null) 
-                    {
-                        var bf = generateBlockface(pos, Vector3Int.left);
-                        bf.transform.parent = root.transform;
-                    }
-                    if (blockTilemap.GetSprite(pos + Vector3Int.right) == null) 
-                    {
-                        var bf = generateBlockface(pos, Vector3Int.right);
-                        bf.transform.parent = root.transform;
+                        if (blockTilemap.GetSprite(pos + Vector3Int.up) == null)
+                        {
+                            var bf = generateBlockface(blockTilemap, pos, Vector3Int.up, zCoord);
+                            bf.transform.parent = root.transform;
+                        }
+                        if (blockTilemap.GetSprite(pos + Vector3Int.down) == null)
+                        {
+                            var bf = generateBlockface(blockTilemap, pos, Vector3Int.down, zCoord);
+                            bf.transform.parent = root.transform;
+                        }
+                        if (blockTilemap.GetSprite(pos + Vector3Int.left) == null)
+                        {
+                            var bf = generateBlockface(blockTilemap, pos, Vector3Int.left, zCoord);
+                            bf.transform.parent = root.transform;
+                        }
+                        if (blockTilemap.GetSprite(pos + Vector3Int.right) == null)
+                        {
+                            var bf = generateBlockface(blockTilemap, pos, Vector3Int.right, zCoord);
+                            bf.transform.parent = root.transform;
+                        }
                     }
                 }
             }
         }
+        
 
         for (int i = billboardTilemap.cellBounds.xMin; i < billboardTilemap.cellBounds.xMax; i++) 
         {
@@ -97,7 +104,7 @@ public class FirstPerson : MonoBehaviour
         this.transform.position = new Vector3(playerMovement.transform.position.x, playerMovement.transform.position.y, 0f);
     }
 
-    GameObject generateBlockface(Vector3Int pos, Vector3Int facing) 
+    GameObject generateBlockface(UnityEngine.Tilemaps.Tilemap blockTilemap, Vector3Int pos, Vector3Int facing, float zCoord = 0) 
     {
         var blockFace = new GameObject();
 
@@ -112,10 +119,10 @@ public class FirstPerson : MonoBehaviour
         Vector3 position = facing;
         position.Scale(blockTilemap.cellSize * 0.5f);
         position += blockTilemap.CellToWorld(pos) + blockTilemap.cellSize * 0.5f;
-        blockFace.transform.position = position;
+        blockFace.transform.position = position + new Vector3(0, 0, zCoord);
 
         var renderer = blockFace.AddComponent<SpriteRenderer>();
-        renderer.sprite = blockTilemap.GetSprite(pos);
+        renderer.sprite = blockTilemap.GetSprite(pos );
 
         blockFace.layer = 8; // Only viewable by 1st person camera
 
