@@ -14,8 +14,9 @@ public class Billboard : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        this.transform.rotation = whatToFace.rotation;
+    void Update() {
+        if (whatToFace != null) { 
+            this.transform.rotation = whatToFace.rotation;
+        }
     }
 }
