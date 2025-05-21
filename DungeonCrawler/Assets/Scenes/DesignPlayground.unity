@@ -600,6 +600,14 @@ PrefabInstance:
       propertyPath: billboardTilemap
       value: 
       objectReference: {fileID: 1945592753}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: blockTilemaps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1668141771}
     - target: {fileID: 2619835680712289181, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
