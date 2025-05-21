@@ -1581,7 +1581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4076948206300723153, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -536.6738
+      value: -536.6715
       objectReference: {fileID: 0}
     - target: {fileID: 4083211404898657799, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2462,34 +2462,6 @@ PrefabInstance:
     - target: {fileID: 6147742485456186748, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157745180102435740, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157745180102435740, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157745180102435740, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 2576440227037086860, guid: b3433c98894bbcf439464d5c7969aa4a, type: 3}
-    - target: {fileID: 6157745180102435740, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157745180102435740, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: pop
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157745180102435740, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: GameManagerBehavior, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6157745180102435740, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6173404287303528580, guid: e9ca6d1c3cfcc7a41b52e1440877554c, type: 3}
       propertyPath: m_AnchorMax.y
