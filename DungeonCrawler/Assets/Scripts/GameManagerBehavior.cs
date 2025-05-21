@@ -110,6 +110,7 @@ public class GameManagerBehavior : MonoBehaviour
                 scenesToLoad = new List<string> { "Combat", "Menu" };
                 hasCompletedTutorial = true;
             }
+            GameObject.FindWithTag("FirstPerson").GetComponent<FirstPerson>().setUp();
 
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
@@ -274,6 +275,7 @@ public class GameManagerBehavior : MonoBehaviour
         levelData.SetActive(false);
         levelData = null;
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
         SceneManager.UnloadSceneAsync(curScene);
     }        
 
@@ -360,6 +362,14 @@ public class GameManagerBehavior : MonoBehaviour
             {
                 Debug.Log("updated level data");
                 levelData.SetActive(gameMode == E_GameMode.LEVEL && !inMenu);
+                GameObject[] fps = GameObject.FindGameObjectsWithTag("FirstPerson");
+                foreach(GameObject fp in fps)
+                {
+                    if (fp.scene == SceneManager.GetSceneByName(curScene))
+                    {
+                        fp.GetComponent<FirstPerson>().setUp();
+                    }
+                }
             }
         }
         if (menuData == null)
