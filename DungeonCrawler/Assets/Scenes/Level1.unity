@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &306469640 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 416718713640296829, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+  m_PrefabInstance: {fileID: 7831863163920793558}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &401125037
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -368,6 +379,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7831863163920793559}
+  - {fileID: 1925091865}
   - {fileID: 1869433651}
   - {fileID: 1753817853}
   - {fileID: 1892888509}
@@ -375,6 +387,11 @@ Transform:
   - {fileID: 899074768}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &816635052 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6557498440345317867, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+  m_PrefabInstance: {fileID: 7831863163920793558}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &899074765
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,6 +962,17 @@ MonoBehaviour:
       damageAllEnemies: 0
       characterTargeting: 0
       spellDescriptionText: 
+--- !u!114 &1658743378 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7839424309165638814, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+  m_PrefabInstance: {fileID: 7831863163920793558}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1668141768
 GameObject:
   m_ObjectHideFlags: 0
@@ -3958,6 +3986,55 @@ Transform:
   - {fileID: 401125038}
   m_Father: {fileID: 813819801}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1925091864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1925091865}
+  - component: {fileID: 1925091866}
+  m_Layer: 0
+  m_Name: TooltipManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1925091865
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925091864}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 222.32712, y: 125.43532, z: -0.007480189}
+  m_LocalScale: {x: 0.63624996, y: 0.63624996, z: 0.63624996}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 813819801}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1925091866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925091864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff7834c12f08ab041a2d707b7a240c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipPanel: {fileID: 816635052}
+  tooltipDescription: {fileID: 1658743378}
+  tooltipFlavor: {fileID: 306469640}
+  xOffset: 120
+  yOffset: -15
 --- !u!1 &1943116617
 GameObject:
   m_ObjectHideFlags: 0
@@ -24040,6 +24117,14 @@ PrefabInstance:
       propertyPath: chestUI
       value: 
       objectReference: {fileID: 487783032}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: LootContents.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: 'LootContents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8475f395f3f10b84f9a9eca941b009c9, type: 2}
     - target: {fileID: 9144235709468297681, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: m_Name
       value: Chest

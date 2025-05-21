@@ -26,8 +26,14 @@ public class GameManagerBehavior : MonoBehaviour
     public static bool combatOnlyMode = false;
     public static float sensSlider;
     public static bool modernControls;
-    private static AudioSource ambience;
-    private void Awake()
+    private static AudioSource[] audioSources;
+	private static AudioSource menuMusic;
+	private static AudioSource ambience;
+	private static AudioSource popSound;
+    private static AudioSource levelTheme;
+    private static AudioSource combatTheme;
+
+	private void Awake()
     {
         if (instance != null && instance != this)
         {
@@ -47,12 +53,24 @@ public class GameManagerBehavior : MonoBehaviour
 
         instance = this;
         curSceneToLoad = 0;
+
         curScene = SceneManager.GetActiveScene().name;
-        ambience = GetComponent<AudioSource>();
-        if (curScene == "Combat")
+        audioSources = GetComponents<AudioSource>();
+        ambience = audioSources[0];
+		menuMusic = audioSources[1];
+		popSound = audioSources[2];
+		levelTheme = audioSources[3];
+		combatTheme = audioSources[4];
+
+		if (curScene == "Combat")
         {
             ambience.Pause();
-            Debug.Log("starting in combat");
+            levelTheme.Pause();
+			menuMusic.Pause();
+			combatTheme.Play();
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			Debug.Log("starting in combat");
             gameMode = E_GameMode.COMBAT;
             combatData = GameObject.FindWithTag("CombatData");
             combatOnlyMode = true;
@@ -72,7 +90,12 @@ public class GameManagerBehavior : MonoBehaviour
         else if (curScene.Contains("Level") || curScene == "DesignPlayground")
         {
             ambience.Play();
-            Debug.Log("starting in level");
+			levelTheme.Play();
+			menuMusic.Pause();
+            combatTheme.Pause();
+			Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+			Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
             scenesToLoad = new List<string> { "CombatTutorial", "Combat", "Menu" };
@@ -82,7 +105,12 @@ public class GameManagerBehavior : MonoBehaviour
         else if (curScene == "Menu")
         {
             ambience.Pause();
-            Debug.Log("starting in menu");
+			menuMusic.Play();
+			levelTheme.Pause();
+			combatTheme.Pause();
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			Debug.Log("starting in menu");
             gameMode = E_GameMode.LEVEL;
             menuData = GameObject.FindWithTag("MenuData");
             scenesToLoad = new List<string> { "Level1", "CombatTutorial", "Combat" };
@@ -118,7 +146,12 @@ public class GameManagerBehavior : MonoBehaviour
     public static void enterCombat(CombatEncounterBehavior encounter)
     {
         ambience.Pause();
-        Debug.Log("entering combat");
+		menuMusic.Pause();
+		levelTheme.Pause();
+		combatTheme.Play();
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+		Debug.Log("entering combat");
         if (!combatOnlyMode) //combat only mode is used to just test combat, so don't go back to the level
         {
             levelData.SetActive(false);
@@ -151,14 +184,19 @@ public class GameManagerBehavior : MonoBehaviour
     // what to do when entering the level
     public static void enterLevel()
     {
-        if (combatOnlyMode)
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
+		if (combatOnlyMode)
         {
             DebugBehavior.updateLog("COMBAT ENDED");
             exit();
         }
         else
         {
-            ambience.Play();
+            combatTheme.Pause();
+			menuMusic.Pause();
+			ambience.Play();
+            levelTheme.Play();
             combatData.SetActive(false);
             menuData.SetActive(false);
             combatTutorialData.SetActive(false);
@@ -169,9 +207,14 @@ public class GameManagerBehavior : MonoBehaviour
     
     private static void enterMenu()
     {
-        Debug.Log("Enter pause menu");
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+		Debug.Log("Enter pause menu");
         ambience.Pause();
-        levelData.SetActive(false);
+		menuMusic.Play();
+        levelTheme.Pause();
+        combatTheme.Pause();
+		levelData.SetActive(false);
         combatData.SetActive(false);
         combatTutorialData.SetActive(false);
         menuData.SetActive(true);
@@ -181,19 +224,27 @@ public class GameManagerBehavior : MonoBehaviour
     // what to do when leaving menu
     public static void leaveMenu()
     {
-     
-        if (gameMode == E_GameMode.LEVEL)
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
+		if (gameMode == E_GameMode.LEVEL)
         {
             DebugBehavior.updateLog("RE-ENTER LEVEL");
-            ambience.Play();
-            menuData.SetActive(false);
+			menuMusic.Pause();
+            if (!levelTheme.isPlaying)
+                levelTheme.Play();
+			if (!ambience.isPlaying)
+				ambience.Play();
+			menuData.SetActive(false);
             levelData.SetActive(true);
 
         } 
         else // COMBAT
         {
             ambience.Pause();
-            DebugBehavior.updateLog("RE-ENTER COMBAT");
+            levelTheme.Pause();
+			menuMusic.Pause();
+			combatTheme.Play();
+			DebugBehavior.updateLog("RE-ENTER COMBAT");
             menuData.SetActive(false);
             if (CombatManagerBehavior.inTutorial)
             {
@@ -204,6 +255,10 @@ public class GameManagerBehavior : MonoBehaviour
                 combatData.SetActive(true);
             }
         }
+    }
+
+    public static void pop() {
+        popSound.Play();
     }
 
     public static void exit()

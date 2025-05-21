@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
 
-[System.Serializable]
-public class Item
+public abstract class Item : ScriptableObject
 {
     public string itemName;
     public Sprite icon;
+    public string description;
+    public string flavor;
 
-    public String description;
-    
+    public abstract void Use();
 }

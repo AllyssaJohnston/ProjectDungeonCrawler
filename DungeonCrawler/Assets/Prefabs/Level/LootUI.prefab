@@ -47,7 +47,6 @@ MonoBehaviour:
   chestPanel: {fileID: 9078042308615836503}
   itemSlotParent: {fileID: 3155530965537427452}
   itemSlotPrefab: {fileID: 51233026887119720, guid: bcbb7a393b8bd6840a9dee369002cc4c, type: 3}
-  inventory: {fileID: 0}
 --- !u!1 &822179551315296182
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +373,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8398803497582102112}
-  - {fileID: 1112004399404367370}
   m_Father: {fileID: 4577987242591196314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -471,11 +469,11 @@ Transform:
   m_GameObject: {fileID: 5350940804817020074}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -447.63467, y: -252.74318, z: 0.020564094}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 222.32712, y: 125.43532, z: -0.007480189}
+  m_LocalScale: {x: 0.63625, y: 0.63625, z: 0.63625}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2932484405529270607}
+  m_Father: {fileID: 4577987242591196314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6292579282084328048
 MonoBehaviour:
@@ -524,6 +522,7 @@ Transform:
   m_Children:
   - {fileID: 2932484405529270607}
   - {fileID: 1968893509424449247}
+  - {fileID: 1112004399404367370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9078042308615836503

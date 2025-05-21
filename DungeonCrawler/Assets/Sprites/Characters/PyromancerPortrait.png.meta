@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4f367bf513262624d8e88120aaf54e8f
+guid: c9191efd502a7124cad4a692f7889962
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -172,7 +172,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PyromancerPortrait_0: 8386845849917675104
+      PyromancerPortrait_1: 1486598749581911735
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     { 
         if (GameManagerBehavior.modernControls)
         {
-            float mouseXDelta = Input.GetAxis("Mouse X");
+			float mouseXDelta = Input.GetAxis("Mouse X");
             rotation += mouseXDelta * rotationSpeed * Time.deltaTime;
 
             float strafe = Input.GetAxis("Horizontal");

@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 // Singleton
 public class CombatManagerBehavior : MonoBehaviour
 {
-    private static CombatManagerBehavior instance = null;
+    [HideInInspector] public static CombatManagerBehavior instance = null;
 
     public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
     public List<GameObject> inputEnemyCharacters = new List<GameObject>();
@@ -16,7 +16,7 @@ public class CombatManagerBehavior : MonoBehaviour
     [SerializeField] GameObject characterHolder;
     [SerializeField] private int startingMana = 3;
     [SerializeField] private int manaRegen = 2;
-    
+
 
     [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
@@ -31,7 +31,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static GameObject youDiedScreen;
 
-    public void Start()
+	public void Start()
     {
         if (instance != null && instance != this)
         {
@@ -42,9 +42,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
         instance = this;
         Debug.Log("combat manager initialized");
-
-        // will get called each reload from the main menu
-        friendlyCharacterBehaviors.Clear();
+		// will get called each reload from the main menu
+		friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
             friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
@@ -66,15 +65,17 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private CombatManagerBehavior() { }
 
-    public static bool loaded() {
+    public static bool loaded()
+    {
         return instance != null;
     }
 
-    public static List<GameObject> getParty() {
+    public static List<GameObject> getParty()
+    {
         if (instance == null) return null;
         else return instance.inputFriendlyCharacters;
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -128,7 +129,8 @@ public class CombatManagerBehavior : MonoBehaviour
 
                 if (raycastResults.Count > 0)
                 {
-                    foreach (RaycastResult result in raycastResults)
+                    GameManagerBehavior.pop();
+					foreach (RaycastResult result in raycastResults)
                     {
                         if (result.gameObject.tag == "Spell")
                         {
@@ -219,7 +221,7 @@ public class CombatManagerBehavior : MonoBehaviour
                 createEnemies(inputCombatData);
             }
             battleSetUp();
-            combatStarted = true;
+			combatStarted = true;
         }
     }
 
@@ -294,7 +296,7 @@ public class CombatManagerBehavior : MonoBehaviour
     // called to end combat
     private static void endCombat(bool died)
     {
-        Debug.Log("end combat");
+		Debug.Log("end combat");
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
             if (died)
@@ -310,7 +312,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static IEnumerator exitToMainMenu()
     {
-        youDiedScreen.SetActive(true);
+		youDiedScreen.SetActive(true);
         yield return new WaitForSeconds(2);
         youDiedScreen.SetActive(false);
         // go to main menu
@@ -349,7 +351,7 @@ public class CombatManagerBehavior : MonoBehaviour
         if (canCast && TeamManaBehavior.getMana() - spellBehavior.manaCost >= 0)
         {
             curSpellToCast = spellBehavior;
-            switch(curSpellToCast.targeting)
+            switch (curSpellToCast.targeting)
             {
                 case (E_SPELL_TARGETING.ALL_ENEMIES):
                     friendlyCastSpellOnAllEnemies();
@@ -387,7 +389,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         if (curSpellToCast.moraleRegen > 0 || curSpellToCast.heal > 0)
         {
-            foreach(FriendlyBehavior character in friendlyCharacterBehaviors)
+            foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
             {
                 character.updateHealth(curSpellToCast.heal); // regen health
                 character.updateMorale(curSpellToCast.moraleRegen); // regen morale
@@ -542,4 +544,6 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         return instance.manaRegen;
     }
+
 }
+

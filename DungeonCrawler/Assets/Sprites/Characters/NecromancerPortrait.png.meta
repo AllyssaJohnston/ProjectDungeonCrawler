@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f29bb6103f72a584c8385df294a32206
+guid: 8cd5c16c7662f1d4bb005d99407f70a4
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      NecromancerPortrait_0: 3389446028299116169
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
