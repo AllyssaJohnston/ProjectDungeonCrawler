@@ -34,7 +34,6 @@ public class TutorialManagerBehavior : MonoBehaviour
         instance = this;
 
         tutorialPanels = GetComponentsInChildren<TutorialPanelBehavior>(true);
-        Debug.Log(tutorialPanels[curPanel].action);
     }
 
     private void Awake()
@@ -66,7 +65,6 @@ public class TutorialManagerBehavior : MonoBehaviour
 
     private static void nextPanel()
     {
-        Debug.Log("called");
         tutorialPanels[curPanel].gameObject.SetActive(false);
         if (curPanel == tutorialPanels.Length - 1)
         {
@@ -74,7 +72,6 @@ public class TutorialManagerBehavior : MonoBehaviour
             ArrowIndicatorManagerBehavior.createArrows();
             ArrowIndicatorManagerBehavior.OnNextState(StateManagerBehavior.getState());
         }
-        Debug.Log(tutorialPanels[curPanel].action);
         if (curPanel < tutorialPanels.Length - 1)
         {
             curPanel++;

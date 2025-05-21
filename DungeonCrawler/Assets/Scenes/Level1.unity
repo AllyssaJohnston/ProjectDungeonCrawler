@@ -690,6 +690,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy2
       objectReference: {fileID: 0}
+    - target: {fileID: 7894889504821124579, guid: ce837342856ac6d4ea5901debd41d056, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3873,22 +3877,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -3257324099673127162, guid: b3433c98894bbcf439464d5c7969aa4a, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2576440227037086860, guid: b3433c98894bbcf439464d5c7969aa4a, type: 3}
-      propertyPath: mainMenu
-      value: 
-      objectReference: {fileID: 4794797639100282546, guid: be764b16916948f4b957424a12387509, type: 3}
-    - target: {fileID: 2576440227037086860, guid: b3433c98894bbcf439464d5c7969aa4a, type: 3}
-      propertyPath: LevelCommon
-      value: 
-      objectReference: {fileID: 6128516325162540643}
-    - target: {fileID: 2576440227037086860, guid: b3433c98894bbcf439464d5c7969aa4a, type: 3}
-      propertyPath: combatEncounters.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6079814253926807431, guid: b3433c98894bbcf439464d5c7969aa4a, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -24310,11 +24298,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
---- !u!1 &6128516325162540643 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1068206352855354120, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
-  m_PrefabInstance: {fileID: 7831863163920793558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7831863163920793558
 PrefabInstance:
   m_ObjectHideFlags: 0

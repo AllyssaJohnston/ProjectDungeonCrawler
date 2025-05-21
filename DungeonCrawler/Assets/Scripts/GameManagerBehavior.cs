@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public enum E_GameMode
 {
@@ -40,6 +41,7 @@ public class GameManagerBehavior : MonoBehaviour
             return;
         }
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
@@ -54,12 +56,7 @@ public class GameManagerBehavior : MonoBehaviour
         curSceneToLoad = 0;
 
         curScene = SceneManager.GetActiveScene().name;
-        audioSources = GetComponents<AudioSource>();
-        ambience = audioSources[0];
-		menuMusic = audioSources[1];
-		popSound = audioSources[2];
-		levelTheme = audioSources[3];
-		combatTheme = audioSources[4];
+        getAudio();
 
 		if (curScene == "Combat")
         {
@@ -266,6 +263,26 @@ public class GameManagerBehavior : MonoBehaviour
         }
     }
 
+    public static void changeLevels(string levelName)
+    {
+        //GameObject gameManager = instance.gameObject;
+        Scene curScene = levelData.scene;
+        levelData = null;
+        SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(curScene);
+        //Instantiate(gameManager);
+    }        
+
+    private static void getAudio()
+    {
+        audioSources = instance.GetComponents<AudioSource>();
+        ambience = audioSources[0];
+        menuMusic = audioSources[1];
+        popSound = audioSources[2];
+        levelTheme = audioSources[3];
+        combatTheme = audioSources[4];
+    }
+
     public static void pop() 
     {
         popSound.Play();
@@ -321,6 +338,7 @@ public class GameManagerBehavior : MonoBehaviour
             combatData = GameObject.FindWithTag("CombatData");
             if (combatData != null)
             {
+                Debug.Log("updated combat data");
                 combatData.SetActive(false);
             }
         }
@@ -329,7 +347,8 @@ public class GameManagerBehavior : MonoBehaviour
             levelData = GameObject.FindWithTag("LevelData");
             if (levelData != null)
             {
-                levelData.SetActive(false);
+                Debug.Log("updated level data");
+                levelData.SetActive(gameMode == E_GameMode.LEVEL);
             }
         }
         if (menuData == null)
@@ -337,6 +356,7 @@ public class GameManagerBehavior : MonoBehaviour
             menuData = GameObject.FindWithTag("MenuData");
             if (menuData != null)
             {
+                Debug.Log("updated menu data");
                 menuData.SetActive(false);
                 modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
                 sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
