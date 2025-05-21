@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelTransition
       objectReference: {fileID: 0}
+    - target: {fileID: 825954754603025935, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4015139724018051468, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.5
