@@ -12,6 +12,7 @@ public class FirstPerson : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Debug.Log("building tilemap");
         if (blockTilemaps.Count == 0 && billboardTilemap == null)
         {
             var parent = FindFirstObjectByType<Grid>();
@@ -32,7 +33,6 @@ public class FirstPerson : MonoBehaviour
         foreach (UnityEngine.Tilemaps.Tilemap blockTilemap in blockTilemaps) 
         {
             float zCoord = blockTilemap.gameObject.transform.position.z;
-            Debug.Log(zCoord);
             for (int i = blockTilemap.cellBounds.xMin; i < blockTilemap.cellBounds.xMax; i++)
             {
                 for (int j = blockTilemap.cellBounds.yMin; j < blockTilemap.cellBounds.yMax; j++)

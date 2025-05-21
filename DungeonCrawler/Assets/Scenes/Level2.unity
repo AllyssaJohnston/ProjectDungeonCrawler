@@ -60133,6 +60133,46 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: billboardTilemap
+      value: 
+      objectReference: {fileID: 1945592753}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: blockTilemaps.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1668141771}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1362918012}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1755783259}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[3]'
+      value: 
+      objectReference: {fileID: 1011775294}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[4]'
+      value: 
+      objectReference: {fileID: 187186136}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1734850491}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[6]'
+      value: 
+      objectReference: {fileID: 946110849}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[7]'
+      value: 
+      objectReference: {fileID: 946110849}
     - target: {fileID: 2619835680712289181, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -60181,6 +60221,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6917518823353449314, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: inventoryUI
+      value: 
+      objectReference: {fileID: 2016016066}
     - target: {fileID: 7259857708556819282, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_Name
       value: LevelCommon
@@ -60282,6 +60326,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8238418189505899177, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
   m_PrefabInstance: {fileID: 2016016062}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2016016066 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8363969777793809639, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+  m_PrefabInstance: {fileID: 2016016062}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d06de5d8ea33e46b5514c439b14887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2044241530 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6515522074850941062, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
