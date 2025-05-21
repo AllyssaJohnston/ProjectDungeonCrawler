@@ -624,6 +624,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3542136547084836617, guid: ce837342856ac6d4ea5901debd41d056, type: 3}
   m_PrefabInstance: {fileID: 1268095818}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1441978894 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6170668879744696494, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+  m_PrefabInstance: {fileID: 7831863163920793558}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5fd4c11dd18d274985a9fc947e51418, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1591793620
 GameObject:
   m_ObjectHideFlags: 0
@@ -24213,6 +24224,38 @@ PrefabInstance:
       propertyPath: levelTransition
       value: 
       objectReference: {fileID: 7831863163920793560}
+    - target: {fileID: 8199591841745786942, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 2.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199591841745786942, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 5.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199591841745786942, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.5475
+      objectReference: {fileID: 0}
+    - target: {fileID: 8199591841745786942, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.295
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458381223702187189, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_Size.x
+      value: 2.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458381223702187189, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_Size.y
+      value: 5.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458381223702187189, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5293031974318352618, guid: ef65ae5d4ac12d241b9d4c7a20b963fd, type: 3}
+    - target: {fileID: 8458381223702187189, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24240,11 +24283,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2066828952843011808, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15
+      value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 2066828952843011808, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15
+      value: -16.68
       objectReference: {fileID: 0}
     - target: {fileID: 2243292444403985859, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -24269,11 +24312,19 @@ PrefabInstance:
     - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: playerMovement
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1441978894}
     - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: billboardTilemap
       value: 
       objectReference: {fileID: 1945592753}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: blockTilemaps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332290160041419879, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: 'blockTilemaps.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1668141771}
     - target: {fileID: 2619835680712289181, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
