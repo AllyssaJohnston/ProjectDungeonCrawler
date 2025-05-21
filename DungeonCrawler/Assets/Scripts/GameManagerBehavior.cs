@@ -32,6 +32,7 @@ public class GameManagerBehavior : MonoBehaviour
 	private static AudioSource popSound;
     private static AudioSource levelTheme;
     private static AudioSource combatTheme;
+    private static bool hasCompletedTutorial = false;
 
 	private void Awake()
     {
@@ -86,7 +87,7 @@ public class GameManagerBehavior : MonoBehaviour
             combatData = GameObject.FindWithTag("CombatData");
             combatOnlyMode = true;
             // combat already loaded, don't have to load it
-            enterCombatTutorial();
+            enterCombat(null);
         }
         else if (curScene.Contains("Level") || curScene == "DesignPlayground")
         {
@@ -99,7 +100,16 @@ public class GameManagerBehavior : MonoBehaviour
 			Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
-            scenesToLoad = new List<string> { "CombatTutorial", "Menu" };
+            if (curScene == "Level1" ) // only load tutorial on Level 1
+            {
+                scenesToLoad = new List<string> { "CombatTutorial", "Menu" };
+            }
+            else
+            {
+                scenesToLoad = new List<string> { "Combat", "Menu" };
+                hasCompletedTutorial = true;
+            }
+
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -160,29 +170,18 @@ public class GameManagerBehavior : MonoBehaviour
             combatData.SetActive(true);
         }
         gameMode = E_GameMode.COMBAT;
-        CombatManagerBehavior.inTutorial = false;
-        CombatManagerBehavior.startBattle(encounter);
-    }
-
-    // start combat tutorial
-    public static void enterCombatTutorial()
-    {
-        ambience.Pause();
-        menuMusic.Pause();
-        levelTheme.Pause();
-        combatTheme.Play();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        Debug.Log("entering combat tutorial");
-        if (!combatOnlyMode) //combat only mode is used to just test combat, other datas aren't set, so don't call set active on them
+        if (hasCompletedTutorial)
         {
-            levelData.SetActive(false);
-            menuData.SetActive(false);
-            combatData.SetActive(true);
+            CombatManagerBehavior.inTutorial = false;
+            CombatManagerBehavior.startBattle(encounter);
+
+        } 
+        else
+        {
+            CombatManagerBehavior.inTutorial = true;
+            CombatManagerBehavior.startBattle(null, true);
         }
-        gameMode = E_GameMode.COMBAT;
-        CombatManagerBehavior.inTutorial = true;
-        CombatManagerBehavior.startBattle(null, true);
+       
     }
 
     // what to do when entering the level
@@ -209,11 +208,12 @@ public class GameManagerBehavior : MonoBehaviour
         }
         if (inTutorialLevel)
         {
-            SceneManager.UnloadSceneAsync("CombatTutorial"); //unload tutorial, load in reg combat
             combatData = null;
+            SceneManager.UnloadSceneAsync("CombatTutorial"); //unload tutorial, load in reg combat
             curSceneToLoad = 0;
             scenesToLoad = new List<string> { "Combat" };
             instance.StartCoroutine(instance.StartLoad());
+            hasCompletedTutorial = true;
         }
     }
     
@@ -265,12 +265,10 @@ public class GameManagerBehavior : MonoBehaviour
 
     public static void changeLevels(string levelName)
     {
-        //GameObject gameManager = instance.gameObject;
         Scene curScene = levelData.scene;
         levelData = null;
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
         SceneManager.UnloadSceneAsync(curScene);
-        //Instantiate(gameManager);
     }        
 
     private static void getAudio()
