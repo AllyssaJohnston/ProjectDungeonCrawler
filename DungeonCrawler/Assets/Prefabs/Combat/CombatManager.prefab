@@ -50,4 +50,7 @@ MonoBehaviour:
   - {fileID: 0}
   inputEnemyCharacters:
   - {fileID: 0}
+  enemyContainerTemplate: {fileID: 0}
+  characterHolder: {fileID: 0}
   startingMana: 3
+  manaRegen: 2

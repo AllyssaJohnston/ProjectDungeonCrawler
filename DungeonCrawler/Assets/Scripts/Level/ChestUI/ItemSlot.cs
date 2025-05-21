@@ -45,7 +45,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnClick()
     {
-
+        GameManagerBehavior.pop();
         inventory.AddItem(storedItem);
         TooltipManager.HideTooltip();
         // remove this UI element after picking it up

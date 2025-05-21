@@ -11,14 +11,16 @@ public class ChestUI : MonoBehaviour
     void Start()
     {
         if (inventory == null) inventory = FindFirstObjectByType<PlayerInventory>();
-    }
+	}
 
     public void OpenChest(List<Item> contents)
     {
+		    
         chestPanel.SetActive(true);
-
-        // Clear existing slots
-        foreach (Transform child in itemSlotParent)
+        Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+		// Clear existing slots
+		foreach (Transform child in itemSlotParent)
         {
             Destroy(child.gameObject);
         }
@@ -34,6 +36,9 @@ public class ChestUI : MonoBehaviour
 
     public void CloseChest()
     {
-        chestPanel.SetActive(false);
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
+		
+		chestPanel.SetActive(false);
     }
 }
