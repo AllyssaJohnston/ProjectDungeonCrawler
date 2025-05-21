@@ -16,6 +16,8 @@ public class InventoryUI : MonoBehaviour
 
     public void OpenInventory(List<Item> contents)
     {
+        Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
         inventoryPanel.SetActive(true);
         ClearSlots();
 
@@ -30,6 +32,8 @@ public class InventoryUI : MonoBehaviour
 
     public void CloseInventory()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
         inventoryPanel.SetActive(false);
     }
 
