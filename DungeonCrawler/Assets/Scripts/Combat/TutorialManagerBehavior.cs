@@ -34,6 +34,7 @@ public class TutorialManagerBehavior : MonoBehaviour
         instance = this;
 
         tutorialPanels = GetComponentsInChildren<TutorialPanelBehavior>(true);
+        EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
     }
 
     private void Awake()
@@ -72,10 +73,12 @@ public class TutorialManagerBehavior : MonoBehaviour
             ArrowIndicatorManagerBehavior.createArrows();
             ArrowIndicatorManagerBehavior.OnNextState(StateManagerBehavior.getState());
             DebugBehavior.OnNextState(StateManagerBehavior.getState());
+            EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
         }
         if (curPanel < tutorialPanels.Length - 1)
         {
             curPanel++;
+            EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
         }
     }
 
@@ -113,6 +116,11 @@ public class TutorialManagerBehavior : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public static bool showButton()
+    {
+        return tutorialPanels[curPanel].action == E_Tutorial_Action.CLICK_END_TURN;
     }
 
     public static bool canEndTurn()
