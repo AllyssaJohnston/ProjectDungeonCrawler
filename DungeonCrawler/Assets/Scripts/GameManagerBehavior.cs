@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using NUnit.Framework;
 
 public enum E_GameMode
 {
@@ -36,6 +35,15 @@ public class GameManagerBehavior : MonoBehaviour
     private static AudioSource levelTheme;
     private static AudioSource combatTheme;
 
+    private struct CheatCode {
+        public delegate void OnActivate();
+
+        public KeyCode[] sequence;
+        public OnActivate onActivate;
+    }
+    private static CheatCode[] cheats;
+    private static int[] cheatInputProgression;
+
 	private void Awake()
     {
         if (instance != null && instance != this)
@@ -64,6 +72,7 @@ public class GameManagerBehavior : MonoBehaviour
     public static void SetUp()
     {
         curScene = SceneManager.GetActiveScene().name;
+        setupCheats();
         getAudio();
 
         if (curScene == "Combat")
@@ -136,6 +145,8 @@ public class GameManagerBehavior : MonoBehaviour
         {
             enterMenu();
         }
+
+        progressCheats();
 
         // load scenes async
         if (loading && instance != null)
@@ -368,6 +379,46 @@ public class GameManagerBehavior : MonoBehaviour
                 menuData.SetActive(gameMode == E_GameMode.MENU);
                 modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
                 sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
+            }
+        }
+    }
+
+    private static void setupCheats()
+    {
+        cheats = new CheatCode[1];
+        cheatInputProgression = new int[cheats.Length];
+
+        cheats[0].onActivate = () => Debug.Log("Cheat Activated");
+        cheats[0].sequence = new KeyCode[]
+        {
+            KeyCode.Semicolon,
+            KeyCode.U,
+        };
+    }
+
+    private static void progressCheats()
+    {
+        var cheatProgressed = new bool[cheats.Length];
+
+        for (int i = 0; i < cheats.Length; i++)
+        {
+            if (Input.GetKeyDown(cheats[i].sequence[cheatInputProgression[i]]))
+            {
+                cheatInputProgression[i]++;
+                cheatProgressed[i] = true;
+                if (cheatInputProgression[i] >= cheats[i].sequence.Length)
+                {
+                    cheats[i].onActivate();
+                    cheatInputProgression[i] = 0;
+                }
+            }
+        }
+
+        if (Input.anyKeyDown) for (int i = 0; i < cheats.Length; i++)
+        {
+            if (!cheatProgressed[i])
+            {
+                cheatInputProgression[i] = 0;
             }
         }
     }
