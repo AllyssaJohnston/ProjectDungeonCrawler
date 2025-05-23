@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -9,29 +8,29 @@ using UnityEngine.SceneManagement;
 // Singleton
 public class CombatManagerBehavior : MonoBehaviour
 {
-    [HideInInspector] public static CombatManagerBehavior instance = null;
+    private static CombatManagerBehavior instance = null;
 
-    public List<GameObject> inputFriendlyCharacters = new List<GameObject>();
-    public List<GameObject> inputEnemyCharacters = new List<GameObject>();
+    [SerializeField] List<GameObject> inputFriendlyCharacters = new List<GameObject>();
+    [SerializeField] List<GameObject> inputEnemyCharacters = new List<GameObject>();
     [SerializeField] GameObject enemyContainerTemplate;
-    [SerializeField] GameObject characterHolder;
-    [SerializeField] private int startingMana = 3;
-    [SerializeField] private int manaRegen = 2;
+    [SerializeField] GameObject friendlyCharacterHolder;
+    [SerializeField] GameObject enemyCharacterHolder;
+    [SerializeField] int startingMana = 3;
+    [SerializeField] int manaRegen = 2;
+    [SerializeField] bool simulateTutorial = false;
 
 
     [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
+    
     private static float damageModifier = 1;
-
     private static FriendlySpellBehavior curSpellToCast = null;
-    public static bool combatStarted { get; private set; }
-    public static bool inTutorial = false;
-    public static bool inTutorialLevel = false;
-
     private static float clickBufferWait = .2f;
     private static float clickBufferTimer = 0f;
-
     private static GameObject youDiedScreen;
+
+    [HideInInspector] public static bool inTutorial = false;
+    [HideInInspector] public static bool inTutorialLevel = false;
 
 	public void Start()
     {
@@ -44,10 +43,12 @@ public class CombatManagerBehavior : MonoBehaviour
 
         instance = this;
         Debug.Log("combat manager initialized");
+
 		// will get called each reload from the main menu
 		friendlyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputFriendlyCharacters)
         {
+            character.SetActive(true);
             friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
         }
         youDiedScreen = GameObject.FindWithTag("YouDead");
@@ -67,15 +68,9 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private CombatManagerBehavior() { }
 
-    public static bool loaded()
-    {
-        return instance != null;
-    }
+    public static bool loaded() { return instance != null; }
 
-    public static List<FriendlyBehavior> getParty()
-    {
-        return friendlyCharacterBehaviors;
-    }
+    public static List<FriendlyBehavior> getParty() { return friendlyCharacterBehaviors; }
 
     // Update is called once per frame
     void Update()
@@ -208,68 +203,63 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // called at the start of each combat
-    public static void startBattle(CombatEncounterBehavior inputCombatData, bool givenInTutorialLevel = false)
+    public static void startBattle(CombatEncounterBehavior inputCombatData)
     {
-        if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
-        {
-            TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
-            if (inputCombatData == null)
-            {
-                useDefaultEnemies();
-            }
-            else
-            {
-                createEnemies(inputCombatData);
-            }
-            battleSetUp(givenInTutorialLevel);
-			combatStarted = true;
-        }
+        inTutorialLevel = false;
+        inTutorial = false;
+        battleSetUp(inputCombatData);
     }
 
-    private static void battleSetUp(bool givenInTutorialLevel)
+    public static void startTutorial()
     {
-        GameObject curYouDiedScreen = GameObject.FindWithTag("YouDead");
-        if (curYouDiedScreen != null) // reset the youDied screen on the transition from tutorial to reg combat. TODO do this properly
+        inTutorialLevel = true;
+        inTutorial = true;
+        battleSetUp(null);
+        TutorialManagerBehavior.startTutorial();
+    }
+
+    private static void battleSetUp(CombatEncounterBehavior inputCombatData)
+    {
+        TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
+        if (inputCombatData == null)
         {
-            youDiedScreen = curYouDiedScreen;
-            youDiedScreen.SetActive(false);
+            useDefaultEnemies();
         }
-        inTutorialLevel = givenInTutorialLevel;
-       
+        else
+        {
+            createEnemies(inputCombatData);
+        }
+
         foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
+            character.gameObject.transform.parent.gameObject.SetActive(character.inTutorial || (!inTutorial));
             character.startBattle();
         }
-        PartySpellManagerBehavior.updateSpells();
-        PartySpellManagerBehavior.UpdateSpellOrder();
-        if (!inTutorial)
+        foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
-            ArrowIndicatorManagerBehavior.createArrows();
+            character.gameObject.transform.parent.gameObject.SetActive(character.inTutorial || (!inTutorial));
+            character.startBattle();
         }
+
+        PartySpellManagerBehavior.updateSpells(inTutorial);
+        PartySpellManagerBehavior.UpdateSpellOrder();
+        ArrowIndicatorManagerBehavior.createArrows(inTutorial);
         StateManagerBehavior.StartBattle();
     }
 
     private static void useDefaultEnemies()
     {
-        // reset so that you can enter the same encounter multiple times
+        // reset so that you don't keep adding enemies
         enemyCharacterBehaviors.Clear();
         foreach (GameObject character in instance.inputEnemyCharacters)
         {
-            EnemyBehavior behavior = character.GetComponent<EnemyBehavior>();
-            enemyCharacterBehaviors.Add(behavior);
-            behavior.startBattle();
+            enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
         }
     }
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
         Debug.Log("create enemeies");
-        float screenX = instance.characterHolder.GetComponent<RectTransform>().offsetMax.x - 295;
-        float yPos = friendlyCharacterBehaviors[0].gameObject.transform.parent.localPosition.y;
-        float spacing = 70f;
-
-
-        int i = inputCombatData.enemies.Count - 1;
         //clear old enemies
         foreach (GameObject defaultEnemy in instance.inputEnemyCharacters)
         {
@@ -277,28 +267,22 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         enemyCharacterBehaviors.Clear();
         instance.inputEnemyCharacters.Clear();
+        foreach (EnemyBehavior defaultEnemy in instance.enemyCharacterHolder.GetComponentsInChildren<EnemyBehavior>())
+        {
+            Destroy(defaultEnemy.gameObject.transform.parent.gameObject);
+        }
 
         //create new enemies
         foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
         {
             GameObject enemyContainer = Instantiate<GameObject>(instance.enemyContainerTemplate);
-            GameObject enemy = enemyContainer.transform.GetChild(0).gameObject; // only one child of enemy container
             RectTransform enemyContainerRect = enemyContainer.GetComponent<RectTransform>();
             Vector3 scale = enemyContainerRect.localScale;
-            Vector3 pos = enemyContainerRect.position;
-            Debug.Log(pos);
-            enemyContainer.transform.SetParent(instance.characterHolder.transform);
+            enemyContainer.transform.SetParent(instance.enemyCharacterHolder.transform);
             enemyContainer.transform.localScale = scale;
-            enemyContainerRect.anchoredPosition = new Vector3(screenX - i * (spacing), yPos, 0);
-            foreach (Behaviour component in enemy.GetComponents<Behaviour>())
-            {
-                component.enabled = true;
-            }
-            EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
+            EnemyBehavior enemyBehavior = enemyContainer.GetComponentInChildren<EnemyBehavior>();
             enemyBehavior.setUpFromStats(curEnemyStat);
             enemyCharacterBehaviors.Add(enemyBehavior);
-            enemyBehavior.startBattle();
-            i--;
         }
     }
 
@@ -314,7 +298,7 @@ public class CombatManagerBehavior : MonoBehaviour
             }
             else
             {
-                GameManagerBehavior.enterLevel(inTutorialLevel);
+                GameManagerBehavior.enterLevel();
             }
         }
     }
@@ -417,7 +401,7 @@ public class CombatManagerBehavior : MonoBehaviour
         DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on all enemies");
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
-            character.updateHealth(-(int)(curSpellToCast.damage * damageModifier));
+            character.updateHealth(-(int)(curSpellToCast.damage));
         }
         friendlyCast();
     }
@@ -429,7 +413,7 @@ public class CombatManagerBehavior : MonoBehaviour
         if (target.isAlive()) //dont cast on dead targets
         {
             DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on " + target.characterName);
-            target.updateHealth(-(int)(curSpellToCast.damage * damageModifier));
+            target.updateHealth(-(int)(curSpellToCast.damage));
             if (curSpellToCast.stun)
             {
                 target.stun();
@@ -468,7 +452,6 @@ public class CombatManagerBehavior : MonoBehaviour
         DebugBehavior.updateLog(curSpellToCast.castingCharactersText + " cast " + curSpellToCast.spellDescriptionText + " on all party members.");
         friendlyCast();
     }
-
 
 
     //chooses a spell and executes it
@@ -549,10 +532,8 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
-    public static int getManaRegen()
-    {
-        return instance.manaRegen;
-    }
+    public static bool getSimulateTutorial() { return instance.simulateTutorial; }
 
+    public static int getManaRegen() { return instance.manaRegen; }
 }
 

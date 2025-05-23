@@ -90,15 +90,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   friendly: 0
+  inTutorial: 0
   characterName: Demon
   damagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
   usedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
+  deadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
   maxHealth: 60
   spellsToChooseFrom:
   - spellName: Torture
     damage: 10
+    heal: 0
+    moraleDamageToEnemies: 0
     damageAllEnemies: 0
-    targeting: 1
+    characterTargeting: 0
+    spellDescriptionText: 
 --- !u!114 &4811999712675437589
 MonoBehaviour:
   m_ObjectHideFlags: 0

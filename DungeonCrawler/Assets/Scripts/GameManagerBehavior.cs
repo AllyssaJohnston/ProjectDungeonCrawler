@@ -33,7 +33,6 @@ public class GameManagerBehavior : MonoBehaviour
 	private static AudioSource popSound;
     private static AudioSource levelTheme;
     private static AudioSource combatTheme;
-    private static bool hasCompletedTutorial = false;
 
 	private void Awake()
     {
@@ -60,22 +59,7 @@ public class GameManagerBehavior : MonoBehaviour
         curScene = SceneManager.GetActiveScene().name;
         getAudio();
 
-		if (curScene == "Combat")
-        {
-            ambience.Pause();
-            levelTheme.Pause();
-			menuMusic.Pause();
-			combatTheme.Play();
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			Debug.Log("starting in combat");
-            gameMode = E_GameMode.COMBAT;
-            combatData = GameObject.FindWithTag("CombatData");
-            combatOnlyMode = true;
-            // combat already loaded, don't have to load it
-            enterCombat(null);
-        }
-        if (curScene == "CombatTutorial")
+        if (curScene == "Combat")
         {
             ambience.Pause();
             levelTheme.Pause();
@@ -83,35 +67,25 @@ public class GameManagerBehavior : MonoBehaviour
             combatTheme.Play();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Debug.Log("starting in combat tutorial");
+            Debug.Log("starting in combat");
             gameMode = E_GameMode.COMBAT;
             combatData = GameObject.FindWithTag("CombatData");
             combatOnlyMode = true;
-            // combat already loaded, don't have to load it
-            enterCombat(null);
+            enterCombat(null, CombatManagerBehavior.getSimulateTutorial());
         }
         else if (curScene.Contains("Level") || curScene == "DesignPlayground")
         {
             ambience.Play();
-			levelTheme.Play();
-			menuMusic.Pause();
+            levelTheme.Play();
+            menuMusic.Pause();
             combatTheme.Pause();
-			Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-			Debug.Log("starting in level");
+            Debug.Log("starting in level");
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
-            if (curScene == "Level1" ) // only load tutorial on Level 1
-            {
-                scenesToLoad = new List<string> { "CombatTutorial", "Menu" };
-            }
-            else
-            {
-                scenesToLoad = new List<string> { "Combat", "Menu" };
-                hasCompletedTutorial = true;
-            }
+            scenesToLoad = new List<string> { "Combat", "Menu" };
             GameObject.FindWithTag("FirstPerson").GetComponent<FirstPerson>().setUp();
-
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -119,15 +93,15 @@ public class GameManagerBehavior : MonoBehaviour
         {
             inMenu = true;
             ambience.Pause();
-			menuMusic.Play();
-			levelTheme.Pause();
-			combatTheme.Pause();
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			Debug.Log("starting in menu");
+            menuMusic.Play();
+            levelTheme.Pause();
+            combatTheme.Pause();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("starting in menu");
             gameMode = E_GameMode.LEVEL;
             menuData = GameObject.FindWithTag("MenuData");
-            scenesToLoad = new List<string> { "Level1", "CombatTutorial"};
+            scenesToLoad = new List<string> { "Level1", "CombatTutorial" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -157,7 +131,7 @@ public class GameManagerBehavior : MonoBehaviour
     }
 
     // start combat
-    public static void enterCombat(CombatEncounterBehavior encounter)
+    public static void enterCombat(CombatEncounterBehavior encounter, bool enterTutorial = false)
     {
         ambience.Pause();
 		menuMusic.Pause();
@@ -173,22 +147,21 @@ public class GameManagerBehavior : MonoBehaviour
             combatData.SetActive(true);
         }
         gameMode = E_GameMode.COMBAT;
-        if (hasCompletedTutorial)
+        if (enterTutorial)
         {
-            CombatManagerBehavior.inTutorial = false;
-            CombatManagerBehavior.startBattle(encounter);
+            CombatManagerBehavior.inTutorial = true;
+            CombatManagerBehavior.startTutorial();
 
         } 
         else
         {
-            CombatManagerBehavior.inTutorial = true;
-            CombatManagerBehavior.startBattle(null, true);
+            CombatManagerBehavior.inTutorial = false;
+            CombatManagerBehavior.startBattle(encounter);
         }
-       
     }
 
     // what to do when entering the level
-    public static void enterLevel(bool inTutorialLevel = false)
+    public static void enterLevel()
     {
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
@@ -208,16 +181,6 @@ public class GameManagerBehavior : MonoBehaviour
             menuData.SetActive(false);
             levelData.SetActive(true);
             gameMode = E_GameMode.LEVEL;
-        }
-        if (inTutorialLevel)
-        {
-            combatData.SetActive(false);
-            combatData = null;
-            SceneManager.UnloadSceneAsync("CombatTutorial"); //unload tutorial, load in reg combat
-            curSceneToLoad = 0;
-            scenesToLoad = new List<string> { "Combat" };
-            instance.StartCoroutine(instance.StartLoad());
-            hasCompletedTutorial = true;
         }
     }
     
@@ -346,13 +309,6 @@ public class GameManagerBehavior : MonoBehaviour
             {
                 Debug.Log("updated combat data");
                 combatData.SetActive(false);
-                //temp hack
-                CharstatusPortrait[] portraits = GameObject.FindWithTag("levelCharPanel").GetComponentsInChildren<CharstatusPortrait>(); // temp
-                foreach (CharstatusPortrait portrait in portraits)
-                {
-                    //Debug.Log("reset");
-                    portrait.setUpCharacterUI();
-                }
             }
         }
         if (levelData == null)

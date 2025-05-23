@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class CharacterBehavior : MonoBehaviour
 {
     public bool friendly = true;
+    public bool inTutorial = false;
     public string characterName = "unnamed";
 
     protected Sprite regSprite;

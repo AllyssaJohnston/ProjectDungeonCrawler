@@ -453,6 +453,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyTutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 7894889504821124579, guid: ce837342856ac6d4ea5901debd41d056, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

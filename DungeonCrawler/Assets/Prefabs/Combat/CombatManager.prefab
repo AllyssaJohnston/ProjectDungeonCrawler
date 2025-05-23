@@ -59,6 +59,7 @@ MonoBehaviour:
   characterHolder: {fileID: 0}
   startingMana: 3
   manaRegen: 2
+  simulateTutorial: 1
 --- !u!114 &8731133951252832855
 MonoBehaviour:
   m_ObjectHideFlags: 0

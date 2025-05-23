@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public enum E_Tutorial_Action
 {
@@ -33,8 +31,7 @@ public class TutorialManagerBehavior : MonoBehaviour
         }
         instance = this;
 
-        tutorialPanels = GetComponentsInChildren<TutorialPanelBehavior>(true);
-        EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
+        tutorialPanels = instance.GetComponentsInChildren<TutorialPanelBehavior>(true);
     }
 
     private void Awake()
@@ -45,6 +42,12 @@ public class TutorialManagerBehavior : MonoBehaviour
             return;
         }
         instance = this;
+    }
+
+    public static void startTutorial()
+    {
+        curPanel = 0;
+        EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
     }
 
     private void Update()
@@ -70,7 +73,7 @@ public class TutorialManagerBehavior : MonoBehaviour
         if (curPanel == tutorialPanels.Length - 1)
         {
             CombatManagerBehavior.inTutorial = false;
-            ArrowIndicatorManagerBehavior.createArrows();
+            ArrowIndicatorManagerBehavior.createArrows(CombatManagerBehavior.inTutorial);
             ArrowIndicatorManagerBehavior.OnNextState(StateManagerBehavior.getState());
             DebugBehavior.OnNextState(StateManagerBehavior.getState());
             EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());

@@ -58,20 +58,24 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
     private ArrowIndicatorManagerBehavior() {}
 
     // get called at the start of combat
-    public static void createArrows()
+    public static void createArrows(bool tutorialMode)
     {
         deleteArrows();
 
-        //spell ptrs
-        FriendlySpellBehavior[] spells = PartySpellManagerBehavior.getSpells();
-        arrows.Add(E_Arrow_Type.SPELL_PTR, new List<GameObject> { });
-        foreach (FriendlySpellBehavior spell in spells)
+        if (!tutorialMode)
         {
-            arrows[E_Arrow_Type.SPELL_PTR].Add(createArrow(E_Arrow_Type.SPELL_PTR, spell.gameObject));
-        }
+            //spell ptrs
+            FriendlySpellBehavior[] spells = PartySpellManagerBehavior.getSpells();
+            arrows.Add(E_Arrow_Type.SPELL_PTR, new List<GameObject> { });
+            foreach (FriendlySpellBehavior spell in spells)
+            {
+                arrows[E_Arrow_Type.SPELL_PTR].Add(createArrow(E_Arrow_Type.SPELL_PTR, spell.gameObject));
+            }
 
-        //end turn button
-        arrows.Add(E_Arrow_Type.END_TURN_PTR, new List<GameObject> { createArrow(E_Arrow_Type.END_TURN_PTR, instance.button.gameObject)  });
+            //end turn button
+            arrows.Add(E_Arrow_Type.END_TURN_PTR, new List<GameObject> { createArrow(E_Arrow_Type.END_TURN_PTR, instance.button.gameObject) });
+
+        }
 
         //enemy turn and target selection
         foreach (EnemyBehavior enemy in CombatManagerBehavior.enemyCharacterBehaviors)
