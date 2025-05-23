@@ -15,7 +15,6 @@ public class PartySpellManagerBehavior : MonoBehaviour
         }
 
         instance = this;
-        Debug.Log("party spell manager initialized");
     }
 
     public void Start()
@@ -26,17 +25,20 @@ public class PartySpellManagerBehavior : MonoBehaviour
             return;
         }
         instance = this;
-
-        spells = viewport.GetComponentsInChildren<FriendlySpellBehavior>();
+        Debug.Log("party spell manager initialized");
     }
 
-
-    public static void updateSpells()
+    // Re-fetch the spells and enable/disable based on tutorial mode
+    public static void updateSpells(bool tutorialMode)
     {
-        spells = instance.viewport.GetComponentsInChildren<FriendlySpellBehavior>();
+        spells = instance.viewport.GetComponentsInChildren<FriendlySpellBehavior>(true);
+        foreach(FriendlySpellBehavior spellBehavior in spells)
+        {
+            spellBehavior.gameObject.SetActive(spellBehavior.inTutorial && tutorialMode || !spellBehavior.inTutorial && !tutorialMode);
+        }
     }
 
-
+    // Put castable spells up top and uncastable spells at bottom
     public static void UpdateSpellOrder()
     {
         int numCastable = 0;
@@ -57,6 +59,7 @@ public class PartySpellManagerBehavior : MonoBehaviour
         }
     }
 
+    // Reset the spell's text with the given damage modifier
     public static void UpdateSpellTextStats(float damageModifier)
     {
         foreach (FriendlySpellBehavior spell in spells)
@@ -65,9 +68,5 @@ public class PartySpellManagerBehavior : MonoBehaviour
         }
     }
 
-    public static FriendlySpellBehavior[] getSpells()
-    {
-        return spells;
-    }
-
+    public static FriendlySpellBehavior[] getSpells() { return spells; }
 }

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FriendlyBehavior : CharacterBehavior
 {
+
     // icon images
     public Sprite iconSprite;
     public Sprite iconUsedSprite;

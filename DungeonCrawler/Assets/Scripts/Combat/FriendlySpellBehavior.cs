@@ -60,6 +60,8 @@ public class FriendlySpellBehavior : SpellBehavior
     public float secondCharacterY; // y pos of second character icon
     public float doubleCharacterScale;
 
+    public bool inTutorial = false;
+
     [HideInInspector] public bool canCast;
 
     private List<CharacterIconBehavior> characterIcons = new List<CharacterIconBehavior>();
@@ -224,44 +226,23 @@ public class FriendlySpellBehavior : SpellBehavior
     {
         base.setUpStringStats();
 
-        if (moraleDamageToSelf != 0f)
-        {
-            spellDescriptionText += " costing " + moraleDamageToSelf + " morale,";
-        }
+        if (moraleDamageToSelf != 0f) { spellDescriptionText += " costing " + moraleDamageToSelf + " morale,"; }
 
-        if (stun)
-        {
-            spellDescriptionText += " stunning,";
-        }
+        if (stun) {                     spellDescriptionText += " stunning,"; }
 
-        if (revive)
-        {
-            spellDescriptionText += " reviving,";
-        }
+        if (revive) {                   spellDescriptionText += " reviving,"; }
 
-        if (moraleRegen != 0f)
-        {
-            spellDescriptionText += " for " + moraleRegen + " party morale regen,";
-        }
+        if (moraleRegen != 0f) {        spellDescriptionText += " for " + moraleRegen + " party morale regen,"; }
 
-        if (manaRegen != 0f)
-        {
-            spellDescriptionText += " for " + manaRegen + " party mana regen,";
-        }
+        if (manaRegen != 0f) {          spellDescriptionText += " for " + manaRegen + " party mana regen,"; }
 
-        if (manaCost != 0)
-        {
-            spellDescriptionText += " costing " + manaCost + " mana,";
-        }
+        if (manaCost != 0) {            spellDescriptionText += " costing " + manaCost + " mana,";  }
 
 
-        if (castingCharacterBehaviors.Count == 1)
+        castingCharactersText = castingCharacterBehaviors[0].characterName;
+        if (castingCharacterBehaviors.Count == 2)
         {
-            castingCharactersText = castingCharacterBehaviors[0].characterName;
-        }
-        else if (castingCharacterBehaviors.Count == 2)
-        {
-            castingCharactersText = castingCharacterBehaviors[0].characterName + " and " + castingCharacterBehaviors[1].characterName;
+            castingCharactersText += " and " + castingCharacterBehaviors[1].characterName;
         }
     }
 
@@ -333,10 +314,7 @@ public class FriendlySpellBehavior : SpellBehavior
 
     public void applyDamageModifier(float damageModifer)
     {
-        //TODO don't do this
-        int baseDamage = damage;
-        damage = (int)((float)damage * damageModifer);
+        damage = baseDamage * damageModifer;
         setUpStringStats();
-        damage = baseDamage;
     }
 }

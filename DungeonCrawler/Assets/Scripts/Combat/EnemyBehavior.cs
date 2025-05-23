@@ -7,7 +7,6 @@ public class EnemyBehavior : CharacterBehavior
     [SerializeField] List<EnemySpellStats> spellsToChooseFrom = new List<EnemySpellStats>();
     private int curSpellIndex = 0;
 
-
     override public void SetUp()
     {
         base.SetUp();

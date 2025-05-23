@@ -3,23 +3,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Unity.VisualScripting;
+using NUnit.Framework;
 
 public enum E_GameMode
 {
     LEVEL,
-    COMBAT
+    COMBAT,
+    MENU
 }
 
 public class GameManagerBehavior : MonoBehaviour
 {
     private static GameManagerBehavior instance;
     public static E_GameMode gameMode = E_GameMode.LEVEL;
-    public static bool inMenu = false;
+    public static E_GameMode lastGameMode = E_GameMode.LEVEL;
     static bool loading = false;
     static List<string> scenesToLoad;
     static int curSceneToLoad;
     AsyncOperation asyncLoad;
+    static string curLevel = "Level1";
     static GameObject combatData;
     static GameObject levelData;
     public static GameObject menuData;
@@ -33,7 +35,6 @@ public class GameManagerBehavior : MonoBehaviour
 	private static AudioSource popSound;
     private static AudioSource levelTheme;
     private static AudioSource combatTheme;
-    private static bool hasCompletedTutorial = false;
 
 	private void Awake()
     {
@@ -57,25 +58,15 @@ public class GameManagerBehavior : MonoBehaviour
         instance = this;
         curSceneToLoad = 0;
 
+        SetUp();
+    }
+
+    public static void SetUp()
+    {
         curScene = SceneManager.GetActiveScene().name;
         getAudio();
 
-		if (curScene == "Combat")
-        {
-            ambience.Pause();
-            levelTheme.Pause();
-			menuMusic.Pause();
-			combatTheme.Play();
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			Debug.Log("starting in combat");
-            gameMode = E_GameMode.COMBAT;
-            combatData = GameObject.FindWithTag("CombatData");
-            combatOnlyMode = true;
-            // combat already loaded, don't have to load it
-            enterCombat(null);
-        }
-        if (curScene == "CombatTutorial")
+        if (curScene == "Combat")
         {
             ambience.Pause();
             levelTheme.Pause();
@@ -83,65 +74,64 @@ public class GameManagerBehavior : MonoBehaviour
             combatTheme.Play();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Debug.Log("starting in combat tutorial");
+            Debug.Log("starting in combat");
+            lastGameMode = E_GameMode.COMBAT;
             gameMode = E_GameMode.COMBAT;
             combatData = GameObject.FindWithTag("CombatData");
             combatOnlyMode = true;
-            // combat already loaded, don't have to load it
-            enterCombat(null);
+            enterCombat(null, CombatManagerBehavior.getSimulateTutorial());
         }
         else if (curScene.Contains("Level") || curScene == "DesignPlayground")
         {
             ambience.Play();
-			levelTheme.Play();
-			menuMusic.Pause();
+            levelTheme.Play();
+            menuMusic.Pause();
             combatTheme.Pause();
-			Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-			Debug.Log("starting in level");
+            Debug.Log("starting in level");
+            lastGameMode = E_GameMode.LEVEL;
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
-            if (curScene == "Level1" ) // only load tutorial on Level 1
-            {
-                scenesToLoad = new List<string> { "CombatTutorial", "Menu" };
-            }
-            else
-            {
-                scenesToLoad = new List<string> { "Combat", "Menu" };
-                hasCompletedTutorial = true;
-            }
+            scenesToLoad = new List<string> { "Combat", "Menu" };
             GameObject.FindWithTag("FirstPerson").GetComponent<FirstPerson>().setUp();
-
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
         else if (curScene == "Menu")
         {
-            inMenu = true;
             ambience.Pause();
-			menuMusic.Play();
-			levelTheme.Pause();
-			combatTheme.Pause();
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			Debug.Log("starting in menu");
-            gameMode = E_GameMode.LEVEL;
+            menuMusic.Play();
+            levelTheme.Pause();
+            combatTheme.Pause();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("starting in menu");
+            lastGameMode = E_GameMode.LEVEL;
+            gameMode = E_GameMode.MENU;
             menuData = GameObject.FindWithTag("MenuData");
-            scenesToLoad = new List<string> { "Level1", "CombatTutorial"};
+            scenesToLoad = new List<string> { "Level1", "CombatTutorial" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
     }
 
-    public void updateSettings()
+    public static void gameReset()
     {
-        modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
-        sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
+        enterMenu();
+        lastGameMode = E_GameMode.LEVEL;
+        gameMode = E_GameMode.MENU;
+        SceneManager.UnloadSceneAsync(curLevel);
+        curLevel = "Level1";
+        levelData = null;
+        SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
     }
 
     // Update is called once per frame
     void Update()
     {
+        curScene = SceneManager.GetActiveScene().name;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             enterMenu();
@@ -156,8 +146,15 @@ public class GameManagerBehavior : MonoBehaviour
         getRootData();
     }
 
+    public void updateSettings()
+    {
+        modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
+        sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
+    }
+
+
     // start combat
-    public static void enterCombat(CombatEncounterBehavior encounter)
+    public static void enterCombat(CombatEncounterBehavior encounter, bool enterTutorial = false)
     {
         ambience.Pause();
 		menuMusic.Pause();
@@ -172,23 +169,23 @@ public class GameManagerBehavior : MonoBehaviour
             menuData.SetActive(false);
             combatData.SetActive(true);
         }
+        lastGameMode = gameMode;
         gameMode = E_GameMode.COMBAT;
-        if (hasCompletedTutorial)
+        if (enterTutorial)
         {
-            CombatManagerBehavior.inTutorial = false;
-            CombatManagerBehavior.startBattle(encounter);
+            CombatManagerBehavior.inTutorial = true;
+            CombatManagerBehavior.startTutorial();
 
         } 
         else
         {
-            CombatManagerBehavior.inTutorial = true;
-            CombatManagerBehavior.startBattle(null, true);
+            CombatManagerBehavior.inTutorial = false;
+            CombatManagerBehavior.startBattle(encounter);
         }
-       
     }
 
     // what to do when entering the level
-    public static void enterLevel(bool inTutorialLevel = false)
+    public static void enterLevel()
     {
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
@@ -207,23 +204,13 @@ public class GameManagerBehavior : MonoBehaviour
             combatData.SetActive(false);
             menuData.SetActive(false);
             levelData.SetActive(true);
+            lastGameMode = gameMode;
             gameMode = E_GameMode.LEVEL;
-        }
-        if (inTutorialLevel)
-        {
-            combatData.SetActive(false);
-            combatData = null;
-            SceneManager.UnloadSceneAsync("CombatTutorial"); //unload tutorial, load in reg combat
-            curSceneToLoad = 0;
-            scenesToLoad = new List<string> { "Combat" };
-            instance.StartCoroutine(instance.StartLoad());
-            hasCompletedTutorial = true;
         }
     }
     
-    private static void enterMenu()
+    public static void enterMenu()
     {
-        inMenu = true;
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 		Debug.Log("Enter pause menu");
@@ -234,16 +221,20 @@ public class GameManagerBehavior : MonoBehaviour
 		levelData.SetActive(false);
         combatData.SetActive(false);
         menuData.SetActive(true);
+        if (gameMode != E_GameMode.MENU)
+        {
+            lastGameMode = gameMode;
+        }
+        gameMode = E_GameMode.MENU;
 
     }
 
     // what to do when leaving menu
     public static void leaveMenu()
     {
-        inMenu = false;
         Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
-		if (gameMode == E_GameMode.LEVEL)
+		if (lastGameMode == E_GameMode.LEVEL)
         {
             DebugBehavior.updateLog("RE-ENTER LEVEL");
 			menuMusic.Pause();
@@ -267,6 +258,8 @@ public class GameManagerBehavior : MonoBehaviour
             menuData.SetActive(false);
             combatData.SetActive(true);
         }
+        gameMode = lastGameMode;
+        lastGameMode = E_GameMode.MENU;
     }
 
     public static void changeLevels(string levelName)
@@ -274,6 +267,7 @@ public class GameManagerBehavior : MonoBehaviour
         Scene curScene = levelData.scene;
         levelData.SetActive(false);
         levelData = null;
+        curLevel = levelName;
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
         SceneManager.UnloadSceneAsync(curScene);
@@ -346,13 +340,6 @@ public class GameManagerBehavior : MonoBehaviour
             {
                 Debug.Log("updated combat data");
                 combatData.SetActive(false);
-                //temp hack
-                CharstatusPortrait[] portraits = GameObject.FindWithTag("levelCharPanel").GetComponentsInChildren<CharstatusPortrait>(); // temp
-                foreach (CharstatusPortrait portrait in portraits)
-                {
-                    //Debug.Log("reset");
-                    portrait.setUpCharacterUI();
-                }
             }
         }
         if (levelData == null)
@@ -361,7 +348,7 @@ public class GameManagerBehavior : MonoBehaviour
             if (levelData != null)
             {
                 Debug.Log("updated level data");
-                levelData.SetActive(gameMode == E_GameMode.LEVEL && !inMenu);
+                levelData.SetActive(gameMode == E_GameMode.LEVEL);
                 GameObject[] fps = GameObject.FindGameObjectsWithTag("FirstPerson");
                 foreach(GameObject fp in fps)
                 {
@@ -378,7 +365,7 @@ public class GameManagerBehavior : MonoBehaviour
             if (menuData != null)
             {
                 Debug.Log("updated menu data");
-                menuData.SetActive(false);
+                menuData.SetActive(gameMode == E_GameMode.MENU);
                 modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
                 sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
             }

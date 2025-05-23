@@ -54,7 +54,10 @@ public class StateManagerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        stateTick();   
+        if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
+        {
+            stateTick();
+        }
     }
 
     // complete state effects and update if needed
@@ -105,6 +108,13 @@ public class StateManagerBehavior : MonoBehaviour
                 Debug.Log("Invalid state" + curState);
                 break;
         }
+    }
+
+    public static void reset()
+    {
+        curState = E_State.PLAYER_SPELL_SELECTION;
+        curEnemyIndex = 0;
+        bufferTimer = 0f;
     }
 
     // update the buffer timer and go to the next state once past goalWaitTime

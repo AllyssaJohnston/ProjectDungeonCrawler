@@ -11,7 +11,7 @@ public class CombatEntranceTrigger : MonoBehaviour
         {
             Debug.Log("Entering combat!");
             if (selfDestruct) { Destroy(gameObject); }
-            GameManagerBehavior.enterCombat(encounter);
+            GameManagerBehavior.enterCombat(encounter, tutorial);
         }
     }
 }

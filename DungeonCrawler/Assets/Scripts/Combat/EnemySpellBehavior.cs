@@ -18,7 +18,7 @@ public class EnemySpellStats
     public bool damageAllEnemies = false;
     public E_ENEMY_SPELL_TARGETING characterTargeting;
 
-    public string spellDescriptionText;
+    [HideInInspector] public string spellDescriptionText;
 
     public void setUpStringStats()
     {

@@ -12,7 +12,8 @@ public class SpellBehavior : MonoBehaviour
 {
     [Header("Spell details")]
     public string spellName = "unnamed";
-    public int damage = 10;
+    [HideInInspector] public float baseDamage;
+    public float damage = 10;
     public int heal = 0;
     public E_SPELL_TARGETING targeting = E_SPELL_TARGETING.SINGLE_ENEMY;
 
@@ -21,6 +22,7 @@ public class SpellBehavior : MonoBehaviour
 
     private void Start()
     {
+        baseDamage = damage;
         setUpStringStats();
     }
 

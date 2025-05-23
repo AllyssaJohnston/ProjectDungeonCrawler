@@ -26,7 +26,7 @@ public class CharstatusPortrait : MonoBehaviour
         }
     }
 
-    public void setUpCharacterUI() 
+    private void setUpCharacterUI() 
     {
         List<FriendlyBehavior> party = new List<FriendlyBehavior>();
         party = CombatManagerBehavior.getParty();
