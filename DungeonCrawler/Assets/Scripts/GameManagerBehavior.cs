@@ -388,11 +388,15 @@ public class GameManagerBehavior : MonoBehaviour
         cheats = new CheatCode[1];
         cheatInputProgression = new int[cheats.Length];
 
-        cheats[0].onActivate = () => Debug.Log("Cheat Activated");
+        cheats[0].onActivate = CombatManagerBehavior.winCombatCheat;
         cheats[0].sequence = new KeyCode[]
         {
-            KeyCode.Semicolon,
-            KeyCode.U,
+            KeyCode.Backslash,
+            KeyCode.N,
+            KeyCode.O,
+            KeyCode.C,
+            KeyCode.O,
+            KeyCode.M,
         };
     }
 
@@ -408,6 +412,7 @@ public class GameManagerBehavior : MonoBehaviour
                 cheatProgressed[i] = true;
                 if (cheatInputProgression[i] >= cheats[i].sequence.Length)
                 {
+                    Debug.Log($"Activating cheat #{i}");
                     cheats[i].onActivate();
                     cheatInputProgression[i] = 0;
                 }
