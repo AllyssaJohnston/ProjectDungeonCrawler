@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 
 // Singleton
@@ -75,9 +74,9 @@ public class CombatManagerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        clickBufferTimer += Time.deltaTime;
         if (GameManagerBehavior.gameMode == E_GameMode.COMBAT)
         {
+            clickBufferTimer += Time.deltaTime;
             checkCombatStatus();
             getInput();
         }
@@ -194,12 +193,17 @@ public class CombatManagerBehavior : MonoBehaviour
         Debug.Log("resetting combat");
         foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
+            character.gameObject.transform.parent.gameObject.SetActive(true);
             character.reset();
         }
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {
+            character.gameObject.transform.parent.gameObject.SetActive(true);
             character.reset();
         }
+        curSpellToCast = null;
+        StateManagerBehavior.reset();
+        GameManagerBehavior.gameReset();
     }
 
     // called at the start of each combat
@@ -221,6 +225,7 @@ public class CombatManagerBehavior : MonoBehaviour
     private static void battleSetUp(CombatEncounterBehavior inputCombatData)
     {
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
+        clearOldEnemies();
         if (inputCombatData == null)
         {
             useDefaultEnemies();
@@ -240,6 +245,7 @@ public class CombatManagerBehavior : MonoBehaviour
             character.gameObject.transform.parent.gameObject.SetActive(character.inTutorial || (!inTutorial));
             character.startBattle();
         }
+        
 
         PartySpellManagerBehavior.updateSpells(inTutorial);
         PartySpellManagerBehavior.UpdateSpellOrder();
@@ -247,32 +253,35 @@ public class CombatManagerBehavior : MonoBehaviour
         StateManagerBehavior.StartBattle();
     }
 
-    private static void useDefaultEnemies()
+    private static void clearOldEnemies()
     {
         // reset so that you don't keep adding enemies
         enemyCharacterBehaviors.Clear();
-        foreach (GameObject character in instance.inputEnemyCharacters)
+        foreach (EnemyBehavior defaultEnemy in instance.enemyCharacterHolder.GetComponentsInChildren<EnemyBehavior>())
         {
-            enemyCharacterBehaviors.Add(character.GetComponent<EnemyBehavior>());
+            Destroy(defaultEnemy.gameObject.transform.parent.gameObject);
+        }
+    }
+
+    private static void useDefaultEnemies()
+    {
+        // copy default enemies
+        foreach (GameObject template in instance.inputEnemyCharacters)
+        {
+            GameObject copyContainer = Instantiate(template);
+            RectTransform enemyContainerRect = copyContainer.GetComponent<RectTransform>();
+            Vector3 scale = enemyContainerRect.localScale;
+            copyContainer.transform.SetParent(instance.enemyCharacterHolder.transform);
+            copyContainer.transform.localScale = scale;
+            enemyCharacterBehaviors.Add(copyContainer.GetComponentInChildren<EnemyBehavior>());
         }
     }
 
     private static void createEnemies(CombatEncounterBehavior inputCombatData)
     {
         Debug.Log("create enemeies");
-        //clear old enemies
-        foreach (GameObject defaultEnemy in instance.inputEnemyCharacters)
-        {
-            Destroy(defaultEnemy.transform.parent.gameObject);
-        }
-        enemyCharacterBehaviors.Clear();
-        instance.inputEnemyCharacters.Clear();
-        foreach (EnemyBehavior defaultEnemy in instance.enemyCharacterHolder.GetComponentsInChildren<EnemyBehavior>())
-        {
-            Destroy(defaultEnemy.gameObject.transform.parent.gameObject);
-        }
 
-        //create new enemies
+        // create new enemies
         foreach (EnemyStats curEnemyStat in inputCombatData.enemies)
         {
             GameObject enemyContainer = Instantiate<GameObject>(instance.enemyContainerTemplate);
@@ -294,7 +303,8 @@ public class CombatManagerBehavior : MonoBehaviour
         {
             if (died)
             {
-                instance.StartCoroutine(exitToMainMenu());
+                instance.StartCoroutine(showYouDiedScreen());
+                reset();
             }
             else
             {
@@ -303,15 +313,11 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
-    private static IEnumerator exitToMainMenu()
+    private static IEnumerator showYouDiedScreen()
     {
 		youDiedScreen.SetActive(true);
         yield return new WaitForSeconds(2);
         youDiedScreen.SetActive(false);
-        // go to main menu
-        reset();
-        SceneManager.LoadScene("Menu");
-        GameManagerBehavior.enterLevel();
     }
 
     public static void OnNextState(E_State oldState, E_State nextState)
@@ -516,7 +522,7 @@ public class CombatManagerBehavior : MonoBehaviour
                 StateManagerBehavior.InteruptState();
                 StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
             }
-            if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
+            else if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
             {
                 StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);
             }

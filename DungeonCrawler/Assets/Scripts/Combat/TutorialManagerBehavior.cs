@@ -4,7 +4,7 @@ public enum E_Tutorial_Action
 {
     CLICK_TO_CONTINUE = 0,
     CLICK_BLAST_CURSES = 1,
-    CLICK_ENGERGIZE = 2,
+    CLICK_ENERGIZE = 2,
     CLICK_DEATHS_KISS = 3,
     CLICK_END_TURN = 4,
     CLICK_ENEMY_TARGET = 5,
@@ -95,7 +95,7 @@ public class TutorialManagerBehavior : MonoBehaviour
             case E_Tutorial_Action.CLICK_BLAST_CURSES:
                 isValid =  spell.gameObject == instance.blastCursesSpell;
                 break;
-            case E_Tutorial_Action.CLICK_ENGERGIZE:
+            case E_Tutorial_Action.CLICK_ENERGIZE:
                 isValid = spell.gameObject == instance.energizeSpell;
                 break;
             case E_Tutorial_Action.CLICK_DEATHS_KISS:

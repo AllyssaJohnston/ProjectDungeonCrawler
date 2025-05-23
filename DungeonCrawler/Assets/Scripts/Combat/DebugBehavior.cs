@@ -80,8 +80,6 @@ public class DebugBehavior : MonoBehaviour
             case E_State.ENEMY_BUFFER:
                 updateLog(CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex].characterName + " is choosing their attack...");
                 break;
-            case E_State.ENEMY_END_TURN_BUFFER:
-                break;
             default:
                 break;
 
