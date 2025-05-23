@@ -820,7 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.48584908, g: 1, b: 0.90206647, a: 1}
+  m_Color: {r: 0.9081211, g: 0.809474, b: 0.9481132, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -850,6 +850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellName: Individual Spell
+  baseDamage: 0
   damage: 5
   heal: 0
   targeting: 0
@@ -894,6 +895,7 @@ MonoBehaviour:
   secondCharacterX: -43
   secondCharacterY: 44
   doubleCharacterScale: 0.9
+  inTutorial: 0
   canCast: 0
 --- !u!1 &3282105494933913699
 GameObject:
@@ -953,7 +955,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4862745, g: 1, b: 0.9019608, a: 0.29803923}
+  m_Color: {r: 0.9411765, g: 0.79607844, b: 1, a: 0.29803923}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
