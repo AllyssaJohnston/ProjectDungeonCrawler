@@ -40,5 +40,6 @@ public class ChestUI : MonoBehaviour
 		Cursor.visible = false;
 		
 		chestPanel.SetActive(false);
+        TooltipManager.HideTooltip();
     }
 }

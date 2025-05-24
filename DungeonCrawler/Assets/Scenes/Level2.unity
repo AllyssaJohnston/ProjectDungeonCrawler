@@ -60337,6 +60337,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d06de5d8ea33e46b5514c439b14887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2016016067 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8686769242641067978, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+  m_PrefabInstance: {fileID: 2016016062}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2044241530 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6515522074850941062, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
@@ -60353,7 +60358,7 @@ PrefabInstance:
     - target: {fileID: 3207364598594228132, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: whatToFace
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2016016067}
     - target: {fileID: 6515522074850941062, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -60402,6 +60407,10 @@ PrefabInstance:
       propertyPath: LootContents.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: 'LootContents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8475f395f3f10b84f9a9eca941b009c9, type: 2}
     - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: LootContents.Array.data[0].icon
       value: 
