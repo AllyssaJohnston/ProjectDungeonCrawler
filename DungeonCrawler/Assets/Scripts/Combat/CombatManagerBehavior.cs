@@ -528,7 +528,7 @@ public class CombatManagerBehavior : MonoBehaviour
             if (StateManagerBehavior.getState() == E_State.PLAYER_BETWEEN_SPELLS_BUFFFER || StateManagerBehavior.getState() == E_State.ENEMY_END_TURN_BUFFER)
             {
                 StateManagerBehavior.InteruptState();
-                StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
+                StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);
             }
             else if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
             {
