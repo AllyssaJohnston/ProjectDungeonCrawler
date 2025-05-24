@@ -25,16 +25,21 @@ public class CharacterBehavior : MonoBehaviour
     // called at the start of first battle
     virtual public void SetUp()
     {
-        characterImageManager = GetComponent<Image>();
-        regSprite = characterImageManager.sprite;
+        if (!setUp)
+        {
+            characterImageManager = GetComponent<Image>();
+            regSprite = characterImageManager.sprite;
 
-        health = maxHealth;
+            health = maxHealth;
 
-        UI_ManagerBehavior = gameObject.GetComponent<CharacterUICreatorBehavior>();
-        UI_ManagerBehavior.SetUp(this);
-        setUp = true;
+            UI_ManagerBehavior = gameObject.GetComponent<CharacterUICreatorBehavior>();
+            UI_ManagerBehavior.SetUp(this);
+            setUp = true;
+        }
     }
 
+    public int getMaxHealth() { return maxHealth; }
+    
     public int getHealth() { return health; }
 
     // updates the character's health

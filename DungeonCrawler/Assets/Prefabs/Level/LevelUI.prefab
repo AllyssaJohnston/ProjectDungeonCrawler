@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 105600214712533412}
   m_Layer: 5
   m_Name: CharstatusPanel
-  m_TagString: Untagged
+  m_TagString: levelCharPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

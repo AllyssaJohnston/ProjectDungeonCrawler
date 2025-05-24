@@ -102,6 +102,7 @@ public class GameManagerBehavior : MonoBehaviour
             lastGameMode = E_GameMode.LEVEL;
             gameMode = E_GameMode.LEVEL;
             levelData = GameObject.FindWithTag("LevelData");
+            TooltipManager.onLevelChange();
             scenesToLoad = new List<string> { "Combat", "Menu" };
             GameObject.FindWithTag("FirstPerson").GetComponent<FirstPerson>().setUp();
             // load in scenes async so they're ready when we need them
@@ -282,6 +283,7 @@ public class GameManagerBehavior : MonoBehaviour
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
         SceneManager.UnloadSceneAsync(curScene);
+        
     }        
 
     private static void getAudio()
@@ -359,6 +361,7 @@ public class GameManagerBehavior : MonoBehaviour
             if (levelData != null)
             {
                 Debug.Log("updated level data");
+                TooltipManager.onLevelChange();
                 levelData.SetActive(gameMode == E_GameMode.LEVEL);
                 GameObject[] fps = GameObject.FindGameObjectsWithTag("FirstPerson");
                 foreach(GameObject fp in fps)

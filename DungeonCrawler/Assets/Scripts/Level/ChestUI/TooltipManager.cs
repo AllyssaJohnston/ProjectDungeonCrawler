@@ -1,11 +1,12 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TooltipManager : MonoBehaviour
 {
-    public GameObject tooltipPanel;
-    public TMP_Text tooltipDescription;
-    public TMP_Text tooltipFlavor;
+    public static GameObject tooltipPanel;
+    public static TMP_Text tooltipDescription;
+    public static TMP_Text tooltipFlavor;
     [SerializeField] int xOffset;
     [SerializeField] int yOffset;
 
@@ -20,15 +21,7 @@ public class TooltipManager : MonoBehaviour
         }
 
         instance = this;
-        Debug.Log("tooltip manager initialized");
-        tooltipPanel.SetActive(false);
-    }
-
-    public void Setup(GameObject tooltipPanel, TMP_Text tooltipText)
-    {
-        
-        
-
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void Start()
@@ -39,28 +32,40 @@ public class TooltipManager : MonoBehaviour
             return;
         }
         instance = this;
-        tooltipPanel.SetActive(false);
+        Debug.Log("tooltip manager initialized");
+        
     }
 
     void Update()
     {
-        if (tooltipPanel.activeSelf)
+        if (tooltipPanel != null && tooltipPanel.activeSelf)
         {
             Vector3 offset = new Vector3(instance.xOffset, instance.yOffset);
             tooltipPanel.transform.position = Input.mousePosition + offset;
         }
     }
 
+    public static void onLevelChange()
+    {
+        tooltipPanel = GameObject.FindGameObjectsWithTag("tooltipPanel")[0];
+        TMP_Text[] text = tooltipPanel.GetComponentsInChildren<TMP_Text>();
+        tooltipDescription = text[0];
+        tooltipFlavor = text[1];
+        tooltipPanel.SetActive(false);
+    }
+
     public static void ShowTooltip(string description, string flavor, Vector3 position)
     {
-        instance.tooltipDescription.text = description;
-        instance.tooltipFlavor.text = "*" + flavor + "*";
-        instance.tooltipPanel.transform.position = position;
-        instance.tooltipPanel.SetActive(true);
+        Debug.Log("Show");
+        tooltipDescription.text = description;
+        tooltipFlavor.text = "*" + flavor + "*";
+        tooltipPanel.transform.position = position;
+        tooltipPanel.SetActive(true);
     }
 
     public static void HideTooltip()
     {
-        instance.tooltipPanel.SetActive(false);
+        Debug.Log("hide");
+        tooltipPanel.SetActive(false);
     }
 }

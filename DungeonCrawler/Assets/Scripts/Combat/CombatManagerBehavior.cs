@@ -43,12 +43,15 @@ public class CombatManagerBehavior : MonoBehaviour
         instance = this;
         Debug.Log("combat manager initialized");
 
-		// will get called each reload from the main menu
-		friendlyCharacterBehaviors.Clear();
-        foreach (GameObject character in instance.inputFriendlyCharacters)
+        // will get called each reload from the main menu
+        if (friendlyCharacterBehaviors.Count == 0)
         {
-            character.SetActive(true);
-            friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
+            Debug.Log("Setting up characters");
+            foreach (GameObject character in instance.inputFriendlyCharacters)
+            {
+                character.SetActive(true);
+                friendlyCharacterBehaviors.Add(character.GetComponent<FriendlyBehavior>());
+            }
         }
         youDiedScreen = GameObject.FindWithTag("YouDead");
         youDiedScreen.SetActive(false);
@@ -62,7 +65,7 @@ public class CombatManagerBehavior : MonoBehaviour
             return;
         }
         instance = this;
-        return;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private CombatManagerBehavior() { }
