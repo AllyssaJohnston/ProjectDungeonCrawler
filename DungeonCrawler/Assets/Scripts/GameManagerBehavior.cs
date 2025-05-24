@@ -158,10 +158,21 @@ public class GameManagerBehavior : MonoBehaviour
         getRootData();
     }
 
-    public void updateSettings()
+    public static void updateSettings()
     {
         modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
-        sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
+        Slider[] sliders = menuData.GetComponentsInChildren<Slider>(true);
+        foreach (Slider slider in sliders)
+        {
+            if (slider.gameObject.tag == "lookSensitivity")
+            {
+                sensSlider = slider.value;
+            }
+            else if (slider.gameObject.tag == "combatWaitTime")
+            {
+                StateManagerBehavior.waitTimeModifier = slider.value;
+            }
+        }
     }
 
 
@@ -223,22 +234,25 @@ public class GameManagerBehavior : MonoBehaviour
     
     public static void enterMenu()
     {
-		Cursor.lockState = CursorLockMode.None;
-		Cursor.visible = true;
-		Debug.Log("Enter pause menu");
-        ambience.Pause();
-		menuMusic.Play();
-        levelTheme.Pause();
-        combatTheme.Pause();
-		levelData.SetActive(false);
-        combatData.SetActive(false);
-        menuData.SetActive(true);
-        if (gameMode != E_GameMode.MENU)
+        if (!combatOnlyMode)
         {
-            lastGameMode = gameMode;
-        }
-        gameMode = E_GameMode.MENU;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("Enter pause menu");
+            ambience.Pause();
+            menuMusic.Play();
+            levelTheme.Pause();
+            combatTheme.Pause();
+            levelData.SetActive(false);
+            combatData.SetActive(false);
+            menuData.SetActive(true);
+            if (gameMode != E_GameMode.MENU)
+            {
+                lastGameMode = gameMode;
+            }
+            gameMode = E_GameMode.MENU;
 
+        }
     }
 
     // what to do when leaving menu
@@ -380,8 +394,7 @@ public class GameManagerBehavior : MonoBehaviour
             {
                 Debug.Log("updated menu data");
                 menuData.SetActive(gameMode == E_GameMode.MENU);
-                modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
-                sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
+                updateSettings();
             }
         }
     }

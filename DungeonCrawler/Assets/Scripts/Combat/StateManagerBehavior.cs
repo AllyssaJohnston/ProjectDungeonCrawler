@@ -21,6 +21,7 @@ public class StateManagerBehavior : MonoBehaviour
     private static E_State curState = E_State.PLAYER_SPELL_SELECTION;
 
     private static float bufferTimer = 0f;
+    public static float waitTimeModifier = 1f;
     [SerializeField] float playerBetweenSpellsWaitTime = 1f;
     [SerializeField] float enemyActionWaitTime = 1f;
     [SerializeField] float enemyBetweenTurnsWaitTime = 1f;
@@ -117,7 +118,7 @@ public class StateManagerBehavior : MonoBehaviour
     private static void buffer(float goalWaitTime)
     {
         bufferTimer += Time.deltaTime;
-        if (bufferTimer > goalWaitTime)
+        if (bufferTimer > goalWaitTime * waitTimeModifier)
         {
             bufferTimer = 0f;
             NextState(); 
@@ -187,4 +188,5 @@ public class StateManagerBehavior : MonoBehaviour
     }
 
     public static E_State getState() { return curState; }
+
 }
