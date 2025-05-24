@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -191,6 +192,23 @@ public class CombatManagerBehavior : MonoBehaviour
                         }
                     }
                 }
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("space");
+            switch (StateManagerBehavior.getState())
+            {
+                case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
+                case E_State.PLAYER_END_TURN_BUFFER:
+                case E_State.ENEMY_BUFFER:
+                case E_State.BETWEEN_ENEMIES_BUFFER:
+                case E_State.ENEMY_ACTION:
+                case E_State.ENEMY_END_TURN_BUFFER:
+                    StateManagerBehavior.InteruptState();
+                    break;
+                default:
+                    break;
             }
         }
     }
