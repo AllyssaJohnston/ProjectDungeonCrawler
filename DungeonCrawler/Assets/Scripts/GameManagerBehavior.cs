@@ -361,8 +361,8 @@ public class GameManagerBehavior : MonoBehaviour
             if (levelData != null)
             {
                 Debug.Log("updated level data");
-                levelData.SetActive(gameMode == E_GameMode.LEVEL);
                 TooltipManager.onLevelChange();
+                levelData.SetActive(gameMode == E_GameMode.LEVEL);
                 GameObject[] fps = GameObject.FindGameObjectsWithTag("FirstPerson");
                 foreach(GameObject fp in fps)
                 {

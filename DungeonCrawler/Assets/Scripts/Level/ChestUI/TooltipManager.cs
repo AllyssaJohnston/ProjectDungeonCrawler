@@ -21,15 +21,7 @@ public class TooltipManager : MonoBehaviour
         }
 
         instance = this;
-        tooltipPanel.SetActive(false);
         DontDestroyOnLoad(this.gameObject);
-    }
-
-    public void Setup(GameObject tooltipPanel, TMP_Text tooltipText)
-    {
-        
-        
-
     }
 
     public void Start()
@@ -46,7 +38,7 @@ public class TooltipManager : MonoBehaviour
 
     void Update()
     {
-        if (tooltipPanel.activeSelf)
+        if (tooltipPanel != null && tooltipPanel.activeSelf)
         {
             Vector3 offset = new Vector3(instance.xOffset, instance.yOffset);
             tooltipPanel.transform.position = Input.mousePosition + offset;

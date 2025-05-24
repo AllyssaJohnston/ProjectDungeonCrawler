@@ -1,51 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3186740251200353194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2754915012192443631}
-  - component: {fileID: 6979669958188227146}
-  m_Layer: 0
-  m_Name: TooltipManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2754915012192443631
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3186740251200353194}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 222.32712, y: 125.43532, z: -0.007480189}
-  m_LocalScale: {x: 0.63624996, y: 0.63624996, z: 0.63624996}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8126585704324134629}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6979669958188227146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3186740251200353194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff7834c12f08ab041a2d707b7a240c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xOffset: 120
-  yOffset: -15
 --- !u!1 &4147034894910084424
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +186,6 @@ Transform:
   - {fileID: 4860076063636272866}
   - {fileID: 2066828952843011808}
   - {fileID: 5145286338966880439}
-  - {fileID: 2754915012192443631}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4251591189163050899
@@ -460,7 +413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8475800333409956216, guid: 48220752893ceb64fbf9ca2b999e96f0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 69
       objectReference: {fileID: 0}
     - target: {fileID: 8475800333409956216, guid: 48220752893ceb64fbf9ca2b999e96f0, type: 3}
       propertyPath: m_LocalPosition.z
