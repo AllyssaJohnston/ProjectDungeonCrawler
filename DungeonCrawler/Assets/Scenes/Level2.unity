@@ -195,7 +195,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -56572,7 +56572,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -60224,7 +60224,7 @@ PrefabInstance:
     - target: {fileID: 6917518823353449314, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: inventoryUI
       value: 
-      objectReference: {fileID: 2016016066}
+      objectReference: {fileID: 0}
     - target: {fileID: 7259857708556819282, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_Name
       value: LevelCommon
@@ -60326,17 +60326,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8238418189505899177, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
   m_PrefabInstance: {fileID: 2016016062}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2016016066 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8363969777793809639, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
-  m_PrefabInstance: {fileID: 2016016062}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0d06de5d8ea33e46b5514c439b14887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2016016067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8686769242641067978, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
