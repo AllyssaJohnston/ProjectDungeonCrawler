@@ -18,6 +18,8 @@ TagManager:
   - TutorialPanel
   - levelCharPanel
   - tooltipPanel
+  - lookSensitivity
+  - combatWaitTime
   layers:
   - Default
   - TransparentFX

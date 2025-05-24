@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -22,10 +23,16 @@ public class CombatManagerBehavior : MonoBehaviour
     [HideInInspector] public static List<FriendlyBehavior> friendlyCharacterBehaviors = new List<FriendlyBehavior>();
     [HideInInspector] public static List<EnemyBehavior> enemyCharacterBehaviors = new List<EnemyBehavior>();
     
+    //friendly damage modifier
     private static float damageModifier = 1;
+    // cur friendly spell to cast
     private static FriendlySpellBehavior curSpellToCast = null;
+    // which enemy's turn it is
+    public static int curEnemyIndex = 0;
+
     private static float clickBufferWait = .2f;
     private static float clickBufferTimer = 0f;
+
     private static GameObject youDiedScreen;
 
     [HideInInspector] public static bool inTutorial = false;
@@ -70,9 +77,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private CombatManagerBehavior() { }
 
-    public static bool loaded() { return instance != null; }
-
-    public static List<FriendlyBehavior> getParty() { return friendlyCharacterBehaviors; }
+    //public static bool loaded() { return instance != null; }
 
     // Update is called once per frame
     void Update()
@@ -85,6 +90,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    // checks if combat should end and ends it
     private static void checkCombatStatus()
     {
         // check if all characters or all enemies are dead
@@ -188,11 +194,29 @@ public class CombatManagerBehavior : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("space");
+            switch (StateManagerBehavior.getState())
+            {
+                case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
+                case E_State.PLAYER_END_TURN_BUFFER:
+                case E_State.ENEMY_BUFFER:
+                case E_State.BETWEEN_ENEMIES_BUFFER:
+                case E_State.ENEMY_ACTION:
+                case E_State.ENEMY_END_TURN_BUFFER:
+                    StateManagerBehavior.InteruptState();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     // reset all stats
     public static void reset()
     {
+        curEnemyIndex = 0;
         Debug.Log("resetting combat");
         foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
         {
@@ -209,7 +233,7 @@ public class CombatManagerBehavior : MonoBehaviour
         GameManagerBehavior.gameReset();
     }
 
-    // called at the start of each combat
+    // called at the start of each regular combat
     public static void startBattle(CombatEncounterBehavior inputCombatData)
     {
         inTutorialLevel = false;
@@ -217,6 +241,7 @@ public class CombatManagerBehavior : MonoBehaviour
         battleSetUp(inputCombatData);
     }
 
+    // called to start tutorial combat
     public static void startTutorial()
     {
         inTutorialLevel = true;
@@ -227,6 +252,7 @@ public class CombatManagerBehavior : MonoBehaviour
 
     private static void battleSetUp(CombatEncounterBehavior inputCombatData)
     {
+        curEnemyIndex = 0;
         TeamManaBehavior.setManaWithoutEffect(instance.startingMana);
         clearOldEnemies();
         if (inputCombatData == null)
@@ -254,6 +280,7 @@ public class CombatManagerBehavior : MonoBehaviour
         PartySpellManagerBehavior.UpdateSpellOrder();
         ArrowIndicatorManagerBehavior.createArrows(inTutorial);
         StateManagerBehavior.StartBattle();
+        SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
     }
 
     private static void clearOldEnemies()
@@ -316,8 +343,11 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    // called to skip combat
     public static void winCombatCheat()
     {
+        inTutorial = false;
+        inTutorialLevel = false;
         endCombat(false);
     }
 
@@ -328,6 +358,7 @@ public class CombatManagerBehavior : MonoBehaviour
         youDiedScreen.SetActive(false);
     }
 
+    // called when the state changes
     public static void OnNextState(E_State oldState, E_State nextState)
     {
         if (oldState == E_State.ENEMY_END_TURN_BUFFER && nextState == E_State.PLAYER_SPELL_SELECTION)
@@ -335,8 +366,20 @@ public class CombatManagerBehavior : MonoBehaviour
             playerStartTurn();
             enemiesStartTurn();
         }
+        switch (nextState)
+        {
+            case E_State.PLAYER_END_TURN_BUFFER:
+                curEnemyIndex = 0;
+                break;
+            case E_State.ENEMY_ACTION:
+                enemyCastSpell();
+                break;
+            default:
+                break;
+        }
     }
 
+    // updates friendly's damage by the given modifier
     public static void updateDamageModifier(float givenDamageModifier)
     {
         damageModifier = givenDamageModifier;
@@ -469,9 +512,9 @@ public class CombatManagerBehavior : MonoBehaviour
 
 
     //chooses a spell and executes it
-    public static void enemyCastSpell()
+    private static void enemyCastSpell()
     {
-        EnemyBehavior curEnemy = enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex];
+        EnemyBehavior curEnemy = enemyCharacterBehaviors[curEnemyIndex];
         if (curEnemy.canCast())
         {
             EnemySpellStats spell = curEnemy.getSpell();
@@ -507,7 +550,7 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // called at the start of the player turn
-    public static void playerStartTurn()
+    private static void playerStartTurn()
     {
         // regen mana
         TeamManaBehavior.updateMana(instance.manaRegen);
@@ -520,7 +563,7 @@ public class CombatManagerBehavior : MonoBehaviour
         PartySpellManagerBehavior.UpdateSpellOrder();
     }
 
-    // called at the end of the player turn (button click)
+    // called at the end of the player turn
     public static void playerEndTurn()
     {
         if (!inTutorial || (inTutorial && TutorialManagerBehavior.canEndTurn()))
@@ -528,7 +571,7 @@ public class CombatManagerBehavior : MonoBehaviour
             if (StateManagerBehavior.getState() == E_State.PLAYER_BETWEEN_SPELLS_BUFFFER || StateManagerBehavior.getState() == E_State.ENEMY_END_TURN_BUFFER)
             {
                 StateManagerBehavior.InteruptState();
-                StateManagerBehavior.NextState(E_State.PLAYER_SPELL_SELECTION);
+                StateManagerBehavior.NextState(E_State.PLAYER_END_TURN_BUFFER);
             }
             else if (StateManagerBehavior.getState() == E_State.PLAYER_SPELL_SELECTION)
             {
@@ -538,7 +581,7 @@ public class CombatManagerBehavior : MonoBehaviour
     }
 
     // called at the start of the enemies' turn
-    public static void enemiesStartTurn()
+    private static void enemiesStartTurn()
     {
         foreach (EnemyBehavior character in enemyCharacterBehaviors)
         {

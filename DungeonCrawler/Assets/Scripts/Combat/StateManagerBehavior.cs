@@ -20,8 +20,8 @@ public class StateManagerBehavior : MonoBehaviour
 
     private static E_State curState = E_State.PLAYER_SPELL_SELECTION;
 
-    public static int curEnemyIndex = 0;
     private static float bufferTimer = 0f;
+    public static float waitTimeModifier = 1f;
     [SerializeField] float playerBetweenSpellsWaitTime = 1f;
     [SerializeField] float enemyActionWaitTime = 1f;
     [SerializeField] float enemyBetweenTurnsWaitTime = 1f;
@@ -74,27 +74,25 @@ public class StateManagerBehavior : MonoBehaviour
                 buffer(instance.playerBetweenSpellsWaitTime);
                 break;
             case E_State.PLAYER_END_TURN_BUFFER:
-                // prep/reset enemies for next round
-                curEnemyIndex = 0;
                 buffer(instance.playerEndTurnBuffer);
                 break;
             case E_State.ENEMY_BUFFER:
+                if (CombatManagerBehavior.enemyCharacterBehaviors[CombatManagerBehavior.curEnemyIndex].canCast() == false)
+                {
+                    NextState(E_State.ENEMY_ACTION);
+                    return;
+                }
                 buffer(instance.enemyActionWaitTime);
                 break;
             case E_State.BETWEEN_ENEMIES_BUFFER:
                 buffer(instance.enemyBetweenTurnsWaitTime);
                 break;
             case E_State.ENEMY_ACTION:
-                CombatManagerBehavior.enemyCastSpell();
-                if (curEnemyIndex < CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
+                if (CombatManagerBehavior.curEnemyIndex < CombatManagerBehavior.enemyCharacterBehaviors.Count - 1)
                 {
                     // continue rotating through enemies
-                    curEnemyIndex++;
+                    CombatManagerBehavior.curEnemyIndex++;
                     NextState(E_State.BETWEEN_ENEMIES_BUFFER);
-                    if (CombatManagerBehavior.enemyCharacterBehaviors[curEnemyIndex].canCast() == false)
-                    {
-                        InteruptState();
-                    }
                     return;
                 }
                 NextState();
@@ -113,7 +111,6 @@ public class StateManagerBehavior : MonoBehaviour
     public static void reset()
     {
         curState = E_State.PLAYER_SPELL_SELECTION;
-        curEnemyIndex = 0;
         bufferTimer = 0f;
     }
 
@@ -121,7 +118,7 @@ public class StateManagerBehavior : MonoBehaviour
     private static void buffer(float goalWaitTime)
     {
         bufferTimer += Time.deltaTime;
-        if (bufferTimer > goalWaitTime)
+        if (bufferTimer > goalWaitTime * waitTimeModifier)
         {
             bufferTimer = 0f;
             NextState(); 
@@ -131,7 +128,6 @@ public class StateManagerBehavior : MonoBehaviour
     // called at start of combat
     public static void StartBattle()
     {
-        curEnemyIndex = 0;
         bufferTimer = 0f;
         NextState(E_State.PLAYER_SPELL_SELECTION);
     }
@@ -145,6 +141,7 @@ public class StateManagerBehavior : MonoBehaviour
         CombatManagerBehavior.OnNextState(curState, nextState);
         ArrowIndicatorManagerBehavior.OnNextState(nextState);
         EndTurnButtonBehavior.OnNextState(nextState);
+        SkipBufferButtonBehavior.OnNextState(nextState);
         curState = nextState;
     }
 
@@ -191,4 +188,5 @@ public class StateManagerBehavior : MonoBehaviour
     }
 
     public static E_State getState() { return curState; }
+
 }

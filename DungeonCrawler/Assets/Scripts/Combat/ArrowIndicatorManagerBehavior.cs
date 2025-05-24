@@ -118,7 +118,7 @@ public class ArrowIndicatorManagerBehavior : MonoBehaviour
                 break;
             case E_State.ENEMY_BUFFER:
                 updateArrowVisibility();
-                updateEnemySelectionArrowVisibility(CombatManagerBehavior.enemyCharacterBehaviors[StateManagerBehavior.curEnemyIndex]);
+                updateEnemySelectionArrowVisibility(CombatManagerBehavior.enemyCharacterBehaviors[CombatManagerBehavior.curEnemyIndex]);
                 break;
             case E_State.ENEMY_END_TURN_BUFFER:
                 break;

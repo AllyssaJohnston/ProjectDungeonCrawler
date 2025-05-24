@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndTurnButtonBehavior : MonoBehaviour
+public class SkipBufferButtonBehavior : MonoBehaviour
 {
-    private static EndTurnButtonBehavior instance;
+    private static SkipBufferButtonBehavior instance;
     private static Button button;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,13 +35,9 @@ public class EndTurnButtonBehavior : MonoBehaviour
         {
             switch (nextState)
             {
-                case E_State.PLAYER_SPELL_SELECTION:
-                    // show if not in tutorial
-                    // show if in tutorial
-                    button.gameObject.SetActive(!CombatManagerBehavior.inTutorial || (CombatManagerBehavior.inTutorial && TutorialManagerBehavior.showButton()));
-                    break;
-                case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
-                case E_State.ENEMY_END_TURN_BUFFER:
+                case E_State.ENEMY_BUFFER:
+                case E_State.BETWEEN_ENEMIES_BUFFER:
+                case E_State.ENEMY_ACTION:
                     //show if not in tutorial
                     button.gameObject.SetActive(!CombatManagerBehavior.inTutorial);
                     break;
@@ -55,6 +51,6 @@ public class EndTurnButtonBehavior : MonoBehaviour
 
     public static void OnClick()
     {
-        CombatManagerBehavior.playerEndTurn();
+        StateManagerBehavior.InteruptState();
     }
 }
