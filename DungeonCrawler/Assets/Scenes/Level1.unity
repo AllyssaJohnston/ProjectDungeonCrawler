@@ -24164,6 +24164,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 2066828952843011808, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2243292444403985859, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

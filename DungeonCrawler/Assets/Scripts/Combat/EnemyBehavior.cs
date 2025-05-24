@@ -9,17 +9,19 @@ public class EnemyBehavior : CharacterBehavior
 
     override public void SetUp()
     {
-        base.SetUp();
-        friendly = false;
-        if (spellsToChooseFrom.Count == 0)
+        if (!setUp)
         {
-            Debug.Log("No spells");
+            base.SetUp();
+            friendly = false;
+            if (spellsToChooseFrom.Count == 0)
+            {
+                Debug.Log("No spells");
+            }
+            foreach (EnemySpellStats spell in spellsToChooseFrom)
+            {
+                spell.setUpStringStats();
+            }
         }
-        foreach (EnemySpellStats spell in spellsToChooseFrom)
-        {
-            spell.setUpStringStats();
-        }
-
     }
 
     public override void reset()

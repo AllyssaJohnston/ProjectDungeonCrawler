@@ -9,7 +9,9 @@ public class HealthBarManager : MonoBehaviour
     [SerializeField] Image fill;
     [SerializeField] TMP_Text numberText;
 
-    public void SetUp(int maxVal, Color color, Color textColor)
+    public void SetUp(int maxVal, Color color, Color textColor) { SetUp(maxVal, maxVal, color, textColor); }
+
+    public void SetUp(int maxVal, int  curVal, Color color, Color textColor)
     {
         slider.maxValue = maxVal;
         slider.value = maxVal;
@@ -18,13 +20,11 @@ public class HealthBarManager : MonoBehaviour
         numberText.color = textColor;
 
         fill.color = color;
-        //fill.color = gradient.Evaluate(1f);
     }
 
     public void SetValue(int value)
     {
         slider.value = value;
-        //fill.color = gradient.Evaluate(slider.normalizedValue);
         numberText.text = value.ToString();
     }
 }

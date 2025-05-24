@@ -28,14 +28,13 @@ public class CharstatusPortrait : MonoBehaviour
 
     private void setUpCharacterUI() 
     {
-        List<FriendlyBehavior> party = new List<FriendlyBehavior>();
-        party = CombatManagerBehavior.getParty();
-        if (party.Count == 0) return;
-        character = party[index];
+         
+        if (CombatManagerBehavior.friendlyCharacterBehaviors.Count == 0) return;
+        character = CombatManagerBehavior.friendlyCharacterBehaviors[index];
         character.SetUp();
         characterIcon.sprite = character.iconSprite;
-        healthBarManager.SetUp(character.getHealth(), Color.red, Color.white);
-        moraleBarManager.SetUp(character.getMorale(), Color.white, Color.black);
+        healthBarManager.SetUp(character.getMaxHealth(), Color.red, Color.white);
+        moraleBarManager.SetUp(character.getMaxMorale(), Color.white, Color.black);
         setUp = true;
     }
 }

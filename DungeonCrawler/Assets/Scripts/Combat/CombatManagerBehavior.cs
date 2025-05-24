@@ -46,6 +46,7 @@ public class CombatManagerBehavior : MonoBehaviour
         // will get called each reload from the main menu
         if (friendlyCharacterBehaviors.Count == 0)
         {
+            Debug.Log("Setting up characters");
             foreach (GameObject character in instance.inputFriendlyCharacters)
             {
                 character.SetActive(true);
@@ -64,7 +65,7 @@ public class CombatManagerBehavior : MonoBehaviour
             return;
         }
         instance = this;
-        return;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private CombatManagerBehavior() { }
