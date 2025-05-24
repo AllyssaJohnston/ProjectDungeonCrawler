@@ -48,6 +48,7 @@ public class TutorialManagerBehavior : MonoBehaviour
     {
         curPanel = 0;
         EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
+        SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
     }
 
     private void Update()
@@ -77,11 +78,13 @@ public class TutorialManagerBehavior : MonoBehaviour
             ArrowIndicatorManagerBehavior.OnNextState(StateManagerBehavior.getState());
             DebugBehavior.OnNextState(StateManagerBehavior.getState());
             EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
+            SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
         }
         if (curPanel < tutorialPanels.Length - 1)
         {
             curPanel++;
             EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
+            SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
         }
     }
 
