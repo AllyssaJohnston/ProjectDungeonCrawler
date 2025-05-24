@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using NUnit.Framework;
 
 public enum E_GameMode
 {
@@ -36,6 +35,15 @@ public class GameManagerBehavior : MonoBehaviour
     private static AudioSource levelTheme;
     private static AudioSource combatTheme;
 
+    private struct CheatCode {
+        public delegate void OnActivate();
+
+        public KeyCode[] sequence;
+        public OnActivate onActivate;
+    }
+    private static CheatCode[] cheats;
+    private static int[] cheatInputProgression;
+
 	private void Awake()
     {
         if (instance != null && instance != this)
@@ -64,6 +72,7 @@ public class GameManagerBehavior : MonoBehaviour
     public static void SetUp()
     {
         curScene = SceneManager.GetActiveScene().name;
+        setupCheats();
         getAudio();
 
         if (curScene == "Combat")
@@ -110,7 +119,7 @@ public class GameManagerBehavior : MonoBehaviour
             lastGameMode = E_GameMode.LEVEL;
             gameMode = E_GameMode.MENU;
             menuData = GameObject.FindWithTag("MenuData");
-            scenesToLoad = new List<string> { "Level1", "CombatTutorial" };
+            scenesToLoad = new List<string> { "Combat", "Level1" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -136,6 +145,8 @@ public class GameManagerBehavior : MonoBehaviour
         {
             enterMenu();
         }
+
+        progressCheats();
 
         // load scenes async
         if (loading && instance != null)
@@ -368,6 +379,51 @@ public class GameManagerBehavior : MonoBehaviour
                 menuData.SetActive(gameMode == E_GameMode.MENU);
                 modernControls = menuData.GetComponentInChildren<Toggle>(true).isOn;
                 sensSlider = menuData.GetComponentInChildren<Slider>(true).value;
+            }
+        }
+    }
+
+    private static void setupCheats()
+    {
+        cheats = new CheatCode[1];
+        cheatInputProgression = new int[cheats.Length];
+
+        cheats[0].onActivate = CombatManagerBehavior.winCombatCheat;
+        cheats[0].sequence = new KeyCode[]
+        {
+            KeyCode.Backslash,
+            KeyCode.N,
+            KeyCode.O,
+            KeyCode.C,
+            KeyCode.O,
+            KeyCode.M,
+        };
+    }
+
+    private static void progressCheats()
+    {
+        var cheatProgressed = new bool[cheats.Length];
+
+        for (int i = 0; i < cheats.Length; i++)
+        {
+            if (Input.GetKeyDown(cheats[i].sequence[cheatInputProgression[i]]))
+            {
+                cheatInputProgression[i]++;
+                cheatProgressed[i] = true;
+                if (cheatInputProgression[i] >= cheats[i].sequence.Length)
+                {
+                    Debug.Log($"Activating cheat #{i}");
+                    cheats[i].onActivate();
+                    cheatInputProgression[i] = 0;
+                }
+            }
+        }
+
+        if (Input.anyKeyDown) for (int i = 0; i < cheats.Length; i++)
+        {
+            if (!cheatProgressed[i])
+            {
+                cheatInputProgression[i] = 0;
             }
         }
     }

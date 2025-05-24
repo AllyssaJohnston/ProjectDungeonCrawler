@@ -313,6 +313,11 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    public static void winCombatCheat()
+    {
+        endCombat(false);
+    }
+
     private static IEnumerator showYouDiedScreen()
     {
 		youDiedScreen.SetActive(true);

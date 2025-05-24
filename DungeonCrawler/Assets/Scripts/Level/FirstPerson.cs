@@ -68,6 +68,14 @@ public class FirstPerson : MonoBehaviour
 
         var root = new GameObject();
         root.name = "FirstPersonWorldRoot";
+        foreach (var levelRoot in GameObject.FindGameObjectsWithTag("LevelData")) 
+        {
+            if (levelRoot.scene == this.gameObject.scene)
+            {
+                root.transform.parent = levelRoot.transform;
+                break;
+            }
+        }
 
         foreach (UnityEngine.Tilemaps.Tilemap blockTilemap in blockTilemaps)
         {
