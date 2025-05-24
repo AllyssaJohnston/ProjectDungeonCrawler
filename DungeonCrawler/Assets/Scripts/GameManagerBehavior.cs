@@ -119,7 +119,7 @@ public class GameManagerBehavior : MonoBehaviour
             lastGameMode = E_GameMode.LEVEL;
             gameMode = E_GameMode.MENU;
             menuData = GameObject.FindWithTag("MenuData");
-            scenesToLoad = new List<string> { "Level1", "CombatTutorial" };
+            scenesToLoad = new List<string> { "Combat", "Level1" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
