@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class InventoryUI : MonoBehaviour
     public GameObject inventoryPanel;
     public Transform itemSlotParent;
     public GameObject itemSlotPrefab;
+    public TextMeshProUGUI inventoryIndicatorText;
     private PlayerInventory inventory;
 
     void Start()
@@ -19,6 +21,7 @@ public class InventoryUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
         inventoryPanel.SetActive(true);
+        inventoryIndicatorText.gameObject.SetActive(true);
         ClearSlots();
 
         // Create new slots
@@ -33,8 +36,9 @@ public class InventoryUI : MonoBehaviour
     public void CloseInventory()
     {
         Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
+        Cursor.visible = false;
         inventoryPanel.SetActive(false);
+        inventoryIndicatorText.gameObject.SetActive(false);
     }
 
     private void ClearSlots()
