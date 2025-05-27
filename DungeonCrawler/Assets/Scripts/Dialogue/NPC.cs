@@ -4,17 +4,31 @@ public class NPC : MonoBehaviour
 {
     public DialogueData dialogueData;
     private bool playerInRange = false;
+    public bool finishedDialogue = false;
 
     private void Update()
     {
-        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (!finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            DialogueManager.Instance.StartDialogue(dialogueData);
+            Debug.Log("Show Dialogue");
+            DialogueManager.Instance.StartDialogue(this, dialogueData);
+        }
+        else if (finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("Show summary");
+            DialogueManager.Instance.ShowSummary(dialogueData);
+
         }
 
-        if (DialogueManager.Instance.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
+        if (!finishedDialogue && DialogueManager.Instance.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
         {
             DialogueManager.Instance.NextLine();
+        }
+        else if (finishedDialogue && DialogueManager.Instance.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
+        {
+
+            DialogueManager.Instance.EndDialogue();
+
         }
     }
 
