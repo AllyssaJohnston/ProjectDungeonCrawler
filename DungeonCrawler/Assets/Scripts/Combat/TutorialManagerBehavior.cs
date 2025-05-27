@@ -53,6 +53,13 @@ public class TutorialManagerBehavior : MonoBehaviour
         SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
     }
 
+    // force end tutorial
+    public static void endTutorial()
+    {
+        tutorialPanels[curPanel].gameObject.SetActive(false);
+        curPanel = 0;
+    }
+
     private void Update()
     {
         if (CombatManagerBehavior.inTutorial)

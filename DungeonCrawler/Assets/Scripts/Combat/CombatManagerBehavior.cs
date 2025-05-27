@@ -359,6 +359,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         inTutorial = false;
         inTutorialLevel = false;
+        TutorialManagerBehavior.endTutorial();
         endCombat(false);
     }
 
