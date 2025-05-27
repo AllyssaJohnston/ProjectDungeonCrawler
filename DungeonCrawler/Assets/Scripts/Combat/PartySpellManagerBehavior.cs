@@ -5,6 +5,7 @@ public class PartySpellManagerBehavior : MonoBehaviour
     private static PartySpellManagerBehavior instance;
     [SerializeField] GameObject viewport;
     private static FriendlySpellBehavior[] spells;
+    private static FriendlySpellBehavior[] spellsInOrder;
 
     private void Awake()
     {
@@ -25,16 +26,28 @@ public class PartySpellManagerBehavior : MonoBehaviour
             return;
         }
         instance = this;
+        spells = instance.viewport.GetComponentsInChildren<FriendlySpellBehavior>(true);
+        fetchSpellOrder();
         Debug.Log("party spell manager initialized");
+    }
+
+    public static void fetchSpellOrder()
+    {
+        spellsInOrder = new FriendlySpellBehavior[spells.Length];
+        for (int i = 0; i < spells.Length; i++)
+        {
+            spellsInOrder[i] = spells[i];
+        }
     }
 
     // Re-fetch the spells and enable/disable based on tutorial mode
     public static void updateSpells(bool tutorialMode)
     {
-        spells = instance.viewport.GetComponentsInChildren<FriendlySpellBehavior>(true);
         foreach(FriendlySpellBehavior spellBehavior in spells)
         {
             spellBehavior.gameObject.SetActive(spellBehavior.inTutorial && tutorialMode || !spellBehavior.inTutorial && !tutorialMode);
+            int i = System.Array.IndexOf(spellsInOrder, spellBehavior);
+            spellBehavior.gameObject.transform.SetSiblingIndex(i);
         }
     }
 
