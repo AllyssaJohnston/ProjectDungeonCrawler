@@ -51,7 +51,12 @@ public class FriendlyBehavior : CharacterBehavior
     override public void startBattle()
     {
         base.startBattle();
-        
+    }
+
+    public override void endBattle()
+    {
+        base.endBattle();
+
         // morale regen
         // recover whatever is greater: half of your missing morale rounded down OR 1
         int moraleDif = maxMorale - morale;

@@ -326,6 +326,15 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    // called at the end of won battles
+    private static void endBattle()
+    {
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
+        {
+            character.endBattle();
+        }
+    }
+
     // called to end combat
     private static void endCombat(bool died)
     {
@@ -339,6 +348,7 @@ public class CombatManagerBehavior : MonoBehaviour
             }
             else
             {
+                endBattle();
                 GameManagerBehavior.enterLevel();
             }
         }
