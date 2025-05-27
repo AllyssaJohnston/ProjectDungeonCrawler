@@ -281,6 +281,7 @@ public class CombatManagerBehavior : MonoBehaviour
         ArrowIndicatorManagerBehavior.createArrows(inTutorial);
         StateManagerBehavior.StartBattle();
         SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
+        HelpManagerBehavior.showButton(!inTutorial);
     }
 
     private static void clearOldEnemies()

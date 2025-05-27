@@ -253,6 +253,10 @@ public class GameManagerBehavior : MonoBehaviour
             gameMode = E_GameMode.MENU;
 
         }
+        else
+        {
+            Debug.Log("menu not loaded (combat only mode)");
+        }
     }
 
     // what to do when leaving menu
