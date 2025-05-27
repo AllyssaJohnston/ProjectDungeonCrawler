@@ -281,6 +281,7 @@ public class CombatManagerBehavior : MonoBehaviour
         ArrowIndicatorManagerBehavior.createArrows(inTutorial);
         StateManagerBehavior.StartBattle();
         SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
+        HelpManagerBehavior.showButton(!inTutorial);
     }
 
     private static void clearOldEnemies()
@@ -325,6 +326,15 @@ public class CombatManagerBehavior : MonoBehaviour
         }
     }
 
+    // called at the end of won battles
+    private static void endBattle()
+    {
+        foreach (FriendlyBehavior character in friendlyCharacterBehaviors)
+        {
+            character.endBattle();
+        }
+    }
+
     // called to end combat
     private static void endCombat(bool died)
     {
@@ -338,6 +348,7 @@ public class CombatManagerBehavior : MonoBehaviour
             }
             else
             {
+                endBattle();
                 GameManagerBehavior.enterLevel();
             }
         }
@@ -348,6 +359,7 @@ public class CombatManagerBehavior : MonoBehaviour
     {
         inTutorial = false;
         inTutorialLevel = false;
+        TutorialManagerBehavior.endTutorial();
         endCombat(false);
     }
 

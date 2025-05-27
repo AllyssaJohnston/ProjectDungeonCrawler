@@ -2,12 +2,14 @@ using UnityEngine;
 
 public enum E_Tutorial_Action
 {
+    NONE = -1,
     CLICK_TO_CONTINUE = 0,
     CLICK_BLAST_CURSES = 1,
     CLICK_ENERGIZE = 2,
     CLICK_DEATHS_KISS = 3,
     CLICK_END_TURN = 4,
     CLICK_ENEMY_TARGET = 5,
+    SHOW_HELP = 6,
 }
 
 public class TutorialManagerBehavior : MonoBehaviour
@@ -49,6 +51,13 @@ public class TutorialManagerBehavior : MonoBehaviour
         curPanel = 0;
         EndTurnButtonBehavior.OnNextState(StateManagerBehavior.getState());
         SkipBufferButtonBehavior.OnNextState(StateManagerBehavior.getState());
+    }
+
+    // force end tutorial
+    public static void endTutorial()
+    {
+        tutorialPanels[curPanel].gameObject.SetActive(false);
+        curPanel = 0;
     }
 
     private void Update()
@@ -116,7 +125,7 @@ public class TutorialManagerBehavior : MonoBehaviour
 
     public static bool canSelectEnemy()
     {
-        if (tutorialPanels[curPanel].action == E_Tutorial_Action.CLICK_ENEMY_TARGET)
+        if (tutorialPanels != null && tutorialPanels[curPanel].action == E_Tutorial_Action.CLICK_ENEMY_TARGET)
         {
             nextPanel();
             return true;
@@ -126,12 +135,16 @@ public class TutorialManagerBehavior : MonoBehaviour
 
     public static bool showButton()
     {
-        return tutorialPanels[curPanel].action == E_Tutorial_Action.CLICK_END_TURN;
+        if (tutorialPanels != null)
+        {
+            return tutorialPanels[curPanel].action == E_Tutorial_Action.CLICK_END_TURN;
+        }
+        return false;
     }
 
     public static bool canEndTurn()
     {
-        if (tutorialPanels[curPanel].action == E_Tutorial_Action.CLICK_END_TURN)
+        if (tutorialPanels != null && tutorialPanels[curPanel].action == E_Tutorial_Action.CLICK_END_TURN)
         {
             nextPanel();
             return true;

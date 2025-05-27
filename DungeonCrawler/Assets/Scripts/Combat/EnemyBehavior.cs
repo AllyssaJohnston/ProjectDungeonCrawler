@@ -33,6 +33,7 @@ public class EnemyBehavior : CharacterBehavior
     public override void startBattle()
     {
         base.startBattle();
+        health = maxHealth;
         curSpellIndex = 0;
     }
 

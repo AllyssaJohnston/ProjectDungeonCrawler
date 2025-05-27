@@ -92,7 +92,11 @@ public class CharacterBehavior : MonoBehaviour
         }
 
         castThisTurn = false;
+    }
 
+    // called at end of battle to regen
+    virtual public void endBattle()
+    {
         // health regen
         // start with a minimum of 1 health
         setHealth(Mathf.Max(health, 1));

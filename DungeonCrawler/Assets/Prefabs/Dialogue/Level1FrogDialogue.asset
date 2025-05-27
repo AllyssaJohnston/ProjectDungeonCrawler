@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level1FrogDialogue
   m_EditorClassIdentifier: 
   dialogueLines:
-  - Hello fellow mages. Im glad to see you got past those enemies. Seems you may
+  - Hello fellow mages. I'm glad to see you got past those enemies. Seems you may
     be a skilled bunch!
   - Welcome to Duolon. The land of friendship, and rocks that weirdly look like mountians.
   - Although for millennia this land was known for working together to accomplish
@@ -22,5 +22,5 @@ MonoBehaviour:
     cut off from unity! They feel anti-social! They whisper, \u2018I don\u2019t need
     anyone,\u2019 like it's strength."
   - Maybe your group can show these mages what can come by working together, and
-    hopefully stop them from turning into goblins... Its quite ugly (I don't understand
+    hopefully stop them from turning into goblins... It's quite ugly (I don't understand
     how they still are enticed to be evil).
