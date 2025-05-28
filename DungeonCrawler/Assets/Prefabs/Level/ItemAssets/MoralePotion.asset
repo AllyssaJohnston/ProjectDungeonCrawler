@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c784601e82bd2114b90a2f779615b089, type: 3}
+  m_Name: MoralePotion
+  m_EditorClassIdentifier: 
+  itemName: Morale Potion
+  icon: {fileID: 2007946780074958530, guid: 168fea6b15d4c014e9618c976edc60ea, type: 3}
+  description: Fully restores morale of all party members!
+  flavor: POP. The party feels a tingle as the bottle is opened
+  type: 1
+  amount: 100

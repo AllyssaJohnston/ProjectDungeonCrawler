@@ -7,8 +7,6 @@ public class NPC : MonoBehaviour
     private bool playerInRange = false;
     public bool finishedDialogue = false;
 
-    private bool canAdvanceDialogue = false;
-
     public static NPC activeNPC = null;
 
     private void Update()
@@ -61,13 +59,6 @@ public class NPC : MonoBehaviour
                 NPC.activeNPC = null;
             }
         }
-    }
-    
-    private IEnumerator EnableAdvanceAfterDelay()
-    {
-        canAdvanceDialogue = false;
-        yield return new WaitForSeconds(0.2f); // Adjust to fit your UX
-        canAdvanceDialogue = true;
     }
 
 }

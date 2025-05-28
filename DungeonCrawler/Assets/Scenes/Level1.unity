@@ -613,10 +613,18 @@ PrefabInstance:
       objectReference: {fileID: 6110567560063589270}
     - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: LootContents.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: 'LootContents.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8475f395f3f10b84f9a9eca941b009c9, type: 2}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: 'LootContents.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3ef376255a82ab54384d1e6355e8157b, type: 2}
+    - target: {fileID: 8531818396850305424, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: 'LootContents.Array.data[2]'
       value: 
       objectReference: {fileID: 11400000, guid: 8475f395f3f10b84f9a9eca941b009c9, type: 2}
     - target: {fileID: 9144235709468297681, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
