@@ -3,7 +3,7 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    private static DialogueManager Instance;
+    private static DialogueManager instance;
 
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;
@@ -15,8 +15,14 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) Destroy(gameObject);
-        else Instance = this;
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        curNPC = null;
+        currentIndex = 0;
     }
 
     public static bool IsDialogueActive()
@@ -28,9 +34,9 @@ public class DialogueManager : MonoBehaviour
     {
         curNPC = npc;
         currentIndex = 0;
-        Instance.dialogueBox.SetActive(true);
+        instance.dialogueBox.SetActive(true);
         isActive = true;
-        Instance.dialogueText.text = npc.dialogueData.dialogueLines[currentIndex];
+        instance.dialogueText.text = npc.dialogueData.dialogueLines[currentIndex];
     }
 
     public static void NextLine()
@@ -38,7 +44,7 @@ public class DialogueManager : MonoBehaviour
         currentIndex++;
         if (currentIndex < curNPC.dialogueData.dialogueLines.Length)
         {
-            Instance.dialogueText.text = curNPC.dialogueData.dialogueLines[currentIndex];
+            instance.dialogueText.text = curNPC.dialogueData.dialogueLines[currentIndex];
         }
         else
         {
@@ -49,8 +55,8 @@ public class DialogueManager : MonoBehaviour
 
     public static void ShowSummary(NPC npc)
     {
-        Instance.dialogueText.text = npc.dialogueData.summaryLine;
-        Instance.dialogueBox.SetActive(true);
+        instance.dialogueText.text = npc.dialogueData.summaryLine;
+        instance.dialogueBox.SetActive(true);
         isActive = true;
         currentIndex = 0;
     }
@@ -59,11 +65,12 @@ public class DialogueManager : MonoBehaviour
 
     public static void EndDialogue()
     {
-        Instance.dialogueBox.SetActive(false);
+        instance.dialogueBox.SetActive(false);
         isActive = false;
-        if (curNPC.destroyWhenFinished)
+        if (curNPC != null && curNPC.destroyWhenFinished)
         {
             Destroy(curNPC.gameObject);
+            curNPC = null;
         }
     }
 }
