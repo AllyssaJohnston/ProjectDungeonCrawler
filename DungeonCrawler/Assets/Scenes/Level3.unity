@@ -464,6 +464,7 @@ MonoBehaviour:
     spells:
     - spellName: Basic Attack
       damage: 10
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
@@ -471,6 +472,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Targeted Attack
       damage: 15
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
@@ -478,6 +480,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Demoralize All
       damage: 0
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 3
       damageAllEnemies: 1
@@ -494,6 +497,7 @@ MonoBehaviour:
     spells:
     - spellName: Torture
       damage: 10
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
@@ -501,6 +505,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Sneak Attack
       damage: 15
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
@@ -1128,20 +1133,22 @@ MonoBehaviour:
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
     characterUsedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
-    characterDeadSprite: {fileID: 0}
+    characterDeadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     imageWidth: 136
     imageHeight: 258
     maxHealth: 60
     spells:
     - spellName: Sacrifice
       damage: 10
-      heal: -5
+      selfDamage: 5
+      heal: 0
       moraleDamageToEnemies: 1
       damageAllEnemies: 1
       characterTargeting: 0
       spellDescriptionText: 
     - spellName: Taunt
       damage: 5
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 2
       damageAllEnemies: 1
@@ -1151,13 +1158,14 @@ MonoBehaviour:
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
     characterUsedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
-    characterDeadSprite: {fileID: 0}
+    characterDeadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     imageWidth: 136
     imageHeight: 258
     maxHealth: 60
     spells:
     - spellName: Suck life
       damage: 10
+      selfDamage: 0
       heal: 5
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
@@ -1342,13 +1350,14 @@ MonoBehaviour:
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
     characterUsedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
-    characterDeadSprite: {fileID: 0}
+    characterDeadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     imageWidth: 136
     imageHeight: 258
     maxHealth: 60
     spells:
     - spellName: Torture
       damage: 10
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
@@ -1356,6 +1365,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Taunt
       damage: 5
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 2
       damageAllEnemies: 1
@@ -1365,13 +1375,14 @@ MonoBehaviour:
     characterSprite: {fileID: 6897479667268090689, guid: f7e0cff87e2b90c438dd2ac363fcf180, type: 3}
     characterDamagedSprite: {fileID: -21820133214090555, guid: c9d6ae93edc365648ade9017bfddfe95, type: 3}
     characterUsedSprite: {fileID: -4608643783504783529, guid: 8c95cbc7a0ec37b4b9c7bbd38f50b48a, type: 3}
-    characterDeadSprite: {fileID: 0}
+    characterDeadSprite: {fileID: 766768464754440925, guid: daa92350b9ac34f4e809fa2eedef8c14, type: 3}
     imageWidth: 136
     imageHeight: 258
     maxHealth: 60
     spells:
     - spellName: Mischievous Jab
       damage: 15
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
