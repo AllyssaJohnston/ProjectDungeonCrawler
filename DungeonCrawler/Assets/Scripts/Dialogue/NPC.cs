@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
@@ -6,31 +7,37 @@ public class NPC : MonoBehaviour
     private bool playerInRange = false;
     public bool finishedDialogue = false;
 
+    private bool canAdvanceDialogue = false;
+
+    public static NPC activeNPC = null;
+
     private void Update()
     {
-        if (!finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E))
+        if (NPC.activeNPC != this) return; // Only active NPC responds
+
+        if (!finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.Instance.IsDialogueActive())
         {
-            Debug.Log("Show Dialogue");
-            DialogueManager.Instance.StartDialogue(this, dialogueData);
+            DialogueManager.Instance.StartDialogue(this);
         }
-        else if (finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E))
+        else if (finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.Instance.IsDialogueActive())
         {
-            Debug.Log("Show summary");
-            DialogueManager.Instance.ShowSummary(dialogueData);
-
+            DialogueManager.Instance.ShowSummary(this);
         }
 
-        if (!finishedDialogue && DialogueManager.Instance.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
+        if (DialogueManager.Instance.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
         {
-            DialogueManager.Instance.NextLine();
-        }
-        else if (finishedDialogue && DialogueManager.Instance.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
-        {
-
-            DialogueManager.Instance.EndDialogue();
-
+            if (!finishedDialogue)
+            {
+                DialogueManager.Instance.NextLine(this);
+            }
+            else
+            {
+                DialogueManager.Instance.EndDialogue();
+            }
         }
     }
+
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -38,6 +45,7 @@ public class NPC : MonoBehaviour
         {
             playerInRange = true;
             Debug.Log("playerInRange: " + playerInRange);
+            NPC.activeNPC = this;
         }
     }
 
@@ -47,6 +55,19 @@ public class NPC : MonoBehaviour
         {
             playerInRange = false;
             DialogueManager.Instance.EndDialogue();
+            Debug.Log("playerInRange: " + playerInRange);
+            if (NPC.activeNPC == this)
+            {
+                NPC.activeNPC = null;
+            }
         }
     }
+    
+    private IEnumerator EnableAdvanceAfterDelay()
+    {
+        canAdvanceDialogue = false;
+        yield return new WaitForSeconds(0.2f); // Adjust to fit your UX
+        canAdvanceDialogue = true;
+    }
+
 }
