@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Potion", menuName = "Items/Potion")]
 public class Potion : Item
 {
-    public enum PotionType { Health, Mana }
+    public enum PotionType { Health, Morale }
     public PotionType type;
     public int amount;
 
@@ -37,9 +37,28 @@ public class Potion : Item
                 }
 
                 break;
-            case PotionType.Mana:
+            case PotionType.Morale:
                 Debug.Log($"Restored {amount} MP.");
+                foreach (FriendlyBehavior character in CombatManagerBehavior.friendlyCharacterBehaviors)
+                {
+                    Debug.Log("For each char");
+                    character.updateMorale(amount);
+                    GameObject charstatusPanel = GameObject.Find("CharstatusPanel");
+                    if (charstatusPanel != null)
+                    {
+                        Debug.Log("Found character portrait ui");
+                        foreach (Transform characterTransform in charstatusPanel.transform)
+                        {
+                            Debug.Log("Updating character portrait ui");
+                            characterTransform.GetComponent<CharstatusPortrait>().moraleBarManager.SetValue(character.getMorale());
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError("CharstatusPanel not found!");
+                    }
 
+                }
                 break;
         }
     }
