@@ -2622,6 +2622,7 @@ MonoBehaviour:
     spells:
     - spellName: Basic Attack
       damage: 10
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
@@ -2629,6 +2630,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Targeted Attack
       damage: 15
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
@@ -2636,6 +2638,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Demoralize All
       damage: 0
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 3
       damageAllEnemies: 1
@@ -2652,6 +2655,7 @@ MonoBehaviour:
     spells:
     - spellName: Torture
       damage: 10
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
@@ -2659,6 +2663,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Sneak Attack
       damage: 15
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
@@ -5294,6 +5299,7 @@ MonoBehaviour:
     spells:
     - spellName: Torture
       damage: 10
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 1
@@ -5301,6 +5307,7 @@ MonoBehaviour:
       spellDescriptionText: 
     - spellName: Taunt
       damage: 5
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 2
       damageAllEnemies: 1
@@ -5317,6 +5324,7 @@ MonoBehaviour:
     spells:
     - spellName: Mischievous Jab
       damage: 15
+      selfDamage: 0
       heal: 0
       moraleDamageToEnemies: 0
       damageAllEnemies: 0
@@ -60237,6 +60245,10 @@ PrefabInstance:
     - target: {fileID: 2619835680712289181, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102599388386723026, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
+      propertyPath: m_VertexColorAlwaysGammaSpace
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3138726101685015913, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x
