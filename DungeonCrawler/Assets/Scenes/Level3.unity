@@ -3151,6 +3151,10 @@ PrefabInstance:
       propertyPath: whatToFace
       value: 
       objectReference: {fileID: 2016016067}
+    - target: {fileID: 5245266555841062229, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: whatToFace
+      value: 
+      objectReference: {fileID: 2016016067}
     - target: {fileID: 6515522074850941062, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: m_LocalPosition.x
       value: -13.5
@@ -3445,6 +3449,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 813819801}
     m_Modifications:
     - target: {fileID: 3207364598594228132, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: whatToFace
+      value: 
+      objectReference: {fileID: 2016016067}
+    - target: {fileID: 5245266555841062229, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: whatToFace
       value: 
       objectReference: {fileID: 2016016067}
@@ -101175,6 +101183,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 813819801}
     m_Modifications:
     - target: {fileID: 3207364598594228132, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
+      propertyPath: whatToFace
+      value: 
+      objectReference: {fileID: 2016016067}
+    - target: {fileID: 5245266555841062229, guid: 6ff3980f157824e4a9877d032936b070, type: 3}
       propertyPath: whatToFace
       value: 
       objectReference: {fileID: 2016016067}

@@ -17,7 +17,7 @@ public class ChestBehavior : MonoBehaviour
 
 	void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         if (chestUI == null) chestUI = FindFirstObjectByType<ChestUI>();
     }

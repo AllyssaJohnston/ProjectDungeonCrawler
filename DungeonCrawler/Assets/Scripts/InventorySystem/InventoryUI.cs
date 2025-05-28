@@ -39,6 +39,7 @@ public class InventoryUI : MonoBehaviour
         Cursor.visible = false;
         inventoryPanel.SetActive(false);
         inventoryIndicatorText.gameObject.SetActive(false);
+        TooltipManager.HideTooltip();
     }
 
     private void ClearSlots()

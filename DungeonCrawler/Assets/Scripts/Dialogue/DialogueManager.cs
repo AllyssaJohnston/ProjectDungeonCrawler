@@ -1,67 +1,76 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance;
+    private static DialogueManager instance;
 
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;
 
-    private string[] currentLines;
-    private string summaryLine;
-    private int currentIndex = 0;
+    private static NPC curNPC;
+    private static int currentIndex = 0;
 
-    private bool isActive = false;
+    private static bool isActive = false;
 
     private void Awake()
     {
-        if (Instance != null) Destroy(gameObject);
-        else Instance = this;
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        curNPC = null;
+        currentIndex = 0;
     }
 
-    public bool IsDialogueActive()
+    public static bool IsDialogueActive()
     {
         return isActive;
     }
 
-    public void StartDialogue(NPC npc)
+    public static void StartDialogue(NPC npc)
     {
-        currentLines = npc.dialogueData.dialogueLines;
+        curNPC = npc;
         currentIndex = 0;
-        dialogueBox.SetActive(true);
+        instance.dialogueBox.SetActive(true);
         isActive = true;
-        dialogueText.text = currentLines[currentIndex];
+        instance.dialogueText.text = npc.dialogueData.dialogueLines[currentIndex];
     }
 
-    public void NextLine(NPC npc)
+    public static void NextLine()
     {
         currentIndex++;
-        if (currentIndex < currentLines.Length)
+        if (currentIndex < curNPC.dialogueData.dialogueLines.Length)
         {
-            dialogueText.text = currentLines[currentIndex];
+            instance.dialogueText.text = curNPC.dialogueData.dialogueLines[currentIndex];
         }
         else
         {
-            npc.finishedDialogue = true;
+            curNPC.finishedDialogue = true;
             EndDialogue();
         }
     }
 
-    public void ShowSummary(NPC npc)
+    public static void ShowSummary(NPC npc)
     {
-        dialogueText.text = npc.dialogueData.summaryLine;
-        dialogueBox.SetActive(true);
+        instance.dialogueText.text = npc.dialogueData.summaryLine;
+        instance.dialogueBox.SetActive(true);
         isActive = true;
         currentIndex = 0;
     }
 
 
 
-    public void EndDialogue()
+    public static void EndDialogue()
     {
-        dialogueBox.SetActive(false);
+        instance.dialogueBox.SetActive(false);
         isActive = false;
+        if (curNPC != null && curNPC.destroyWhenFinished)
+        {
+            Destroy(curNPC.gameObject);
+            curNPC = null;
+        }
     }
 }

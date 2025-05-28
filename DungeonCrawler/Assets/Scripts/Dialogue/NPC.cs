@@ -1,36 +1,36 @@
-using System.Collections;
 using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
     public DialogueData dialogueData;
     private bool playerInRange = false;
-    public bool finishedDialogue = false;
+    [HideInInspector] public bool finishedDialogue = false;
+    public bool destroyWhenFinished = false;
 
     public static NPC activeNPC = null;
 
     private void Update()
     {
-        if (NPC.activeNPC != this) return; // Only active NPC responds
+        if (activeNPC != this) return; // Only active NPC responds
 
-        if (!finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.Instance.IsDialogueActive())
+        if (!finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsDialogueActive())
         {
-            DialogueManager.Instance.StartDialogue(this);
+            DialogueManager.StartDialogue(this);
         }
-        else if (finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.Instance.IsDialogueActive())
+        else if (finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsDialogueActive())
         {
-            DialogueManager.Instance.ShowSummary(this);
+            DialogueManager.ShowSummary(this);
         }
 
-        if (DialogueManager.Instance.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
+        if (DialogueManager.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
         {
             if (!finishedDialogue)
             {
-                DialogueManager.Instance.NextLine(this);
+                DialogueManager.NextLine();
             }
             else
             {
-                DialogueManager.Instance.EndDialogue();
+                DialogueManager.EndDialogue();
             }
         }
     }
@@ -43,7 +43,7 @@ public class NPC : MonoBehaviour
         {
             playerInRange = true;
             Debug.Log("playerInRange: " + playerInRange);
-            NPC.activeNPC = this;
+            activeNPC = this;
         }
     }
 
@@ -52,11 +52,11 @@ public class NPC : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            DialogueManager.Instance.EndDialogue();
+            DialogueManager.EndDialogue();
             Debug.Log("playerInRange: " + playerInRange);
-            if (NPC.activeNPC == this)
+            if (activeNPC == this)
             {
-                NPC.activeNPC = null;
+                activeNPC = null;
             }
         }
     }
