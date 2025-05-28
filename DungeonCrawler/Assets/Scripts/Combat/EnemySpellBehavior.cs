@@ -13,6 +13,7 @@ public class EnemySpellStats
 {
     public string spellName = "unnamed";
     public int damage = 10;
+    public int selfDamage = 0;
     public int heal = 0;
     public int moraleDamageToEnemies = 0; // to the opposing side
     public bool damageAllEnemies = false;
@@ -28,10 +29,14 @@ public class EnemySpellStats
         {
             spellDescriptionText += " for " + damage + " damage,";
         }
+        if (selfDamage != 0f)
+        {
+            spellDescriptionText += " for " + damage + " damage against self,";
+        }
 
         if (heal != 0f)
         {
-            spellDescriptionText += " for " + heal + " party health regen,";
+            spellDescriptionText += " for " + heal + " health regen,";
         }
 
         if (moraleDamageToEnemies != 0)

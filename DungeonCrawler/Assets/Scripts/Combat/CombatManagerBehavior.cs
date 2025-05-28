@@ -551,7 +551,7 @@ public class CombatManagerBehavior : MonoBehaviour
                 characterBehavior.updateMorale(-spell.moraleDamageToEnemies);
                 target = characterBehavior.characterName;
             }
-            curEnemy.updateHealth(spell.heal); // heal enemy
+            curEnemy.updateHealth(spell.heal - spell.selfDamage); // heal/ damage enemy
             DebugBehavior.updateLog(curEnemy.characterName + " cast " + spell.spellDescriptionText + " on " + target);
             curEnemy.cast();
         }
