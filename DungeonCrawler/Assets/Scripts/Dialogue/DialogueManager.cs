@@ -15,8 +15,6 @@ public class DialogueManager : MonoBehaviour
 
     private bool isActive = false;
 
-    private NPC currentNPC;
-
     private void Awake()
     {
         if (Instance != null) Destroy(gameObject);
@@ -28,51 +26,42 @@ public class DialogueManager : MonoBehaviour
         return isActive;
     }
 
-    public void StartDialogue(NPC npc, DialogueData dialogueData)
+    public void StartDialogue(NPC npc)
     {
-        currentNPC = npc;
-        currentLines = dialogueData.dialogueLines;
+        currentLines = npc.dialogueData.dialogueLines;
         currentIndex = 0;
         dialogueBox.SetActive(true);
         isActive = true;
-        ShowLine();
+        dialogueText.text = currentLines[currentIndex];
     }
 
-    public void ShowSummary(DialogueData dialogueData)
+    public void NextLine(NPC npc)
     {
-
-        summaryLine = dialogueData.summaryLine;
-        currentIndex = 0;
-        dialogueBox.SetActive(true);
-        isActive = true;
-
-        dialogueText.text = summaryLine;
-
-    }
-
-    public void ShowLine()
-    {
+        currentIndex++;
         if (currentIndex < currentLines.Length)
         {
             dialogueText.text = currentLines[currentIndex];
         }
         else
         {
-            currentNPC.finishedDialogue = true;
+            npc.finishedDialogue = true;
             EndDialogue();
         }
     }
 
-    public void NextLine()
+    public void ShowSummary(NPC npc)
     {
-        currentIndex++;
-        ShowLine();
+        dialogueText.text = npc.dialogueData.summaryLine;
+        dialogueBox.SetActive(true);
+        isActive = true;
+        currentIndex = 0;
     }
+
+
 
     public void EndDialogue()
     {
         dialogueBox.SetActive(false);
         isActive = false;
     }
-    
 }
