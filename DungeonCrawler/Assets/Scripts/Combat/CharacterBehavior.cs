@@ -92,6 +92,7 @@ public class CharacterBehavior : MonoBehaviour
         }
 
         castThisTurn = false;
+        setSprite();
     }
 
     // called at end of battle to regen
