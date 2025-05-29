@@ -397,7 +397,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7454038597967769207, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
       propertyPath: level
-      value: level3
+      value: Epilogue
       objectReference: {fileID: 0}
     - target: {fileID: 7454038597967769207, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
       propertyPath: levelTransition

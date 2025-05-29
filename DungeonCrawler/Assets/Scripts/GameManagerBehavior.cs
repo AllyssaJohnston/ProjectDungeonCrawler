@@ -8,7 +8,8 @@ public enum E_GameMode
 {
     LEVEL,
     COMBAT,
-    MENU
+    MENU,
+    EPILOGUE
 }
 
 public class GameManagerBehavior : MonoBehaviour
@@ -20,7 +21,6 @@ public class GameManagerBehavior : MonoBehaviour
     static List<string> scenesToLoad;
     static int curSceneToLoad;
     AsyncOperation asyncLoad;
-    static string curLevel = "Level1";
     static GameObject combatData;
     static GameObject levelData;
     public static GameObject menuData;
@@ -124,6 +124,22 @@ public class GameManagerBehavior : MonoBehaviour
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
+        else if (curScene == "Epilogue")
+        {
+            ambience.Pause();
+            menuMusic.Play();
+            levelTheme.Pause();
+            combatTheme.Pause();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("starting in epilogue");
+            lastGameMode = E_GameMode.LEVEL;
+            gameMode = E_GameMode.EPILOGUE;
+            menuData = GameObject.FindWithTag("MenuData");
+            scenesToLoad = new List<string> { "Menu", "Combat" };
+            // load in scenes async so they're ready when we need them
+            instance.StartCoroutine(instance.StartLoad());
+        }
     }
 
     public static void gameReset()
@@ -131,8 +147,9 @@ public class GameManagerBehavior : MonoBehaviour
         enterMenu();
         lastGameMode = E_GameMode.LEVEL;
         gameMode = E_GameMode.MENU;
+        string curLevel = levelData.scene.name;
+        Debug.Log($"Unloading {curLevel}...");
         SceneManager.UnloadSceneAsync(curLevel);
-        curLevel = "Level1";
         levelData = null;
         SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
     }
@@ -297,12 +314,10 @@ public class GameManagerBehavior : MonoBehaviour
         Scene curScene = levelData.scene;
         levelData.SetActive(false);
         levelData = null;
-        curLevel = levelName;
         SceneManager.LoadScene(levelName, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(levelName));
         SceneManager.UnloadSceneAsync(curScene);
-        
-    }        
+    }
 
     private static void getAudio()
     {
