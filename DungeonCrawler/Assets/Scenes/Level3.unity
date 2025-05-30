@@ -400,6 +400,10 @@ PrefabInstance:
       value: Epilogue
       objectReference: {fileID: 0}
     - target: {fileID: 7454038597967769207, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
+      propertyPath: ending
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454038597967769207, guid: 32f543f7540f4978eb20b54c31a41f8a, type: 3}
       propertyPath: levelTransition
       value: 
       objectReference: {fileID: 2016016065}

@@ -47,11 +47,15 @@ public class TooltipManager : MonoBehaviour
 
     public static void onLevelChange()
     {
-        tooltipPanel = GameObject.FindGameObjectsWithTag("tooltipPanel")[0];
-        TMP_Text[] text = tooltipPanel.GetComponentsInChildren<TMP_Text>();
-        tooltipDescription = text[0];
-        tooltipFlavor = text[1];
-        tooltipPanel.SetActive(false);
+        GameObject[] panels = GameObject.FindGameObjectsWithTag("tooltipPanel");
+        if (panels.Length > 0)
+        {
+            tooltipPanel = panels[0];
+            TMP_Text[] text = tooltipPanel.GetComponentsInChildren<TMP_Text>();
+            tooltipDescription = text[0];
+            tooltipFlavor = text[1];
+            tooltipPanel.SetActive(false);
+        }
     }
 
     public static void ShowTooltip(string description, string flavor, Vector3 position)

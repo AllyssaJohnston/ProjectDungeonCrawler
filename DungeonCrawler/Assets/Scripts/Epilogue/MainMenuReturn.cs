@@ -5,6 +5,6 @@ public class MainMenuReturn : MonoBehaviour
     public void returnToMainMenu()
     {
         GameObject.FindWithTag("MenuData").SetActive(true);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Epilogue");
     }
 }

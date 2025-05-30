@@ -75,8 +75,11 @@ public class CharacterBehavior : MonoBehaviour
     virtual public void reset()
     {
         health = maxHealth;
-        characterImageManager.color = Color.white;
-        characterImageManager.sprite = regSprite;
+        if (characterImageManager != null)
+        {
+            characterImageManager.color = Color.white;
+            characterImageManager.sprite = regSprite;
+        }
         castThisTurn = false;
         setUp = false;
     }
