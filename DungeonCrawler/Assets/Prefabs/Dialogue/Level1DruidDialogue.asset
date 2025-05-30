@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueLines:
   - Hey, you know what those Goblins do to trees?
-  - They scratch their names into them! It's horrendous. it's disgusting.
-  - I mean who does that!?
-  - You want me to join you? Sure!
+  - They scratch their names into them! It's horrendous. Makes me sick. I mean who
+    does that!?
+  - This world was so peaceful before. People seem to forget what happened last time
+    we let evil run rampant.
+  - 'You want me to join you in restoring Duolon? Sure!
+
+'
   summaryLine: 
