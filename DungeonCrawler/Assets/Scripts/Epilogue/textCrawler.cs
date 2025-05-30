@@ -5,6 +5,7 @@ public class textCrawler : MonoBehaviour
     public float crawlSpeed = 0.05f;
     public bool scaleOnResolution = true;
     public UnityEngine.Events.UnityEvent onScreenExit;
+    bool calledOnScreenExit = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,8 +32,9 @@ public class textCrawler : MonoBehaviour
             }
         } 
 
-        if (onScreenExit != null && exitedScreen)
+        if (onScreenExit != null && exitedScreen && !calledOnScreenExit)
         {
+            calledOnScreenExit = true;
             onScreenExit.Invoke();
         }
     }

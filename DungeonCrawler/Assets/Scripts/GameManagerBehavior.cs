@@ -136,7 +136,7 @@ public class GameManagerBehavior : MonoBehaviour
             lastGameMode = E_GameMode.LEVEL;
             gameMode = E_GameMode.EPILOGUE;
             menuData = GameObject.FindWithTag("MenuData");
-            scenesToLoad = new List<string> { "Menu", "Combat" };
+            scenesToLoad = new List<string> { "Menu", "Combat", "Level1" };
             // load in scenes async so they're ready when we need them
             instance.StartCoroutine(instance.StartLoad());
         }
@@ -144,12 +144,17 @@ public class GameManagerBehavior : MonoBehaviour
 
     public static void gameReset()
     {
+        CombatManagerBehavior.reset();
         enterMenu();
         lastGameMode = E_GameMode.LEVEL;
         gameMode = E_GameMode.MENU;
         string curLevel = levelData.scene.name;
         Debug.Log($"Unloading {curLevel}...");
         SceneManager.UnloadSceneAsync(curLevel);
+        if (SceneManager.GetSceneByName("Epilogue").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("Epilogue");
+        }
         levelData = null;
         SceneManager.LoadScene("Level1", LoadSceneMode.Additive);
     }

@@ -229,7 +229,7 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         curSpellToCast = null;
         StateManagerBehavior.reset();
-        GameManagerBehavior.gameReset();
+        
     }
 
     // called at the start of each regular combat
@@ -343,7 +343,7 @@ public class CombatManagerBehavior : MonoBehaviour
             if (died)
             {
                 instance.StartCoroutine(showYouDiedScreen());
-                reset();
+                GameManagerBehavior.gameReset();
             }
             else
             {

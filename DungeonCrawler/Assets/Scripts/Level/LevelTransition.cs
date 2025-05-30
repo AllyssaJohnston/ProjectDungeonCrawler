@@ -5,13 +5,20 @@ public class LevelTransition : MonoBehaviour
 {
     public string level;
     public GameObject levelTransition;
+    public bool ending = false;
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Player")) {
             Debug.Log("Switching Level");
-            levelTransition.SetActive(true);
+            if (!ending)
+            {
+                levelTransition.SetActive(true);
+            }
             SceneManager.LoadScene(level, LoadSceneMode.Additive);
-            SceneManager.UnloadSceneAsync(this.gameObject.scene);
+            if (!ending)
+            {
+                SceneManager.UnloadSceneAsync(this.gameObject.scene);
+            }
         }
     }
 }
