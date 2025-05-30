@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Level1PyromancerDialogue
   m_EditorClassIdentifier: 
   dialogueLines:
-  - I hate demons. Fire is much better, don't you think?
-  - I mean, fire can do so many things, like burn and char and disintegrate...
-  - You're looking for a pyromancer?
-  - Perfect! Name's Astra by the way.
+  - Those demons think they can harness the true potential of fire since they disregard
+    its nature. That's totally not going to end horribly.
+  - Controlling fire with complete disregard for  its nature... What buffoons.
+  - Then they see me set the dirt around them on fire and while they are screaming
+    they wonder how its possible.
+  - I'm not the biggest advocate around Duolon for groups, but I'll join you. I despise
+    those who try to control others.
+  - Name's Astra by the way.
   summaryLine: 
