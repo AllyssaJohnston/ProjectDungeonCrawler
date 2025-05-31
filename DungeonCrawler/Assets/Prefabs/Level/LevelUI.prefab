@@ -281,8 +281,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "WASD/\nArrow keys: \nTank Controls\n\nE: Interact\nX: Inventory\n\nESC:
-    Main Menu"
+  m_text: "WASD/\nArrow keys: \nTank Movement\n\nE: Interact\nX: Inventory\nSpace:
+    Continue Dialogue\n\nESC: Main Menu"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -754,8 +754,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 74.69629, y: -359.745}
-  m_SizeDelta: {x: 128.60745, y: 152.51001}
+  m_AnchoredPosition: {x: 74.69629, y: -346.39758}
+  m_SizeDelta: {x: 128.6075, y: 179.2049}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8658227435473500664
 CanvasRenderer:
@@ -830,8 +830,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 74.69629, y: -141.56503}
-  m_SizeDelta: {x: 128.60745, y: 263.84998}
+  m_AnchoredPosition: {x: 74.69629, y: -124.93095}
+  m_SizeDelta: {x: 128.6075, y: 234.9119}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8894362624542869045
 CanvasRenderer:
