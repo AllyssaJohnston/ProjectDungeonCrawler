@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Level1FrogDialogue
   m_EditorClassIdentifier: 
   dialogueLines:
-  - Hello fellow mages. I'm glad to see you got past those enemies. Seems you may
+  - 'Hello fellow mages. I''m glad to see you got past those enemies. Seems you may
     be a skilled bunch!
+
+
+
+
+    (Press space to continue)'
   - Welcome to Duolon. The land of friendship, and rocks that weirdly look like mountians.
   - Although for millennia this land was known for working together to accomplish
     our goals, a new evil has started to gain the ear of certain mages...
