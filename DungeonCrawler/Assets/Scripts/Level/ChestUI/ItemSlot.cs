@@ -57,14 +57,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         TooltipManager.HideTooltip();
 
         // If the item is used while in a chest.
-        if (slotMode == SlotMode.Chest)
+        if (slotMode == SlotMode.Chest && storedItem != null && chestContents.Count != 0)
         {
             inventory.AddItem(storedItem);
-            chestContents.RemoveAt(itemIndex);
+            chestContents.Remove(storedItem);
             Destroy(gameObject);
         }
         // If the item is used while in your inventory.
-        else if (slotMode == SlotMode.Inventory)
+        else if (slotMode == SlotMode.Inventory && storedItem != null && chestContents.Count != 0)
         {
             storedItem.Use();
             inventory.RemoveItem(storedItem);
