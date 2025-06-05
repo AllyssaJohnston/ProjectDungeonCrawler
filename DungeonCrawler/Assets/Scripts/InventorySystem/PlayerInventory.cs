@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<Item> items = new List<Item>();
+    public static List<Item> items = new List<Item>();
     public InventoryUI inventoryUI;
 
     private bool isOpen = false;
@@ -45,5 +45,15 @@ public class PlayerInventory : MonoBehaviour
                 isOpen = false;
             }
         }
+    }
+
+    public void gameReset()
+    {
+        Debug.Log("reset");
+        for (int i = items.Count - 1; i >= 0; i--)
+        {
+            items[i] = null;
+        }
+        items.Clear();
     }
 }

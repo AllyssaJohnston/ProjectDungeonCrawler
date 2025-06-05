@@ -145,6 +145,7 @@ public class GameManagerBehavior : MonoBehaviour
     public static void gameReset()
     {
         CombatManagerBehavior.reset();
+        FindFirstObjectByType<InventoryUI>(FindObjectsInactive.Include).gameReset();
         enterMenu();
         lastGameMode = E_GameMode.LEVEL;
         gameMode = E_GameMode.MENU;

@@ -49,4 +49,9 @@ public class InventoryUI : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+
+    public void gameReset()
+    {
+        inventory.gameReset();
+    }
 }

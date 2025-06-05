@@ -195,7 +195,6 @@ public class CombatManagerBehavior : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("space");
             switch (StateManagerBehavior.getState())
             {
                 case E_State.PLAYER_BETWEEN_SPELLS_BUFFFER:
