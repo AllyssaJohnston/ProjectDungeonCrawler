@@ -100966,7 +100966,7 @@ PrefabInstance:
       value: 'Current Quest:
 
 
-        Find the cellar'
+        Find the source of evil'
       objectReference: {fileID: 0}
     - target: {fileID: 8062611264207876456, guid: 5374f7d50e7165873a17209960e47e4a, type: 3}
       propertyPath: m_AnchorMax.x

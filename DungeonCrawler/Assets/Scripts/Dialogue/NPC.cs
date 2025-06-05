@@ -20,9 +20,10 @@ public class NPC : MonoBehaviour
         else if (finishedDialogue && playerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.IsDialogueActive())
         {
             DialogueManager.ShowSummary(this);
+            return;
         }
 
-        if (DialogueManager.IsDialogueActive() && Input.GetKeyDown(KeyCode.Space))
+        if (DialogueManager.IsDialogueActive() && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.E)))
         {
             if (!finishedDialogue)
             {

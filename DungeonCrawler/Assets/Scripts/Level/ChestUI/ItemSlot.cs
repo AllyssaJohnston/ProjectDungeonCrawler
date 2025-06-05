@@ -72,4 +72,6 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         
     }
+
+    
 }
